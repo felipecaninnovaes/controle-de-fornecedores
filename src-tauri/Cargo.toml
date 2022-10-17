@@ -1,0 +1,29 @@
+[package]
+name = "controle-de-fornecedores"
+version = "0.1.0"
+description = "Controle a entrada de fornecedores"
+authors = ["you"]
+license = "GNU General Public License v3.0"
+repository = "https://github.com/felipecaninnovaes/controle-de-fornecedores"
+edition = "2021"
+rust-version = "1.57"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+tauri-build = { version = "1.1", features = [] }
+
+[dependencies]
+rusqlite = { version = "0.28.0", features = ["bundled"] }
+rust_xlsxwriter = "0.4.0"
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+tauri = { version = "1.1", features = ["api-all"] }
+
+[features]
+# by default Tauri runs in production mode
+# when `tauri dev` runs it is executed with `cargo run --no-default-features` if `devPath` is an URL
+default = [ "custom-protocol" ]
+# this feature is used used for production builds where `devPath` points to the filesystem
+# DO NOT remove this
+custom-protocol = [ "tauri/custom-protocol" ]
