@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export async function create_database() {
   createDir('log',{dir: BaseDirectory.App, recursive: true})
   const appDirPath = await appDir() + "database.sqlite";
-  return (await invoke("create_database", { local: appDirPath }));
+  return (await invoke("create_database_fn", { local: appDirPath }));
 }
 
 
@@ -48,7 +48,7 @@ export async function insert_db(fornecedor: String, dataPagamento: String, valor
 
     
     // console.log(mes)
-    return (await invoke("insert_database", { local: appDirPath, mes: mes, fornecedor: fornecedor, dataPagamento: dataPagamento, valor: valor, banco: banco }));
+    return (await invoke("insert_database_fn", { local: appDirPath, mes: mes, fornecedor: fornecedor, dataPagamento: dataPagamento, valor: valor, banco: banco }));
   }
 
 }
@@ -58,7 +58,6 @@ export async function export_xlsx(periodo: String) {
   const mes = periodo.replace("-", "/")
   console.log(mes)
   const appDirPath = await appDir() + "database.sqlite";
-  const log = await appDir() + "logs.txt";
   const xlsx_folder = (await downloadDir() + "relatorio_duplicata_" + (mes).replace('/', '') + ".xlsx")
 
   if (mes === "") {
@@ -87,7 +86,7 @@ export async function export_xlsx(periodo: String) {
         theme: "light",
       });
       notify()
-      return (await invoke("export_xlsx", { local: appDirPath, mesValue: mes, log: log, xlsxFolder: xlsx_folder }));
+      return (await invoke("export_xlsx_fn", { local: appDirPath, mesValue: mes, xlsxFolder: xlsx_folder }));
     }
 
 
