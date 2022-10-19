@@ -76,41 +76,41 @@ export default function InserirPages() {
             Inserir
           </button>
         </div>
-        <div className="h-268 bg-SC_background3 rounded-lg border-solid border-2 border-SC_border1">
-          <div>
+        <div className="h-85 bg-SC_background3 rounded-lg border-solid border-2 border-SC_border1">
+          <div className="overflow-y-auto h-full">
             <ListView />
           </div>
         </div>
-        <div className="flex flex-row pb-2 pt-2">
+          <div className="flex flex-row pb-2 pt-2">
 
-          <div className="top-1">
-            <a className="font-bold px-2">Mes de referencia:</a>
-            <input type={"month"} className="w-56 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:bg-white"
-              onChange={(e) => setPerido(e.currentTarget.value)}
-              placeholder=""
-            />
-          </div>
-          <button className="rounded-md border-solid p-2 ml-2 shadow-gray-400 shadow-md bg-lime-700 text-white text-md font-bold hover:bg-lime-900 transition-colors" type="button" onClick={() => {
-            exportXlSX()
-          }}>
-            Exportar para Exel
-          </button>
-          <div>
+            <div className="top-1">
+              <a className="font-bold px-2">Mes de referencia:</a>
+              <input type={"month"} className="w-56 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:bg-white"
+                onChange={(e) => setPerido(e.currentTarget.value)}
+                placeholder=""
+              />
+            </div>
+            <button className="rounded-md border-solid p-2 ml-2 shadow-gray-400 shadow-md bg-lime-700 text-white text-md font-bold hover:bg-lime-900 transition-colors" type="button" onClick={() => {
+              exportXlSX()
+            }}>
+              Exportar para Exel
+            </button>
+            <div>
 
+            </div>
           </div>
-        </div>
-        <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
+          <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
       </div>
     </div>
   );
