@@ -6,9 +6,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { insert_db, export_xlsx } from "../modules/db"
+import ListView from "./ListPage";
+
+
+
 
 export default function InserirPages() {
-
+  // select()
 
   let [pagamento, setPagamento] = useState("");
   let [fornecedor, setFornecedor] = useState("");
@@ -24,7 +28,6 @@ export default function InserirPages() {
   async function exportXlSX() {
     export_xlsx(periodo)
   }
-
   return (
     <div className="h-screen w-screen justify-center flex flex-row items-center bg-SC_background">
 
@@ -74,6 +77,9 @@ export default function InserirPages() {
           </button>
         </div>
         <div className="h-268 bg-SC_background3 rounded-lg border-solid border-2 border-SC_border1">
+          <div>
+            <ListView />
+          </div>
         </div>
         <div className="flex flex-row pb-2 pt-2">
 

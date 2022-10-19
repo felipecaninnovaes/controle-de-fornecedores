@@ -1,43 +1,32 @@
 pub mod select_from_database {
 
     pub use rusqlite::{Connection, Result};
-
+    pub use serde::{Deserialize, Serialize};
+    use serde_rusqlite::*;
+    pub use serde_json::*;
     #[allow(dead_code)]
-    pub fn select_from_database(local: String, id: i32) -> Result<Vec<String>> {
-        struct Empresas {
-            id: i32,
-            mes: String,
-            fornecedor: String,
-            data_pagamento: String,
-            valor: String,
-            banco: String,
-        }
+    #[derive(Serialize, Deserialize, Debug, PartialEq)]
+    #[allow(non_snake_case)]
+    pub struct Empresas {
+        id: i32,
+        mes: String,
+        fornecedor: String,
+        dataPagamento: String,
+        valor: String,
+        banco: String,
+    }
+
+    pub fn select_from_database(local: String, id: i32) -> Result<Vec<Empresas>> {
 
         let conn = Connection::open(local)?;
-        let mut stmt = conn.prepare(
-            "SELECT id, mes , fornecedor, dataPagamento, valor, banco FROM empresas WHERE id = :id",
-        )?;
-        let rows = stmt.query_map(&[(":id", &id)], |row| {
-            Ok(Empresas {
-                id: row.get(0)?,
-                mes: row.get(1)?,
-                fornecedor: row.get(2)?,
-                data_pagamento: row.get(3)?,
-                valor: row.get(4)?,
-                banco: row.get(5)?,
-            })
-        })?;
+
+        let mut statement = conn.prepare("SELECT * FROM empresas").unwrap();
+        let res = from_rows::<Empresas>(statement.query([]).unwrap());
 
         let mut names = Vec::new();
-        for empresas in rows {
-            names.push(empresas.as_ref().unwrap().id.to_string());
-            names.push(empresas.as_ref().unwrap().mes.to_string());
-            names.push(empresas.as_ref().unwrap().fornecedor.to_string());
-            names.push(empresas.as_ref().unwrap().data_pagamento.to_string());
-            names.push(empresas.as_ref().unwrap().valor.to_string());
-            names.push(empresas.as_ref().unwrap().banco.to_string());
+        for empresas in res {
+           names.push(empresas.unwrap())
         }
-        // println!("{:?}", names);
         Ok(names)
     }
 }
