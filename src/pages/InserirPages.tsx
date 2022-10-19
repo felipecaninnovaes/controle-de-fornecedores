@@ -20,9 +20,11 @@ export default function InserirPages() {
   let [banco, setBanco] = useState("");
 
   let [periodo, setPerido] = useState("");
+  let [data, setData] = useState("");
 
   async function Inserir() {
     insert_db(fornecedor, pagamento, valor, banco)
+    localStorage.setItem('load', banco)
   }
 
   async function exportXlSX() {
@@ -77,7 +79,7 @@ export default function InserirPages() {
           </button>
         </div>
         <div className="h-85 bg-SC_background3 rounded-lg border-solid border-2 border-SC_border1">
-          <div className="overflow-y-auto h-full w-full">
+          <div className="overflow-y-auto h-full w-full" onLoad={() =>{useEffect(() => {})}}>
             <ListView />
           </div>
         </div>
