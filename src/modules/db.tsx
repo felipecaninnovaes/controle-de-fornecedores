@@ -23,7 +23,7 @@ export async function create_database() {
   return (await invoke("create_database_fn", { local: appDirPath }));
 }
 
-export async function delete_in_database(id: Number) {
+export async function delete_in_database(id: String) {
   const appDirPath = await appDir() + "database.sqlite";
   return (await invoke("delete_in_database_fn", { local: appDirPath, id: id.toString() }));
 }
