@@ -24,7 +24,7 @@ export const ListView = () => {
   }, []);
 
   return (
-    <table className="border-spacing-4 text-xl">
+    <table className="border-spacing-4 text-xl w-full">
       <thead>
         <tr>
           <th className="border-spacing-4">ID</th>
@@ -37,9 +37,9 @@ export const ListView = () => {
       </thead>
       {fornecedores.map(data => {
         return (
-          <tbody key={data?.id}>
-            <tr className=" border-solid border border-SC_border1" key={data?.id}><td className="border border-slate-700 border-spacing-4">{data?.id}</td><td className="border border-slate-700">{data?.mes}</td><td className="border border-slate-700">{data?.dataPagamento}</td><td className="border border-slate-700">{data?.fornecedor}</td><td className="border border-slate-700">{data?.valor}</td><td className="border border-slate-700">{data?.banco}</td>
-            <td><button onClick={() =>{delete_in_database(data?.id)}} ><FaTrashAlt color="red"/></button></td>  
+          <tbody key={data?.id} >
+            <tr className=" border-solid border border-SC_border1" key={data?.id}><td className="border  border-spacing-4">{data?.id}</td><td className="border">{data?.mes}</td><td className="border ">{data?.dataPagamento}</td><td className="border ">{data?.fornecedor}</td><td className="border ">{data?.valor}</td><td className="border">{data?.banco}</td>
+            <td className="border"><button onClick={() =>{delete_in_database(data?.id)}} ><FaTrashAlt color="red"/></button></td>  
             </tr>
           </tbody>
           
