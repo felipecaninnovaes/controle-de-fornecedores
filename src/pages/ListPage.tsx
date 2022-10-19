@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { select_from_database, delete_in_database } from "../modules/db"
-import { FaTrashAlt } from "react-icons/fa";
+import { FiTrash2, FiRefreshCcw } from "react-icons/fi";
 import test from "node:test";
 
 interface Fornecedores {
@@ -12,9 +12,9 @@ interface Fornecedores {
   banco: String,
 }
 
+const values = 2;
 export const Teste = () => {
-  const [values, setValues] = useState("");
-
+  
 }
 export const ListView = () => {
   const [fornecedores, setFornecedores] = useState<Fornecedores[] | null[]>([]);
@@ -26,8 +26,11 @@ export const ListView = () => {
     }
     apiCall();
   }, [value]);
+
+  const d = new Date();
+  let time = String(d.getTime());
   return (
-    <table className="border-spacing-4 text-xl w-full">
+    <table className="border-spacing-4 text-xl w-full" onMouseEnter={() =>{setvalue(time)}} >
       <thead>
         <tr>
           <th className="border-spacing-4">ID</th>
@@ -41,11 +44,11 @@ export const ListView = () => {
       {fornecedores.map(data => {
         let idS: String = String(data?.id) as string
         const d = new Date();
-        let time = String(d.getTime());
+        let times = String(d.getTime());
         return (
           <tbody>
             <tr className=" border-solid border border-SC_border1"><td className="border  border-spacing-4">{data?.id}</td><td className="border">{data?.mes}</td><td className="border ">{data?.dataPagamento}</td><td className="border ">{data?.fornecedor}</td><td className="border ">{data?.valor}</td><td className="border">{data?.banco}</td>
-            <td className="border"><button onClick={() =>{delete_in_database(idS); setvalue(time)}} ><FaTrashAlt color="red"/></button></td>  
+            <td className="border"><button onClick={() =>{delete_in_database(idS); setvalue(times)}} ><FiTrash2 color="red"/></button></td>  
             </tr>
           </tbody>
           
