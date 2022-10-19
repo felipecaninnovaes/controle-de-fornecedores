@@ -1,35 +1,51 @@
 import { useEffect, useState } from "react"
-import { select_from_database } from "../modules/db"
-// import parser from 'html-react-parser'
+import { select_from_database, delete_in_database } from "../modules/db"
+import { FaTrashAlt } from "react-icons/fa";
 
 interface Fornecedores {
-    id: String,
-    mes: String,
-    fornecedor: String,
-    dataPagamento: String,
-    valor: String,
-    banco: String,
+  id: String,
+  mes: String,
+  fornecedor: String,
+  dataPagamento: String,
+  valor: String,
+  banco: String,
 }
-export const ListView = () => {
-    const [fornecedores, setFornecedores] = useState<Fornecedores[] | null[]>([]);
 
+export const ListView = () => {
+  const [fornecedores, setFornecedores] = useState<Fornecedores[] | null[]>([]);
+
+  
   useEffect(() => {
     async function apiCall() {
-      const apiResponse: any = await select_from_database(2);
-      console.log(apiResponse);
+      const apiResponse: any = await select_from_database();
       setFornecedores(apiResponse);
     }
     apiCall();
   }, []);
 
   return (
-    <div className="flex flex-col overflow-y-auto">
+    <table className="border-spacing-4 text-xl">
+      <thead>
+        <tr>
+          <th className="border-spacing-4">ID</th>
+          <th>MES REFRENCIA</th>
+          <th className="pl-2">DATA DE PAGAMENTO</th>
+          <th>FORNECEDOR</th>
+          <th>VALOR</th>
+          <th>BANCO</th>
+        </tr>
+      </thead>
       {fornecedores.map(data => {
         return (
-          <ol className=" flex flex-row pb-2 pt-2 mt-3 text-mt border-solid border-2 border-SC_border1"><li key={data?.id}>{data?.id} {data?.dataPagamento} {data?.fornecedor} {data?.valor} {data?.banco}</li></ol>
+          <tbody key={data?.id}>
+            <tr className=" border-solid border border-SC_border1" key={data?.id}><td className="border border-slate-700 border-spacing-4">{data?.id}</td><td className="border border-slate-700">{data?.mes}</td><td className="border border-slate-700">{data?.dataPagamento}</td><td className="border border-slate-700">{data?.fornecedor}</td><td className="border border-slate-700">{data?.valor}</td><td className="border border-slate-700">{data?.banco}</td>
+            <td><button onClick={() =>{delete_in_database(data?.id)}} ><FaTrashAlt color="red"/></button></td>  
+            </tr>
+          </tbody>
+          
         )
       })}
-    </div>
+    </table>
   );
 
 }

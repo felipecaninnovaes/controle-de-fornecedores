@@ -1,4 +1,3 @@
-
 import { appDir, downloadDir } from '@tauri-apps/api/path';
 
 import { invoke } from "@tauri-apps/api/tauri";
@@ -17,27 +16,21 @@ interface Fornecedores {
   banco: String,
 }
 
+
 export async function create_database() {
   createDir('log', { dir: BaseDirectory.App, recursive: true })
   const appDirPath = await appDir() + "database.sqlite";
   return (await invoke("create_database_fn", { local: appDirPath }));
 }
 
-
-export async function select_from_database(id: Number) {
-
+export async function delete_in_database(id: Number) {
   const appDirPath = await appDir() + "database.sqlite";
-  const result = await invoke("select_from_database_fn", { local: appDirPath, id: id });
-  // const fornecedor: Fornecedores = {
-  //   id: result[0],
-  //   mes: result[1],
-  //   fornecedor: result[2],
-  //   data_pagamento: result[3],
-  //   valor: result[4],
-  //   banco: result[5]
-  // }
-  // var myJsonString = JSON.stringify(result)
-  console.log(result)
+  return (await invoke("delete_in_database_fn", { local: appDirPath, id: id.toString() }));
+}
+
+export async function select_from_database() {
+  const appDirPath = await appDir() + "database.sqlite";
+  const result = await invoke("select_from_database_fn", { local: appDirPath});
   return result
 }
 
