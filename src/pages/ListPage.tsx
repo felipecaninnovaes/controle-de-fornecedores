@@ -30,7 +30,7 @@ export const ListView = () => {
   const d = new Date();
   let time = String(d.getTime());
   return (
-    <table className="border-spacing-4 text-xl w-full" onMouseEnter={() =>{setvalue(time)}} >
+    <table className="border-spacing-4 text-xl w-full rounded-md" onMouseEnter={() =>{setvalue(time)}} >
       <thead>
         <tr>
           <th className="border-spacing-4">ID</th>
@@ -46,9 +46,9 @@ export const ListView = () => {
         const d = new Date();
         let times = String(d.getTime());
         return (
-          <tbody>
+          <tbody key={String(data?.id)}>
             <tr className=" border-solid border border-SC_border1"><td className="border  border-spacing-4">{data?.id}</td><td className="border">{data?.mes}</td><td className="border ">{data?.dataPagamento}</td><td className="border ">{data?.fornecedor}</td><td className="border ">{data?.valor}</td><td className="border">{data?.banco}</td>
-            <td className="border"><button onClick={() =>{delete_in_database(idS); setvalue(times)}} ><FiTrash2 color="red"/></button></td>  
+            <td className="border"><button className="" onClick={() =>{delete_in_database(idS); setvalue(times)}} ><FiTrash2 color="red"/></button></td>  
             </tr>
           </tbody>
           

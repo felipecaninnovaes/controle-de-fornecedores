@@ -79,7 +79,7 @@ export default function InserirPages() {
           </button>
         </div>
         <div className="h-85 bg-SC_background3 rounded-lg border-solid border-2 border-SC_border1">
-          <div className="overflow-y-auto h-full w-full" onLoad={() =>{useEffect(() => {})}}>
+          <div className="overflow-y-auto h-full w-full p-2" onLoad={() =>{useEffect(() => {})}}>
             <ListView />
           </div>
         </div>

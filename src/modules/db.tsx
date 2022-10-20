@@ -25,7 +25,20 @@ export async function create_database() {
 
 export async function delete_in_database(id: String) {
   const appDirPath = await appDir() + "database.sqlite";
+  const notify = () => toast.success('Registro apagado', {
+    position: "top-center",
+    autoClose: 500,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+
+  notify()
   return (await invoke("delete_in_database_fn", { local: appDirPath, id: id.toString() }));
+  
 }
 
 export async function select_from_database() {
@@ -37,10 +50,10 @@ export async function select_from_database() {
 
 export async function insert_db(fornecedor: String, dataPagamento: String, valor: String, banco: String) {
   const appDirPath = await appDir() + "database.sqlite";
-  const data = dataPagamento.toString().replace("-", "/").replace("-", "/")
+  let data = dataPagamento.toString().replace("-", "/").replace("-", "/")
   const mes_split = data.split("/")
   const mes = String(mes_split[0] + "/" + mes_split[1]);
-  console.log(data)
+  data = String(mes_split[2] + "/" + mes_split[1] + "/" + mes_split[0])
   if (fornecedor === "" || valor === "" || banco === "" || data === '') {
     const notify = () => toast.error('Campo em branco', {
       position: "top-center",
@@ -68,7 +81,7 @@ export async function insert_db(fornecedor: String, dataPagamento: String, valor
 
 
     // console.log(mes)
-    return (await invoke("insert_database_fn", { local: appDirPath, mes: mes, fornecedor: fornecedor, dataPagamento: dataPagamento, valor: valor, banco: banco }));
+    return (await invoke("insert_database_fn", { local: appDirPath, mes: mes, fornecedor: fornecedor, dataPagamento: data, valor: valor, banco: banco }));
   }
 
 }
