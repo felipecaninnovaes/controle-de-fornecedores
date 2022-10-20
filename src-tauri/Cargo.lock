@@ -409,6 +409,7 @@ dependencies = [
  "rust_xlsxwriter",
  "serde",
  "serde_json",
+ "serde_rusqlite",
  "tauri",
  "tauri-build",
 ]
@@ -2460,9 +2461,9 @@ dependencies = [
 
 [[package]]
 name = "rust_xlsxwriter"
-version = "0.5.0"
+version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "98abd10c6bfdb10168d40b04187322c8d370a1e1f026a05d5b4dd2207dd08f2c"
+checksum = "3b62dd9f60b6850130d78dfb5e4e2c9b672206a6c3a3c1e46edcf4836a461231"
 dependencies = [
  "chrono",
  "itertools",
@@ -2655,6 +2656,16 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "serde_rusqlite"
+version = "0.31.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "538b51f10ee271375cbd9caa04fa6e3e50af431a21db97caae48da92a074244a"
+dependencies = [
+ "rusqlite",
+ "serde",
 ]
 
 [[package]]
