@@ -54,7 +54,7 @@ export default function InserirPages() {
           </div>
           <div>
             <a className="font-bold px-2">Valor:</a>
-            <input className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+            <input type="number" step="0.01" min="0" max="100000000000" className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
               onChange={(e) => setValor(e.currentTarget.value)}
               placeholder="Insira o valor do pagamento..."
               value={valor}
