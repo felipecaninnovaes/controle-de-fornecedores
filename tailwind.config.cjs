@@ -13,6 +13,8 @@ module.exports = {
       },
       height: {
         '268': '95%',
+        '85': '75%',
+        '100': '100%',
       },
       colors: {
         'SC_background': '#beccfb',

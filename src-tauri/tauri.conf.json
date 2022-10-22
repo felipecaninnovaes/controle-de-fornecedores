@@ -72,9 +72,9 @@
       {
         "fullscreen": false,
         "height": 668,
-        "resizable": true,
+        "resizable": false,
         "title": "Controle de fornecedores",
-        "width": 1066
+        "width": 1166
       }
     ]
   }

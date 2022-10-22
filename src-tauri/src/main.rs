@@ -6,16 +6,22 @@ mod modules;
 use modules::{
     edit_in_database::edit_in_database::edit_in_database, 
     insert_in_database::insert_in_database::insert_in_database, 
-    select_from_database::select_from_database::select_from_database,
+    select_from_database::select_from_database::{select_from_database, Empresas},
     create_database::create_database::create_database,
-    export_database_to_exel::export_database_to_exel::export_database_to_exel
+    export_database_to_exel::export_database_to_exel::export_database_to_exel,
+    delete_in_database::delete_in_database::delete_in_database
 };
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+#[allow(non_snake_case)]
+#[tauri::command]
+fn delete_in_database_fn(local: String ,id: String){
+    delete_in_database(local ,id).expect("Erro ao inserir");
+}
+
 #[allow(dead_code)]
 #[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
+fn select_from_database_fn(local: String) -> Vec<Empresas>{
+    select_from_database(local).expect("Erro ao selecionar no banco de dados")
 }
 
 #[tauri::command]
@@ -42,7 +48,7 @@ fn export_xlsx_fn(local: String ,mesValue: String, xlsxFolder: String) {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![create_database_fn, edit_in_database_fn, insert_database_fn, export_xlsx_fn])
+        .invoke_handler(tauri::generate_handler![create_database_fn, edit_in_database_fn, insert_database_fn, export_xlsx_fn, select_from_database_fn, delete_in_database_fn])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
