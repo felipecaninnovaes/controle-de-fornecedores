@@ -8,9 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { insert_db, export_xlsx } from "../modules/db"
 import { ListView } from "./ListPage";
 
-
-
-
 export default function InserirPages() {
   // select()
 
@@ -48,7 +45,7 @@ export default function InserirPages() {
           </div>
           <div>
             <a className="font-bold px-2">Fornecedor:</a>
-            <input id="input" className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+            <input className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
               onChange={(e) => setFornecedor(e.currentTarget.value)}
               placeholder="Insira o nome do fornecedor..."
               value={fornecedor}
@@ -56,7 +53,7 @@ export default function InserirPages() {
           </div>
           <div>
             <a className="font-bold px-2">CNPJ:</a>
-            <input id="input" className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+            <input type="number" id="input" className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
               onChange={(e) => setCnpj(e.currentTarget.value)}
               placeholder="Insira o nome do fornecedor..."
               value={cnpj}
