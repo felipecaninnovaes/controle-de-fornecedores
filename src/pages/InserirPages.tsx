@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { insert_db, export_xlsx } from "../modules/db"
-import {ListView} from "./ListPage";
+import { ListView } from "./ListPage";
 
 
 
@@ -71,17 +71,17 @@ export default function InserirPages() {
             />
           </div><div>
             <a className="font-bold px-2">Multa:</a>
-            <input id="input" className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+            <input type="number" step="0.01" min="0" max="100000000000" className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
               onChange={(e) => setMulta(e.currentTarget.value)}
-              placeholder="Insira o nome do fornecedor..."
+              placeholder="Insira o nome o valor da multa..."
               value={multa}
             />
           </div>
           <div>
             <a className="font-bold px-2">Juros:</a>
-            <input id="input" className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+            <input type="number" step="0.01" min="0" max="100000000000" className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
               onChange={(e) => setJuros(e.currentTarget.value)}
-              placeholder="Insira o nome do fornecedor..."
+              placeholder="Insira o valor do juros..."
               value={juros}
             />
           </div>
@@ -104,39 +104,36 @@ export default function InserirPages() {
           </button>
         </div>
         <div className="h-85 bg-SC_background3 rounded-lg border-solid border-2 border-SC_border1">
-          <div className="overflow-y-auto h-full w-full p-2" onLoad={() =>{useEffect(() => {})}}>
+          <div className="overflow-y-auto h-full w-full p-2" onLoad={() => { useEffect(() => { }) }}>
             <ListView />
           </div>
         </div>
-          <div className="flex flex-row pb-2 pt-2">
-            <div className="top-1">
-              <a className="font-bold px-2">Mes de referencia:</a>
-              <input type={"month"} className="w-56 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:bg-white"
-                onChange={(e) => setPerido(e.currentTarget.value)}
-                placeholder="Insira o mes de referencia"
-              />
-            </div>
-            <button className="rounded-md border-solid p-2 ml-2 shadow-gray-400 shadow-md bg-lime-700 text-white text-md font-bold hover:bg-lime-900 transition-colors" type="button" onClick={() => {
-              exportXlSX()
-            }}>
-              Exportar para Exel
-            </button>
-            <div>
-
-            </div>
+        <div className="h-100 flex flex-row items-end pb-2 pt-2">
+          <div className="top-1">
+            <a className="font-bold px-2">Mes de referencia:</a>
+            <input type={"month"} className="w-56 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:bg-white"
+              onChange={(e) => setPerido(e.currentTarget.value)}
+              placeholder="Insira o mes de referencia"
+            />
           </div>
-          <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
+          <button className="rounded-md border-solid p-2 ml-2 shadow-gray-400 shadow-md bg-lime-700 text-white text-md font-bold hover:bg-lime-900 transition-colors" type="button" onClick={() => {
+            exportXlSX()
+          }}>
+            Exportar para Exel
+          </button>
+        </div>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </div>
     </div>
   );
