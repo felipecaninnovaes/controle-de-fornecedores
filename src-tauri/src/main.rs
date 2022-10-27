@@ -36,8 +36,8 @@ fn edit_in_database_fn(local: String ,id: i32 ,mes: String, fornecedor: String, 
 
 #[allow(non_snake_case)]
 #[tauri::command]
-fn insert_database_fn(local: String ,mes: String, fornecedor: String, dataPagamento: String, valor: String, banco: String){
-    insert_in_database(local ,mes, fornecedor, dataPagamento, valor, banco).expect("Erro ao inserir");
+fn insert_database_fn(local: String ,mes: String, fornecedor: String, cnpj: String, dataPagamento: String, valor: String, multa: String, juros: String, banco: String){
+    insert_in_database(local ,mes, fornecedor, cnpj, dataPagamento, valor, multa, juros, banco).expect("Erro ao inserir");
 }
 
 #[allow(non_snake_case)]

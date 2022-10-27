@@ -6,9 +6,12 @@ import test from "node:test";
 interface Fornecedores {
   id: String | null,
   mes: String,
+  cnpj: String,
   fornecedor: String,
   dataPagamento: String,
   valor: String,
+  multa: String,
+  juros: String,
   banco: String,
 }
 
@@ -37,7 +40,10 @@ export const ListView = () => {
           <th>MES REFRENCIA</th>
           <th className="pl-2">DATA DE PAGAMENTO</th>
           <th>FORNECEDOR</th>
+          <th>CNPJ</th>
           <th>VALOR</th>
+          <th>MULTA</th>
+          <th>JUROS</th>
           <th>BANCO</th>
         </tr>
       </thead>
@@ -47,8 +53,8 @@ export const ListView = () => {
         let times = String(d.getTime());
         return (
           <tbody key={String(data?.id)}>
-            <tr className=" border-solid border border-SC_border1"><td className="border  border-spacing-4">{data?.id}</td><td className="border">{data?.mes}</td><td className="border ">{data?.dataPagamento}</td><td className="border ">{data?.fornecedor}</td><td className="border ">{data?.valor}</td><td className="border">{data?.banco}</td>
-            <td className="border"><button className="" onClick={() =>{delete_in_database(idS); setvalue(times)}} ><FiTrash2 color="red"/></button></td>  
+            <tr className=" border-solid border border-SC_border1"><td className="border  border-spacing-4">{data?.id}</td><td className="border">{data?.mes}</td><td className="border ">{data?.dataPagamento}</td><td className="border ">{data?.fornecedor}</td><td className="border ">{data?.cnpj}</td><td className="border ">{data?.valor}</td><td className="border ">{data?.multa}</td><td className="border ">{data?.juros}</td><td className="border">{data?.banco}</td>
+            <td className="border"><button title="button" onClick={() =>{delete_in_database(idS); setvalue(times)}} ><FiTrash2 color="red"/></button></td>  
             </tr>
           </tbody>
           

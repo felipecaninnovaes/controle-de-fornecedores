@@ -4,7 +4,7 @@ import App from "./App";
 import "./styles/default.css"
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-    <div>
+    <div className="h-screen w-screen justify-center flex flex-row items-center bg-SC_background">
     <App />
     </div>
 );

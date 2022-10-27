@@ -10,8 +10,11 @@ pub mod create_database {
             id   INTEGER PRIMARY KEY,
             mes TEXT NOT NULL,
             fornecedor TEXT NOT NULL,
+            cnpj TEXT NOT NULL,
             dataPagamento TEXT NOT NULL,
             valor TEXT NOT NULL,
+            multa TEXT NOT NULL,
+            juros TEXT NOT NULL,
             banco TEXT NOT NULL
         )",
             (), // empty list of parameters.
