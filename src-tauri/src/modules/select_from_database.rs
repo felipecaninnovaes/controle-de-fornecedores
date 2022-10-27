@@ -11,8 +11,11 @@ pub mod select_from_database {
         id: i32,
         mes: String,
         fornecedor: String,
+        cnpj: String,
         dataPagamento: String,
         valor: String,
+        multa: String,
+        juros: String,
         banco: String,
     }
 

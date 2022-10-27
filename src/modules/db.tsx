@@ -10,9 +10,12 @@ import 'react-toastify/dist/ReactToastify.css';
 interface Fornecedores {
   id: String,
   mes: String,
+  cnpj: String,
   fornecedor: String,
   data_pagamento: String,
   valor: String,
+  multa: String,
+  juros: String,
   banco: String,
 }
 
@@ -48,13 +51,13 @@ export async function select_from_database() {
 }
 
 
-export async function insert_db(fornecedor: String, dataPagamento: String, valor: String, banco: String) {
+export async function insert_db(fornecedor: String, cnpj: String, dataPagamento: String, valor: String, multa: String, juros: String, banco: String) {
   const appDirPath = await appDir() + "database.sqlite";
   let data = dataPagamento.toString().replace("-", "/").replace("-", "/")
   const mes_split = data.split("/")
   const mes = String(mes_split[0] + "/" + mes_split[1]);
   data = String(mes_split[2] + "/" + mes_split[1] + "/" + mes_split[0])
-  if (fornecedor === "" || valor === "" || banco === "" || data === '') {
+  if (fornecedor === "" || valor === "" || banco === "" || data === '' || multa === '' || juros === '') {
     const notify = () => toast.error('Campo em branco', {
       position: "top-center",
       autoClose: 500,
@@ -81,7 +84,7 @@ export async function insert_db(fornecedor: String, dataPagamento: String, valor
 
 
     // console.log(mes)
-    return (await invoke("insert_database_fn", { local: appDirPath, mes: mes, fornecedor: fornecedor, dataPagamento: data, valor: valor, banco: banco }));
+    return (await invoke("insert_database_fn", { local: appDirPath, mes: mes, fornecedor: fornecedor, cnpj: cnpj, dataPagamento: data, valor: valor, multa: multa, juros: juros, banco: banco }));
   }
 
 }
