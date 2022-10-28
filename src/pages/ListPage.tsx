@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { select_from_database, delete_in_database } from "../modules/db"
-import { FiTrash2, FiRefreshCcw } from "react-icons/fi";
+import { FiTrash2, FiEdit } from "react-icons/fi";
 import test from "node:test";
 
 interface Fornecedores {
@@ -15,11 +15,16 @@ interface Fornecedores {
   banco: String,
 }
 
-const values = 2;
-export const Teste = () => {
-  
-}
 export const ListView = () => {
+    let [pagamento, setPagamento] = useState("");
+  let [fornecedor, setFornecedor] = useState("");
+  let [cnpj, setCnpj] = useState("");
+  let [valor, setValor] = useState("");
+  let [multa, setMulta] = useState("");
+  let [juros, setJuros] = useState("");
+  let [banco, setBanco] = useState("");
+
+
   const [fornecedores, setFornecedores] = useState<Fornecedores[] | null[]>([]);
   const [value, setvalue] = useState("");
   useEffect(() => {
@@ -33,7 +38,7 @@ export const ListView = () => {
   const d = new Date();
   let time = String(d.getTime());
   return (
-    <table className="border-spacing-4 text-xl w-full rounded-md" onMouseEnter={() =>{setvalue(time)}} >
+    <table className="border-spacing-4 text-xl w-full rounded-md" onMouseEnter={() => { setvalue(time) }} >
       <thead>
         <tr>
           <th className="border-spacing-4">ID</th>
@@ -53,11 +58,21 @@ export const ListView = () => {
         let times = String(d.getTime());
         return (
           <tbody key={String(data?.id)}>
-            <tr className=" border-solid border border-SC_border1"><td className="border  border-spacing-4">{data?.id}</td><td className="border">{data?.mes}</td><td className="border ">{data?.dataPagamento}</td><td className="border ">{data?.fornecedor}</td><td className="border ">{data?.cnpj}</td><td className="border ">{data?.valor}</td><td className="border ">{data?.multa}</td><td className="border ">{data?.juros}</td><td className="border">{data?.banco}</td>
-            <td className="border"><button title="button" onClick={() =>{delete_in_database(idS); setvalue(times)}} ><FiTrash2 color="red"/></button></td>  
+            <tr className=" border-solid border border-SC_border1"><td className="border  border-spacing-4">{data?.id}</td><td className="border">{data?.mes}</td><td className="border ">{data?.dataPagamento}</td><td className="border ">{data?.fornecedor}</td><td className="border ">{data?.cnpj}</td><td className="border ">{data?.valor}</td><td className="border ">{data?.multa}</td><td className="border ">{data?.juros}</td>
+            <td className="border">{data?.banco}</td>
+            <td className="border">
+                <button title="button" onClick={() => { delete_in_database(idS); setvalue(times) }} >
+                  <FiTrash2 color="red" />
+                </button>
+              </td>
+              <td className="border">
+                <button title="button" onClick={() => { delete_in_database(idS); setvalue(times) }} >
+                  <FiEdit color="blue" />
+                </button>
+              </td>
             </tr>
           </tbody>
-          
+
         )
       })}
     </table>
