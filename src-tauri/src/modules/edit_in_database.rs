@@ -11,15 +11,6 @@ pub mod edit_in_database {
         valor: String,
         banco: String,
     ) -> Result<()> {
-        struct Empresas {
-            id: i32,
-            mes: String,
-            fornecedor: String,
-            data_pagamento: String,
-            valor: String,
-            banco: String,
-        }
-
         
         let conn = Connection::open(local)?;
         let query = "INSERT OR REPLACE INTO empresas(id, mes, fornecedor, dataPagamento, valor, banco) VALUES (?, ?, ?, ?, ?, ?)";

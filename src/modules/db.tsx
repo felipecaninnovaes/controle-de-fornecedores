@@ -51,9 +51,9 @@ export async function select_from_database() {
 }
 
 
-export async function insert_db(fornecedor: String, cnpj: String, dataPagamento: String, valor: String, multa: String, juros: String, banco: String) {
+export async function insert_db(fornecedor: String, cnpj: String, data_pagamento: String, valor: String, multa: String, juros: String, banco: String) {
   const appDirPath = await appDir() + "database.sqlite";
-  let data = dataPagamento.toString().replace("-", "/").replace("-", "/")
+  let data = data_pagamento.toString().replace("-", "/").replace("-", "/")
   const mes_split = data.split("/")
   const mes = String(mes_split[0] + "/" + mes_split[1]);
   data = String(mes_split[2] + "/" + mes_split[1] + "/" + mes_split[0])
