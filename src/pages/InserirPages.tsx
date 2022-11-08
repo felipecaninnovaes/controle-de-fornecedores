@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import ListView from "./ListPage";
 import { insert_db, export_xlsx } from "../modules/db"
-
-import { select_from_database, delete_in_database } from "../modules/db"
-import { FiTrash2, FiEdit } from "react-icons/fi";
 
 interface Fornecedores {
   id: String | null,
@@ -44,7 +40,7 @@ export default function InserirPages() {
     export_xlsx(periodo)
   }
   return (
-    <div className="h-screen w-screen justify-center flex flex-row items-center bg-SC_background">
+    <div className="h-screen w-screen font-sans justify-center flex flex-row items-center bg-SC_background">
 
       <div className="h-268 w-268 bg-SC_background2 flex flex-col rounded-lg shadow-2xl py-5 px-5">
         <div className="flex flex-row pb-5">
@@ -114,10 +110,14 @@ export default function InserirPages() {
           </div>
           <button className="rounded-md border-solid p-2 mt-6 shadow-gray-400 shadow-md bg-SC_button text-white text-md font-bold hover:bg-SC_button_hover transition-colors" type="button" onClick={() => {
             Inserir()
-            setBanco("");
-            setValor("");
-            setFornecedor("");
-            setPagamento("");
+            setId('')
+            setPagamento('')
+            setFornecedor('')
+            setCnpj('')
+            setValor('')
+            setMulta('')
+            setJuros('')
+            setBanco('')
           }}>
             Inserir
           </button>

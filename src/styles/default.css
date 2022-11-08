@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    font-family: ,'Roboto', sans-serif;
+    font-weight: 400;
+    --webkit-font-smoothing: antialiased;
+    font-smooth: 20em;
+  }
+}

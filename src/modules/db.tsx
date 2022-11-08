@@ -50,7 +50,42 @@ export async function select_from_database() {
   return result
 }
 
+export async function edit_db(id: String, fornecedor: String, cnpj: String, data_pagamento: String, valor: String, multa: String, juros: String, banco: String) {
+  const appDirPath = await appDir() + "database.sqlite";
+  let data = data_pagamento.toString().replace("-", "/").replace("-", "/")
+  const mes_split = data.split("/")
+  const mes = String(mes_split[0] + "/" + mes_split[1]);
+  data = String(mes_split[2] + "/" + mes_split[1] + "/" + mes_split[0])
+  if (fornecedor === "" || valor === "" || banco === "" || data === '' || multa === '' || juros === '') {
+    const notify = () => toast.error('Campo em branco', {
+      position: "top-center",
+      autoClose: 500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+    notify()
+  } else {
+    const notify = () => toast.success('Inserido com sucesso', {
+      position: "top-center",
+      autoClose: 500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+    notify()
 
+
+    // console.log(mes)
+    return (await invoke("edit_in_database_fn", { local: appDirPath, id: id, mes: mes, fornecedor: fornecedor, cnpj: cnpj, dataPagamento: data, valor: valor, multa: multa, juros: juros, banco: banco }));
+  }
+}
 export async function insert_db(fornecedor: String, cnpj: String, data_pagamento: String, valor: String, multa: String, juros: String, banco: String) {
   const appDirPath = await appDir() + "database.sqlite";
   let data = data_pagamento.toString().replace("-", "/").replace("-", "/")

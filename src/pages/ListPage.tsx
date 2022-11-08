@@ -4,7 +4,10 @@ import { FiTrash2, FiEdit } from "react-icons/fi";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
-import { insert_db } from "../modules/db"
+import './popUp.css'
+
+import { insert_db, edit_db } from "../modules/db"
+import { close } from "fs";
 
 interface Fornecedores {
   id: String | null,
@@ -23,6 +26,12 @@ export const ListView = () => {
   async function Inserir() {
     insert_db(fornecedor, cnpj, pagamento, valor, multa, juros, banco)
     localStorage.setItem('load', banco)
+  }
+
+  async function Editar() {
+    edit_db(id, fornecedor, cnpj, pagamento, valor, multa, juros, banco)
+    localStorage.setItem('load', banco)
+    console.log('rodou')
   }
 
   let [pagamento, setPagamento] = useState("");
@@ -75,18 +84,20 @@ export const ListView = () => {
                   <FiTrash2 color="red" />
                 </button>
               </td>
-              <td className="border">
+              <td className="border ">
                 <Popup onOpen={() => {
+                  const mesVa = String(data?.dataPagamento).split("/")
+                  const dataV: String = String(mesVa[2] + "/" + mesVa[1] + "/" + mesVa[0])
                   setId(String(data?.id))
-                  setPagamento(String(data?.dataPagamento))
+                  setPagamento(String(dataV))
                   setFornecedor(String(data?.fornecedor))
                   setCnpj(String(data?.cnpj))
                   setValor(String(data?.valor))
                   setMulta(String(data?.multa))
                   setJuros(String(data?.juros))
                   setBanco(String(data?.banco))
-                }} trigger={<button type='submit' title='button' className="button"><FiEdit color="blue" /></button>} modal>
-                  <div>
+                }} trigger={<button type='submit' title='button' className="button"><FiEdit color="blue" /></button>} modal nested>
+                  <div className="bg-SC_background3 mt-4 ml-3">
                     <div>
                       <a className="font-bold px-2">ID:</a>
                       <input className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
@@ -150,6 +161,20 @@ export const ListView = () => {
                         placeholder="Insira o nome do banco pago..."
                         value={banco}
                       />
+                      <button className="rounded-md w-full justify-center uppercase border-solid p-2 mt-6 shadow-gray-400 shadow-md bg-SC_button text-white text-md font-bold hover:bg-SC_button_hover transition-colors" type="button" onClick={() => {
+                        Editar()
+                        setId('')
+                        setPagamento('')
+                        setFornecedor('')
+                        setCnpj('')
+                        setValor('')
+                        setMulta('')
+                        setJuros('')
+                        setBanco('')
+                        
+                      }}>
+                        Inserir
+                      </button>
                     </div>
                   </div>
                 </Popup>
