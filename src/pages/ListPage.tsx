@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react"
 import { select_from_database, delete_in_database } from "../modules/db"
 import { FiTrash2, FiEdit } from "react-icons/fi";
-import test from "node:test";
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+
+import { insert_db } from "../modules/db"
 
 interface Fornecedores {
   id: String | null,
@@ -16,14 +19,20 @@ interface Fornecedores {
 }
 
 export const ListView = () => {
-    let [pagamento, setPagamento] = useState("");
+
+  async function Inserir() {
+    insert_db(fornecedor, cnpj, pagamento, valor, multa, juros, banco)
+    localStorage.setItem('load', banco)
+  }
+
+  let [pagamento, setPagamento] = useState("");
+  let [id, setId] = useState("");
   let [fornecedor, setFornecedor] = useState("");
   let [cnpj, setCnpj] = useState("");
   let [valor, setValor] = useState("");
   let [multa, setMulta] = useState("");
   let [juros, setJuros] = useState("");
   let [banco, setBanco] = useState("");
-
 
   const [fornecedores, setFornecedores] = useState<Fornecedores[] | null[]>([]);
   const [value, setvalue] = useState("");
@@ -56,19 +65,94 @@ export const ListView = () => {
         let idS: String = String(data?.id) as string
         const d = new Date();
         let times = String(d.getTime());
+
         return (
           <tbody key={String(data?.id)}>
             <tr className=" border-solid border border-SC_border1"><td className="border  border-spacing-4">{data?.id}</td><td className="border">{data?.mes}</td><td className="border ">{data?.dataPagamento}</td><td className="border ">{data?.fornecedor}</td><td className="border ">{data?.cnpj}</td><td className="border ">{data?.valor}</td><td className="border ">{data?.multa}</td><td className="border ">{data?.juros}</td>
-            <td className="border">{data?.banco}</td>
-            <td className="border">
+              <td className="border">{data?.banco}</td>
+              <td className="border">
                 <button title="button" onClick={() => { delete_in_database(idS); setvalue(times) }} >
                   <FiTrash2 color="red" />
                 </button>
               </td>
               <td className="border">
-                <button title="button" onClick={() => { delete_in_database(idS); setvalue(times) }} >
-                  <FiEdit color="blue" />
-                </button>
+                <Popup onOpen={() => {
+                  setId(String(data?.id))
+                  setPagamento(String(data?.dataPagamento))
+                  setFornecedor(String(data?.fornecedor))
+                  setCnpj(String(data?.cnpj))
+                  setValor(String(data?.valor))
+                  setMulta(String(data?.multa))
+                  setJuros(String(data?.juros))
+                  setBanco(String(data?.banco))
+                }} trigger={<button type='submit' title='button' className="button"><FiEdit color="blue" /></button>} modal>
+                  <div>
+                    <div>
+                      <a className="font-bold px-2">ID:</a>
+                      <input className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+                        onChange={(e) => setFornecedor(e.currentTarget.value)}
+                        placeholder="Gerado automaticamente..."
+                        value={id}
+                        disabled
+                      />
+                    </div>
+                    <div>
+                      <a className="font-bold px-2">Pago em:</a>
+                      <input type={"date"} className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+                        onChange={(e) => setPagamento(e.currentTarget.value)}
+                        placeholder="Insira a data"
+                        value={pagamento}
+                      />
+                    </div>
+                    <div>
+                      <a className="font-bold px-2">Fornecedor:</a>
+                      <input className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+                        onChange={(e) => setFornecedor(e.currentTarget.value)}
+                        placeholder="Insira o nome do fornecedor..."
+                        value={fornecedor}
+                      />
+                    </div>
+                    <div>
+                      <a className="font-bold px-2">CNPJ:</a>
+                      <input type="number" id="input" className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+                        onChange={(e) => setCnpj(e.currentTarget.value)}
+                        placeholder="Insira o nome do fornecedor..."
+                        value={cnpj}
+                      />
+                    </div>
+                    <div>
+                      <a className="font-bold px-2">Valor:</a>
+                      <input type="number" step="0.01" min="0" max="100000000000" className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+                        onChange={(e) => setValor(e.currentTarget.value)}
+                        placeholder="Insira o valor do pagamento..."
+                        value={valor}
+                      />
+                    </div><div>
+                      <a className="font-bold px-2">Multa:</a>
+                      <input type="number" step="0.01" min="0" max="100000000000" className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+                        onChange={(e) => setMulta(e.currentTarget.value)}
+                        placeholder="Insira o nome o valor da multa..."
+                        value={multa}
+                      />
+                    </div>
+                    <div>
+                      <a className="font-bold px-2">Juros:</a>
+                      <input type="number" step="0.01" min="0" max="100000000000" className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+                        onChange={(e) => setJuros(e.currentTarget.value)}
+                        placeholder="Insira o valor do juros..."
+                        value={juros}
+                      />
+                    </div>
+                    <div>
+                      <a className="font-bold px-2">Banco:</a>
+                      <input className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+                        onChange={(e) => setBanco(e.currentTarget.value)}
+                        placeholder="Insira o nome do banco pago..."
+                        value={banco}
+                      />
+                    </div>
+                  </div>
+                </Popup>
               </td>
             </tr>
           </tbody>

@@ -1,9 +1,9 @@
 pub mod create_database {
     pub use rusqlite::{Connection, Result};
-    
+
     #[allow(dead_code)]
     pub fn create_database(local: String) -> Result<()> {
-
+        
         let conn = Connection::open(local)?;
         conn.execute(
             "CREATE TABLE if not exists empresas (
