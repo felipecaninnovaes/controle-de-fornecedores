@@ -87,9 +87,105 @@ export const ListView = () => {
   let time = String(d.getTime());
   return (
     <table className="border-spacing-4 text-xl w-full rounded-md"
-    onMouseEnter={() => { setvalue(time) }} 
+      onMouseEnter={() => { setvalue(time) }}
     >
       <thead>
+        <Modal
+          className="absolute pr-5 pb-5 pt-2 pl-2 rounded-md justify-center bg-SC_background3"
+          overlayClassName={"Overlay"}
+          isOpen={modalIsOpen}
+          onRequestClose={handleCloseModal}
+          style={customStyles}
+          onAfterClose={() => {
+            setvalue(time)
+          }}
+        >
+          <div className="bg-SC_background3 mt-4 ml-3">
+            <div>
+              <a className="font-bold px-2">ID:</a>
+              <input className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+                onChange={(e) => setFornecedor(e.currentTarget.value)}
+                placeholder="Gerado automaticamente..."
+                value={id}
+                disabled
+              />
+            </div>
+            <div>
+              <a className="font-bold px-2 w-full">Pago em:</a>
+              <input type={"date"} className="rounded-md border-solid w-full p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+                onChange={(e) => setPagamento(e.currentTarget.value)}
+                placeholder="Insira a data"
+                value={pagamento}
+              />
+            </div>
+            <div>
+              <a className="font-bold px-2">Fornecedor:</a>
+              <input className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+                onChange={(e) => setFornecedor(e.currentTarget.value)}
+                placeholder="Insira o nome do fornecedor..."
+                value={fornecedor}
+              />
+            </div>
+            <div>
+              <a className="font-bold px-2">CNPJ:</a>
+              <input type="number" id="input" className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+                onChange={(e) => setCnpj(e.currentTarget.value)}
+                placeholder="Insira o nome do fornecedor..."
+                value={cnpj}
+              />
+            </div>
+            <div>
+              <a className="font-bold px-2">Valor:</a>
+              <input type="number" step="0.01" min="0" max="100000000000" className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+                onChange={(e) => setValor(e.currentTarget.value)}
+                placeholder="Insira o valor do pagamento..."
+                value={valor}
+              />
+            </div><div>
+              <a className="font-bold px-2">Multa:</a>
+              <input type="number" step="0.01" min="0" max="100000000000" className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+                onChange={(e) => setMulta(e.currentTarget.value)}
+                placeholder="Insira o nome o valor da multa..."
+                value={multa}
+              />
+            </div>
+            <div>
+              <a className="font-bold px-2">Juros:</a>
+              <input type="number" step="0.01" min="0" max="100000000000" className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+                onChange={(e) => setJuros(e.currentTarget.value)}
+                placeholder="Insira o valor do juros..."
+                value={juros}
+              />
+            </div>
+            <div>
+              <a className="font-bold px-2">Banco:</a>
+              <input className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+                onChange={(e) => setBanco(e.currentTarget.value)}
+                placeholder="Insira o nome do banco pago..."
+                value={banco}
+              />
+              <button className="rounded-md w-full justify-center uppercase border-solid p-2 mt-6 shadow-gray-400 shadow-md bg-SC_button text-white text-md font-bold hover:bg-SC_button_hover transition-colors" type="button" onClick={() => {
+                Editar()
+                setId('')
+                setPagamento('')
+                setFornecedor('')
+                setCnpj('')
+                setValor('')
+                setMulta('')
+                setJuros('')
+                setBanco('')
+                handleCloseModal()
+              }}>
+                Inserir
+              </button>
+              <button className="rounded-md w-full justify-center uppercase border-solid p-2 mt-6 shadow-gray-400 shadow-md bg-red-500 text-white text-md font-bold hover:bg-red-600 transition-colors" type="button" onClick={() => {
+                handleCloseModal()
+              }}>
+                Fechar
+              </button>
+            </div>
+          </div>
+        </Modal>
         <tr>
           <th className="border-spacing-4">ID</th>
           <th>MES REFRENCIA</th>
@@ -130,102 +226,6 @@ export const ListView = () => {
                 }} >
                   <FiEdit color="blue" />
                 </button>
-                <Modal
-                  className="absolute pr-5 pb-5 pt-2 pl-2 rounded-md justify-center bg-SC_background3"
-                  overlayClassName={"Overlay"}
-                  isOpen={modalIsOpen}
-                  onRequestClose={handleCloseModal}
-                  style={customStyles}
-                  onAfterClose={() => {
-                    setvalue(time)
-                  }}
-                >
-                  <div className="bg-SC_background3 mt-4 ml-3">
-                    <div>
-                      <a className="font-bold px-2">ID:</a>
-                      <input className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
-                        onChange={(e) => setFornecedor(e.currentTarget.value)}
-                        placeholder="Gerado automaticamente..."
-                        value={id}
-                        disabled
-                      />
-                    </div>
-                    <div>
-                      <a className="font-bold px-2 w-full">Pago em:</a>
-                      <input type={"date"} className="rounded-md border-solid w-full p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
-                        onChange={(e) => setPagamento(e.currentTarget.value)}
-                        placeholder="Insira a data"
-                        value={pagamento}
-                      />
-                    </div>
-                    <div>
-                      <a className="font-bold px-2">Fornecedor:</a>
-                      <input className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
-                        onChange={(e) => setFornecedor(e.currentTarget.value)}
-                        placeholder="Insira o nome do fornecedor..."
-                        value={fornecedor}
-                      />
-                    </div>
-                    <div>
-                      <a className="font-bold px-2">CNPJ:</a>
-                      <input type="number" id="input" className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
-                        onChange={(e) => setCnpj(e.currentTarget.value)}
-                        placeholder="Insira o nome do fornecedor..."
-                        value={cnpj}
-                      />
-                    </div>
-                    <div>
-                      <a className="font-bold px-2">Valor:</a>
-                      <input type="number" step="0.01" min="0" max="100000000000" className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
-                        onChange={(e) => setValor(e.currentTarget.value)}
-                        placeholder="Insira o valor do pagamento..."
-                        value={valor}
-                      />
-                    </div><div>
-                      <a className="font-bold px-2">Multa:</a>
-                      <input type="number" step="0.01" min="0" max="100000000000" className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
-                        onChange={(e) => setMulta(e.currentTarget.value)}
-                        placeholder="Insira o nome o valor da multa..."
-                        value={multa}
-                      />
-                    </div>
-                    <div>
-                      <a className="font-bold px-2">Juros:</a>
-                      <input type="number" step="0.01" min="0" max="100000000000" className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
-                        onChange={(e) => setJuros(e.currentTarget.value)}
-                        placeholder="Insira o valor do juros..."
-                        value={juros}
-                      />
-                    </div>
-                    <div>
-                      <a className="font-bold px-2">Banco:</a>
-                      <input className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
-                        onChange={(e) => setBanco(e.currentTarget.value)}
-                        placeholder="Insira o nome do banco pago..."
-                        value={banco}
-                      />
-                      <button className="rounded-md w-full justify-center uppercase border-solid p-2 mt-6 shadow-gray-400 shadow-md bg-SC_button text-white text-md font-bold hover:bg-SC_button_hover transition-colors" type="button" onClick={() => {
-                        Editar()
-                        setId('')
-                        setPagamento('')
-                        setFornecedor('')
-                        setCnpj('')
-                        setValor('')
-                        setMulta('')
-                        setJuros('')
-                        setBanco('')
-                        handleCloseModal()
-                      }}>
-                        Inserir
-                      </button>
-                      <button className="rounded-md w-full justify-center uppercase border-solid p-2 mt-6 shadow-gray-400 shadow-md bg-red-500 text-white text-md font-bold hover:bg-red-600 transition-colors" type="button" onClick={() => {
-                        handleCloseModal()
-                      }}>
-                        Fechar
-                      </button>
-                    </div>
-                  </div>
-                </Modal>
               </td>
             </tr>
           </tbody>
