@@ -69,7 +69,7 @@ export async function edit_db(id: String, fornecedor: String, cnpj: String, data
     });
     notify()
   } else {
-    const notify = () => toast.success('Inserido com sucesso', {
+    const notify = () => toast.success('Editado com sucesso', {
       position: "top-center",
       autoClose: 500,
       hideProgressBar: false,
