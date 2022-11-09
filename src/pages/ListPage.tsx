@@ -2,14 +2,10 @@ import { cloneElement, useEffect, useState } from "react"
 import Modal from 'react-modal';
 import { select_from_database, delete_in_database } from "../modules/db"
 import { FiTrash2, FiEdit } from "react-icons/fi";
-import { Popup } from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
 
 import './popUp.css'
 
 import { insert_db, edit_db } from "../modules/db"
-import { useNavigate } from "react-router-dom";
-import test from "node:test";
 
 
 interface Fornecedores {
