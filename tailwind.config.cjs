@@ -4,10 +4,10 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    fontFamily: {
-      'inherit': ['inherit'],
-    },
     extend: {
+      fontFamily: {
+        sans: 'Roboto, sans-serif',
+      },
       width: {
         '268': '95%',
       },

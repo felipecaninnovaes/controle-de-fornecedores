@@ -1,17 +1,26 @@
-import { useEffect, useRef, useState } from "react";
-
-import React from 'react';
-
-import { ToastContainer, toast } from 'react-toastify';
+import { useEffect, useState } from "react";
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import 'reactjs-popup/dist/index.css';
+import ListView from "./ListPage";
 import { insert_db, export_xlsx } from "../modules/db"
-import { ListView } from "./ListPage";
 
+interface Fornecedores {
+  id: String | null,
+  mes: String,
+  cnpj: String,
+  fornecedor: String,
+  dataPagamento: String,
+  valor: String,
+  multa: String,
+  juros: String,
+  banco: String,
+}
 export default function InserirPages() {
-  // select()
+
 
   let [pagamento, setPagamento] = useState("");
+  let [id, setId] = useState("");
   let [fornecedor, setFornecedor] = useState("");
   let [cnpj, setCnpj] = useState("");
   let [valor, setValor] = useState("");
@@ -31,10 +40,19 @@ export default function InserirPages() {
     export_xlsx(periodo)
   }
   return (
-    <div className="h-screen w-screen justify-center flex flex-row items-center bg-SC_background">
+    <div className="h-screen w-screen font-sans justify-center flex flex-row items-center bg-SC_background">
 
       <div className="h-268 w-268 bg-SC_background2 flex flex-col rounded-lg shadow-2xl py-5 px-5">
         <div className="flex flex-row pb-5">
+          <div>
+            <a className="font-bold px-2">ID:</a>
+            <input className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+              onChange={(e) => setFornecedor(e.currentTarget.value)}
+              placeholder="Gerado automaticamente..."
+              value={id}
+              disabled
+            />
+          </div>
           <div>
             <a className="font-bold px-2">Pago em:</a>
             <input type={"date"} className="w-268 rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
@@ -92,10 +110,14 @@ export default function InserirPages() {
           </div>
           <button className="rounded-md border-solid p-2 mt-6 shadow-gray-400 shadow-md bg-SC_button text-white text-md font-bold hover:bg-SC_button_hover transition-colors" type="button" onClick={() => {
             Inserir()
-            setBanco("");
-            setValor("");
-            setFornecedor("");
-            setPagamento("");
+            setId('')
+            setPagamento('')
+            setFornecedor('')
+            setCnpj('')
+            setValor('')
+            setMulta('')
+            setJuros('')
+            setBanco('')
           }}>
             Inserir
           </button>

@@ -9,32 +9,39 @@ let
       "wasm32-unknown-unknown"
     ];
   });
+  libraries = with pkgs;[
+    webkitgtk
+    gtk3
+    cairo
+    gdk-pixbuf
+    glib.out
+    dbus.lib
+    openssl_3.out
+  ];
+
+  packages = with pkgs; [
+    yarn
+    rust
+    nodejs
+    pkg-config
+    dbus
+    openssl_3
+    glib
+    gtk3
+    libsoup
+    webkitgtk
+    appimagekit
+  ];
 in
-  with pkgs;
-  mkShell {
-    buildInputs = [
-      zsh
-      appimage-run
-      nodejs
-      wget
-      yarn
-      rust
-      pkgconfig
-      openssl
-      openssl.dev
-      sass
-      glib
-      cairo
-      pango
-      atk
-      gdk-pixbuf
-      libsoup
-      gtk3
-      pkgs.webkitgtk
-      librsvg
-      patchelf
-    ];
-  shellHook = '' 
-      yarn
-  '';
+pkgs.mkShell {
+  buildInputs = packages;
+
+  shellHook =
+    let
+      joinLibs = libs: builtins.concatStringsSep ":" (builtins.map (x: "${x}/lib") libs);
+      libs = joinLibs libraries;
+    in
+    ''
+      export LD_LIBRARY_PATH=${libs}:$LD_LIBRARY_PATH
+    '';
 }
