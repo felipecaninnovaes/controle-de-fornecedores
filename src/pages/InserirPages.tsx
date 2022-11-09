@@ -41,7 +41,6 @@ export default function InserirPages() {
   }
   return (
     <div className="h-screen w-screen font-sans justify-center flex flex-row items-center bg-SC_background">
-
       <div className="h-268 w-268 bg-SC_background2 flex flex-col rounded-lg shadow-2xl py-5 px-5">
         <div className="flex flex-row pb-5">
           <div>

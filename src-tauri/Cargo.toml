@@ -11,15 +11,15 @@ rust-version = "1.57"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-tauri-build = { version = "1.1", features = [] }
+tauri-build = { version = "1.2.0", features = [] }
 
 [dependencies]
 rusqlite = { version = "0.28.0", features = ["bundled"] }
-rust_xlsxwriter = "0.6.0"
+rust_xlsxwriter = "0.12.0"
 serde = {version = "1.0.145", features = ["derive"] }
 serde_rusqlite = "0.31.0"
 serde_json = { version ="1.0.86"}
-tauri = { version = "1.1", features = ["api-all"] }
+tauri = { version = "1.2.0", features = ["api-all"] }
 
 [features]
 # by default Tauri runs in production mode

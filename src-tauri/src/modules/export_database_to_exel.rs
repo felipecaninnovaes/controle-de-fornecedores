@@ -20,7 +20,7 @@ pub mod export_database_to_exel {
             banco: String,
         }
         let conn = Connection::open(local)?;
-        let mut workbook = Workbook::new(&xlsx_folder);
+        let mut workbook = Workbook::new();
         let worksheet = workbook.add_worksheet();
         worksheet
             .write_string_only(0, 0, "Data de Pagamento")
@@ -112,7 +112,7 @@ pub mod export_database_to_exel {
                 .expect("Falha ao gravar");
             num += 1;
         }
-        workbook.close().expect("Falha ao salvar");
+        workbook.save(&xlsx_folder).expect("Falha ao salvar");
         Ok(())
     }
 }
