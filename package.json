@@ -17,10 +17,7 @@
     "react-icons": "^4.6.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.4.2",
-    "react-toastify": "^9.0.8",
-    "reactjs-popup": "^2.0.5",
-    "tauri-plugin-sql": "github:tauri-apps/tauri-plugin-sql#42a9ecd38b797024772b37612806b53d747444e5",
-    "tauri-plugin-sql-api": "github:tauri-apps/tauri-plugin-sql"
+    "react-toastify": "^9.0.8"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.2.0",
