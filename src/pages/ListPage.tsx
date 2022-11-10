@@ -86,12 +86,12 @@ export const ListView = () => {
   const d = new Date();
   let time = String(d.getTime());
   return (
-    <table className="border-spacing-4 text-xl w-full rounded-md"
+    <table className="text-xl w-full rounded-md"
       onMouseEnter={() => { setvalue(time) }}
     >
       <thead>
         <Modal
-          className="absolute pr-5 pb-5 pt-2 pl-2 rounded-md justify-center bg-SC_background3"
+          className="absolute pr-5 pb-5 pt-2 pl-2 rounded-md justify-center bg-SC_background3 shadow-xl"
           overlayClassName={"Overlay"}
           isOpen={modalIsOpen}
           onRequestClose={handleCloseModal}
@@ -187,15 +187,16 @@ export const ListView = () => {
           </div>
         </Modal>
         <tr>
-          <th className="border-spacing-4">ID</th>
-          <th>MES REFRENCIA</th>
-          <th className="pl-2">DATA DE PAGAMENTO</th>
-          <th>FORNECEDOR</th>
-          <th>CNPJ</th>
-          <th>VALOR</th>
-          <th>MULTA</th>
-          <th>JUROS</th>
-          <th>BANCO</th>
+          <th className="border border-SC_border1 bg-SC_background4 p-2">ID</th>
+          <th className="border border-SC_border1 bg-SC_background4 p-2">MES REFRENCIA</th>
+          <th className="border border-SC_border1 bg-SC_background4 p-2">DATA DE PAGAMENTO</th>
+          <th className="border border-SC_border1 bg-SC_background4 p-2">FORNECEDOR</th>
+          <th className="border border-SC_border1 bg-SC_background4 p-2">CNPJ</th>
+          <th className="border border-SC_border1 bg-SC_background4 p-2">VALOR</th>
+          <th className="border border-SC_border1 bg-SC_background4 p-2">MULTA</th>
+          <th className="border border-SC_border1 bg-SC_background4 p-2">JUROS</th>
+          <th className="border border-SC_border1 bg-SC_background4 p-2">BANCO</th>
+          <th className="border border-SC_border1 bg-SC_background4 p-2">ACOES</th>
         </tr>
       </thead>
       {fornecedores.map(data => {
@@ -205,15 +206,13 @@ export const ListView = () => {
 
         return (
           <tbody key={String(data?.id)}>
-            <tr className=" border-solid border border-SC_border1"><td className="border  border-spacing-4">{data?.id}</td><td className="border">{data?.mes}</td><td className="border ">{data?.dataPagamento}</td><td className="border ">{data?.fornecedor}</td><td className="border ">{data?.cnpj}</td><td className="border ">{data?.valor}</td><td className="border ">{data?.multa}</td><td className="border ">{data?.juros}</td>
-              <td className="border">{data?.banco}</td>
-              <td className="border">
-                <button title="button" onClick={() => { delete_in_database(idS); setvalue(times) }} >
-                  <FiTrash2 color="red" />
+            <tr className="border-solid"><td className=" border-t border-l border-SC_border1 text-center border-spacing-4">{data?.id}</td><td className="border-t border-l border-SC_border1 text-center">{data?.mes}</td><td className="border-t border-l border-SC_border1 text-center ">{data?.dataPagamento}</td><td className="border-t border-l border-SC_border1 text-center ">{data?.fornecedor}</td><td className="border-t border-l border-SC_border1 text-center ">{data?.cnpj}</td><td className="border-t border-l border-SC_border1 text-center ">{data?.valor}</td><td className="border-t border-l border-SC_border1 text-center p-2">{data?.multa}</td><td className="border-t border-l border-SC_border1 text-center ">{data?.juros}</td>
+              <td className="border-t border-l border-SC_border1 text-center">{data?.banco}</td>
+              <td className="border-t border-l  border-SC_border1">
+                <button className="rounded-md w-auto justify-center uppercase border-solid p-2 mt-0 ml-2 mr-2 mb-2 bg-SC_button_excluir text-white text-sm font-bold hover:bg-SC_button_excluir_hover transition-colors" title="button" onClick={() => { delete_in_database(idS); setvalue(times) }} > 
+                  Excluir {/* <FiTrash2 color="red" /> */}
                 </button>
-              </td>
-              <td className="border">
-                <button title="button" onClick={() => {
+                <button className="rounded-md w-auto justify-center uppercase border-solid p-2 mt-2  bg-SC_button_edit text-white text-sm font-bold hover:bg-SC_button_edit_hover transition-colors" title="button" onClick={() => {
                   handleOpenModal(String(idS),
                     String(data?.dataPagamento),
                     String(data?.fornecedor),
@@ -224,8 +223,10 @@ export const ListView = () => {
                     String(data?.banco)
                   )
                 }} >
-                  <FiEdit color="blue" />
+                  EDITAR
                 </button>
+              </td>
+              <td className="border">
               </td>
             </tr>
           </tbody>

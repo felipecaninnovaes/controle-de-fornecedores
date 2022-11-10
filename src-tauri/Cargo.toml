@@ -1,14 +1,12 @@
 [package]
 name = "controle-de-fornecedores"
-version = "1.0.0"
+version = "1.0.2"
 description = "Controle a entrada de fornecedores"
 authors = ["felipecaninnovaes"]
 license = "GNU General Public License v3.0"
 repository = "https://github.com/felipecaninnovaes/controle-de-fornecedores"
 edition = "2021"
 rust-version = "1.57"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
 tauri-build = { version = "1.2.0", features = [] }
@@ -22,9 +20,5 @@ serde_json = { version ="1.0.86"}
 tauri = { version = "1.2.0", features = ["api-all"] }
 
 [features]
-# by default Tauri runs in production mode
-# when `tauri dev` runs it is executed with `cargo run --no-default-features` if `devPath` is an URL
 default = [ "custom-protocol" ]
-# this feature is used used for production builds where `devPath` points to the filesystem
-# DO NOT remove this
 custom-protocol = [ "tauri/custom-protocol" ]
