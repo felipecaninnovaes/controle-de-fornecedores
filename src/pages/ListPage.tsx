@@ -67,8 +67,6 @@ export const ListView = () => {
 
   async function Editar() {
     edit_db(id, fornecedor, cnpj, pagamento, valor, multa, juros, banco)
-    localStorage.setItem('load', banco)
-    console.log('rodou')
   }
 
 
@@ -78,32 +76,40 @@ export const ListView = () => {
   useEffect(() => {
     async function apiCall() {
       const apiResponse: any = await select_from_database();
+      localStorage.setItem("databaseModified","0");
+      console.log("DataBase Updated")
       setFornecedores(apiResponse);
     }
     apiCall();
   }, [value]);
 
-  const d = new Date();
-  let time = String(d.getTime());
+  var intervalId = window.setInterval(function(){
+    let updateKey = localStorage.getItem('databaseModified')
+    if(updateKey === "1"){
+      setvalue(value + 1) 
+    }else {
+      
+    }
+    console.log(updateKey)
+  }, 3000);
+
   return (
-    <table className="text-xl w-full rounded-md"
-      onMouseEnter={() => { setvalue(time) }}
-    >
-      <thead>
+    <div>
         <Modal
           className="absolute pr-5 pb-5 pt-2 pl-2 rounded-md justify-center bg-SC_background3 shadow-xl"
           overlayClassName={"Overlay"}
+          ariaHideApp={false}
           isOpen={modalIsOpen}
           onRequestClose={handleCloseModal}
           style={customStyles}
           onAfterClose={() => {
-            setvalue(time)
+            setvalue(value + 1)
           }}
         >
           <div className="bg-SC_background3 mt-4 ml-3">
             <div>
               <a className="font-bold px-2">ID:</a>
-              <input className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+              <input className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
                 onChange={(e) => setFornecedor(e.currentTarget.value)}
                 placeholder="Gerado automaticamente..."
                 value={id}
@@ -112,7 +118,7 @@ export const ListView = () => {
             </div>
             <div>
               <a className="font-bold px-2 w-full">Pago em:</a>
-              <input type={"date"} className="rounded-md border-solid w-full p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+              <input type={"date"} className="rounded-md border-solid w-full p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
                 onChange={(e) => setPagamento(e.currentTarget.value)}
                 placeholder="Insira a data"
                 value={pagamento}
@@ -120,7 +126,7 @@ export const ListView = () => {
             </div>
             <div>
               <a className="font-bold px-2">Fornecedor:</a>
-              <input className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+              <input className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
                 onChange={(e) => setFornecedor(e.currentTarget.value)}
                 placeholder="Insira o nome do fornecedor..."
                 value={fornecedor}
@@ -128,7 +134,7 @@ export const ListView = () => {
             </div>
             <div>
               <a className="font-bold px-2">CNPJ:</a>
-              <input type="number" id="input" className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+              <input type="number" id="input" className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
                 onChange={(e) => setCnpj(e.currentTarget.value)}
                 placeholder="Insira o nome do fornecedor..."
                 value={cnpj}
@@ -136,14 +142,14 @@ export const ListView = () => {
             </div>
             <div>
               <a className="font-bold px-2">Valor:</a>
-              <input type="number" step="0.01" min="0" max="100000000000" className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+              <input type="number" step="0.01" min="0" max="100000000000" className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
                 onChange={(e) => setValor(e.currentTarget.value)}
                 placeholder="Insira o valor do pagamento..."
                 value={valor}
               />
             </div><div>
               <a className="font-bold px-2">Multa:</a>
-              <input type="number" step="0.01" min="0" max="100000000000" className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+              <input type="number" step="0.01" min="0" max="100000000000" className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
                 onChange={(e) => setMulta(e.currentTarget.value)}
                 placeholder="Insira o nome o valor da multa..."
                 value={multa}
@@ -151,7 +157,7 @@ export const ListView = () => {
             </div>
             <div>
               <a className="font-bold px-2">Juros:</a>
-              <input type="number" step="0.01" min="0" max="100000000000" className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+              <input type="number" step="0.01" min="0" max="100000000000" className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
                 onChange={(e) => setJuros(e.currentTarget.value)}
                 placeholder="Insira o valor do juros..."
                 value={juros}
@@ -159,12 +165,12 @@ export const ListView = () => {
             </div>
             <div>
               <a className="font-bold px-2">Banco:</a>
-              <input className="w-full rounded-md border-solid p-2 shadow-gray-400 shadow-md bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+              <input className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
                 onChange={(e) => setBanco(e.currentTarget.value)}
                 placeholder="Insira o nome do banco pago..."
                 value={banco}
               />
-              <button className="rounded-md w-full justify-center uppercase border-solid p-2 mt-6 shadow-gray-400 shadow-md bg-SC_button text-white text-md font-bold hover:bg-SC_button_hover transition-colors" type="button" onClick={() => {
+              <button className="rounded-md w-full justify-center uppercase border-solid p-2 mt-6 bg-SC_button text-white text-md font-bold hover:bg-SC_button_hover transition-colors" type="button" onClick={() => {
                 Editar()
                 setId('')
                 setPagamento('')
@@ -178,7 +184,7 @@ export const ListView = () => {
               }}>
                 Inserir
               </button>
-              <button className="rounded-md w-full justify-center uppercase border-solid p-2 mt-6 shadow-gray-400 shadow-md bg-red-500 text-white text-md font-bold hover:bg-red-600 transition-colors" type="button" onClick={() => {
+              <button className="rounded-md w-full justify-center uppercase border-solid p-2 mt-6 bg-SC_button_excluir text-white text-md font-bold hover:bg-SC_button_excluir_hover transition-colors" type="button" onClick={() => {
                 handleCloseModal()
               }}>
                 Fechar
@@ -186,6 +192,11 @@ export const ListView = () => {
             </div>
           </div>
         </Modal>
+      <div className="tableClass"></div>
+    <table className="text-xl w-full rounded-md"
+      // onMouseEnter={() => { setvalue(value + 1) }}
+    >
+      <thead>
         <tr>
           <th className="border border-SC_border1 bg-SC_background4 p-2">ID</th>
           <th className="border border-SC_border1 bg-SC_background4 p-2">MES REFRENCIA</th>
@@ -200,20 +211,26 @@ export const ListView = () => {
         </tr>
       </thead>
       {fornecedores.map(data => {
-        let idS: String = String(data?.id) as string
-        const d = new Date();
-        let times = String(d.getTime());
-
         return (
           <tbody key={String(data?.id)}>
-            <tr className="border-solid"><td className=" border-t border-l border-SC_border1 text-center border-spacing-4">{data?.id}</td><td className="border-t border-l border-SC_border1 text-center">{data?.mes}</td><td className="border-t border-l border-SC_border1 text-center ">{data?.dataPagamento}</td><td className="border-t border-l border-SC_border1 text-center ">{data?.fornecedor}</td><td className="border-t border-l border-SC_border1 text-center ">{data?.cnpj}</td><td className="border-t border-l border-SC_border1 text-center ">{data?.valor}</td><td className="border-t border-l border-SC_border1 text-center p-2">{data?.multa}</td><td className="border-t border-l border-SC_border1 text-center ">{data?.juros}</td>
-              <td className="border-t border-l border-SC_border1 text-center">{data?.banco}</td>
-              <td className="border-t border-l  border-SC_border1">
-                <button className="rounded-md w-auto justify-center uppercase border-solid p-2 mt-0 ml-2 mr-2 mb-2 bg-SC_button_excluir text-white text-sm font-bold hover:bg-SC_button_excluir_hover transition-colors" title="button" onClick={() => { delete_in_database(idS); setvalue(times) }} > 
-                  Excluir {/* <FiTrash2 color="red" /> */}
+            <tr className="border-solid">
+              <td className="border-t border-b border-l border-SC_border1 text-center border-spacing-4">{data?.id}</td>
+              <td className="border-t border-b border-l border-SC_border1 text-center">{data?.mes}</td>
+              <td className="border-t border-b border-l border-SC_border1 text-center ">{data?.dataPagamento}</td>
+              <td className="border-t border-b border-l border-SC_border1 text-center ">{data?.fornecedor}</td>
+              <td className="border-t border-b border-l border-SC_border1 text-center ">{data?.cnpj}</td>
+              <td className="border-t border-b border-l border-SC_border1 text-center ">{data?.valor}</td>
+              <td className="border-t border-b border-l border-SC_border1 text-center p-2">{data?.multa}</td>
+              <td className="border-t border-b border-l border-SC_border1 text-center ">{data?.juros}</td>
+              <td className="border-t border-b border-l border-SC_border1 text-center">{data?.banco}</td>
+              <td className="border-t border-b border-l border-r border-SC_border1 text-center">
+                <div className="space-x-2">
+                <button className="rounded-md w-autojustify-center uppercase border-solid p-2 bg-SC_button_excluir text-white text-sm font-bold hover:bg-SC_button_excluir_hover transition-colors" title="button" onClick={() => { delete_in_database(String(data?.id)); setvalue(value + 1) }} > 
+                 EXCLUIR {/* <FiTrash2 color="white" /> */}
                 </button>
-                <button className="rounded-md w-auto justify-center uppercase border-solid p-2 mt-2  bg-SC_button_edit text-white text-sm font-bold hover:bg-SC_button_edit_hover transition-colors" title="button" onClick={() => {
-                  handleOpenModal(String(idS),
+                <button className="rounded-md w-auto justify-center uppercase border-solid p-2 bg-SC_button_edit text-white text-sm font-bold hover:bg-SC_button_edit_hover transition-colors" title="button" onClick={() => {
+                  handleOpenModal(
+                    String(data?.id),
                     String(data?.dataPagamento),
                     String(data?.fornecedor),
                     String(data?.cnpj),
@@ -225,15 +242,14 @@ export const ListView = () => {
                 }} >
                   EDITAR
                 </button>
-              </td>
-              <td className="border">
+                </div>
               </td>
             </tr>
           </tbody>
-
         )
       })}
     </table>
+    </div>
   );
 
 }

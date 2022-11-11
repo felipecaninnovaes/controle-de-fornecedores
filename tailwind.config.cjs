@@ -19,12 +19,15 @@ module.exports = {
       },
       width: {
         '268': '95%',
+        '20%': '20%',
+        '50%': '50%',
       },
       height: {
         '268': '95%',
-        //    '85': '28.0rem',
        '85': '75%',
         '100': '100%',
+        '20%': '20%',
+        '50%': '80%',
       },
       colors: {
         'SC_background': '#faffff',
@@ -36,10 +39,10 @@ module.exports = {
 
         'SC_button_edit' : '#e5b782',
         'SC_button_edit_hover' : '#daad7c',
-        'SC_button_excluir' : '#eda5a2',
+        'SC_button_excluir' : '#ED786F',
         'SC_button_excluir_hover' : '#d99893',
-        'SC_button' : '#bad1b4',
-        'SC_button_hover' : '#aabfa4',
+        'SC_button' : '#81d16d',
+        'SC_button_hover' : '#67a656',
 
         'SC_text_color1' : '#33436b',      }
     },

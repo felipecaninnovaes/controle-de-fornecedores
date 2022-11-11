@@ -316,11 +316,6 @@
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.0.2.tgz#1c17eadb2fa77f80a796ad5ea9bf108e6993ef06"
   integrity sha512-GRSOFhJzjGN+d4sKHTMSvNeUPoZiDHWmRnXfzaxrqe7dE/Nzlc8BiMSJdLDESZlndM7jIUrZ/F4yWqVYlI0rwQ==
 
-"@tauri-apps/api@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/api/-/api-1.1.0.tgz#2c5756f6aeecd36f7683183eaba021690711bedf"
-  integrity sha512-n13pIqdPd3KtaMmmAcrU7BTfdMtIlGNnfZD0dNX8L4p8dgmuNyikm6JAA+yCpl9gqq6I8x5cV2Y0muqdgD0cWw==
-
 "@tauri-apps/api@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@tauri-apps/api/-/api-1.2.0.tgz#1f196b3e012971227f41b98214c846430a4eb477"
@@ -1118,11 +1113,6 @@ react@^18.2.0:
   dependencies:
     loose-envify "^1.1.0"
 
-reactjs-popup@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/reactjs-popup/-/reactjs-popup-2.0.5.tgz#588a74966bb126699429d739948e3448d7771eac"
-  integrity sha512-b5hv9a6aGsHEHXFAgPO5s1Jw1eSkopueyUVxQewGdLgqk2eW0IVXZrPRpHR629YcgIpC2oxtX8OOZ8a7bQJbxA==
-
 read-cache@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/read-cache/-/read-cache-1.0.0.tgz#e664ef31161166c9751cdbe8dbcf86b5fb58f774"
@@ -1227,13 +1217,6 @@ tailwindcss@^3.1.8:
     quick-lru "^5.1.1"
     resolve "^1.22.1"
 
-"tauri-plugin-sql-api@github:tauri-apps/tauri-plugin-sql", "tauri-plugin-sql@github:tauri-apps/tauri-plugin-sql#42a9ecd38b797024772b37612806b53d747444e5":
-  version "0.1.0"
-  resolved "https://codeload.github.com/tauri-apps/tauri-plugin-sql/tar.gz/42a9ecd38b797024772b37612806b53d747444e5"
-  dependencies:
-    "@tauri-apps/api" "^1.1.0"
-    tslib "2.4.0"
-
 to-fast-properties@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-2.0.0.tgz#dc5e698cbd079265bc73e0377681a4e4e83f616e"
@@ -1245,11 +1228,6 @@ to-regex-range@^5.0.1:
   integrity sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==
   dependencies:
     is-number "^7.0.0"
-
-tslib@2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
-  integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
 
 typescript@^4.6.4:
   version "4.8.4"
