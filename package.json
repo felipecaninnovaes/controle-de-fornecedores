@@ -12,11 +12,13 @@
   "dependencies": {
     "@tauri-apps/api": "^1.2.0",
     "@types/react-modal": "^3.13.1",
+    "@types/react-text-mask": "^5.4.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.4.2",
+    "react-text-mask": "^5.5.0",
     "react-toastify": "^9.0.8"
   },
   "devDependencies": {

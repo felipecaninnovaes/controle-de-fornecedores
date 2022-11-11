@@ -2,6 +2,7 @@ import { cloneElement, useEffect, useState } from "react"
 import Modal from 'react-modal';
 import { select_from_database, delete_in_database } from "../modules/db"
 // import { FiTrash2, FiEdit } from "react-icons/fi";
+import MaskedInput from 'react-text-mask'
 
 import './popUp.css'
 
@@ -134,8 +135,9 @@ export const ListView = () => {
             </div>
             <div>
               <a className="font-bold px-2">CNPJ:</a>
-              <input type="number" id="input" className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
-                onChange={(e) => setCnpj(e.currentTarget.value)}
+              <MaskedInput type="text" 
+              mask={[ /[1-9]/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/]} id="input" className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
+                onChange={(e: any) => setCnpj(e.currentTarget.value)}
                 placeholder="Insira o nome do fornecedor..."
                 value={cnpj}
               />
