@@ -11,9 +11,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
             <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
         </head>
         <body>
-            <div className="h-screen w-screen justify-center font-sans flex flex-row items-center bg-SC_background">
+            <main className="h-screen w-screen justify-center font-sans flex flex-row items-center bg-SC_background">
                 <App />
-            </div>
+            </main>
         </body>
     </html>
 );
