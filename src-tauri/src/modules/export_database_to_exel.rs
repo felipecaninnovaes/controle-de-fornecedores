@@ -20,7 +20,7 @@ pub mod export_database_to_exel {
             banco: String,
         }
         let conn = Connection::open(local)?;
-        let mut workbook = Workbook::new(&xlsx_folder);
+        let mut workbook = Workbook::new();
         let worksheet = workbook.add_worksheet();
         worksheet
             .write_string_only(0, 0, "Data de Pagamento")
@@ -41,7 +41,7 @@ pub mod export_database_to_exel {
                     .write_string_only(0, 5, "Juros")
                     .expect("Falha ao gravar");
         worksheet
-            .write_string_only(0, 3, "Banco")
+            .write_string_only(0, 6, "Banco")
             .expect("Falha ao gravar");
 
         let mut stmt = conn.prepare("SELECT id, mes, fornecedor, cnpj, dataPagamento, valor, multa, juros, banco FROM empresas WHERE mes = :mes")?;
@@ -85,34 +85,34 @@ pub mod export_database_to_exel {
             worksheet
                 .write_string_only(
                     num,
-                    2,
+                    3,
                     empresas.as_ref().unwrap().valor.to_string().as_str(),
                 )
                 .expect("Falha ao gravar");
             worksheet
                 .write_string_only(
                     num,
-                    3,
+                    4,
                     empresas.as_ref().unwrap().multa.to_string().as_str(),
                 )
                 .expect("Falha ao gravar");
             worksheet
                 .write_string_only(
                     num,
-                    4,
+                    5,
                     empresas.as_ref().unwrap().juros.to_string().as_str(),
                 )
                 .expect("Falha ao gravar");
             worksheet
                 .write_string_only(
                     num,
-                    5,
+                    6,
                     empresas.as_ref().unwrap().banco.to_string().as_str(),
                 )
                 .expect("Falha ao gravar");
             num += 1;
         }
-        workbook.close().expect("Falha ao salvar");
+        workbook.save(&xlsx_folder).expect("Falha ao salvar");
         Ok(())
     }
 }

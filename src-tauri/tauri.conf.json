@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "controle-de-fornecedores",
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   "tauri": {
     "allowlist": {
@@ -71,10 +71,13 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 668,
+        "width": 1280,
+        "height": 720,
+        "minWidth": 1280,
+        "minHeight": 720,
         "resizable": true,
         "title": "Controle de fornecedores",
-        "width": 1266
+        "maximized": true
       }
     ]
   }

@@ -1,5 +1,5 @@
 pub mod select_from_database {
-
+    
     pub use rusqlite::{Connection, Result};
     pub use serde::{Deserialize, Serialize};
     use serde_rusqlite::*;
