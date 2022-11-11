@@ -1,7 +1,7 @@
 import { cloneElement, useEffect, useState } from "react"
 import Modal from 'react-modal';
 import { select_from_database, delete_in_database } from "../modules/db"
-import { FiTrash2, FiEdit } from "react-icons/fi";
+// import { FiTrash2, FiEdit } from "react-icons/fi";
 
 import './popUp.css'
 
