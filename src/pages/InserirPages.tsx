@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ListView from "./ListPage";
-import { insert_db, export_xlsx } from "../modules/db"
 import Modal from "react-modal";
-import MaskedInput from 'react-text-mask';
+import InputMask from "react-input-mask";
+import { useForm, SubmitHandler } from "react-hook-form";
 
+import { insert_db, export_xlsx } from "../modules/db"
 
-interface Fornecedores {
+interface IFornecedores {
   id: String | null,
   mes: String,
-  cnpj: String,
   fornecedor: String,
+  cnpj: String,
   dataPagamento: String,
   valor: String,
   multa: String,
@@ -19,31 +20,39 @@ interface Fornecedores {
   banco: String,
 }
 export default function InserirPages() {
-  const [modalIsOpen, setIsOpen] = useState(false)
 
-  function handleOpenModal() {
+
+  const { register, handleSubmit, reset } = useForm<IFornecedores>({
+    defaultValues: {
+      banco: "",
+      cnpj: "",
+      dataPagamento: "",
+      fornecedor: "",
+      juros: "0",
+      multa: "0",
+      valor: "0"
+    }
+  });
+  const onSubmit: SubmitHandler<IFornecedores> = async data => {
+    await insert_db(data.fornecedor, data.cnpj, data.dataPagamento, data.valor, data.multa, data.juros, data.banco)
+    reset()
+    localStorage.setItem("databaseModified", "1");
+    handleCloseModal()
+    console.log("CNPJ: ", data.cnpj)
+  };
+
+
+
+
+  const [modalIsOpen, setIsOpen] = useState(false)
+  async function handleOpenModal() {
     setIsOpen(true)
   }
   function handleCloseModal() {
     setIsOpen(false)
   }
 
-  let [pagamento, setPagamento] = useState("");
-  let [id, setId] = useState("");
-  let [fornecedor, setFornecedor] = useState("");
-  let [cnpj, setCnpj] = useState("");
-  let [valor, setValor] = useState("0");
-  let [multa, setMulta] = useState("0");
-  let [juros, setJuros] = useState("0");
-  let [banco, setBanco] = useState("");
-
   let [periodo, setPerido] = useState("");
-  let [data, setData] = useState("");
-
-  async function Inserir() {
-    insert_db(fornecedor, cnpj, pagamento, valor, multa, juros, banco)
-    localStorage.setItem('load', banco)
-  }
 
   async function exportXlSX() {
     export_xlsx(periodo)
@@ -70,110 +79,56 @@ export default function InserirPages() {
           </button>
         </div>
         <Modal
-          className="absolute pr-5 pb-5 pt-2 pl-2 rounded-md justify-center bg-SC_background3 shadow-xl"
+          className="fixed xl:w-30% 2xl:w-20% pr-5 pb-5 pt-2 pl-2 rounded-md flex justify-center bg-SC_background3 shadow-xl"
           overlayClassName={"Overlay"}
           isOpen={modalIsOpen}
           ariaHideApp={false}
           onRequestClose={handleCloseModal}
           style={customStyles}
         >
-          <form >
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="bg-SC_background3 mt-4 ml-3">
-              <div>
-                <a className="font-bold px-2">ID:</a>
-                <input className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
-                  onChange={(e) => setFornecedor(e.currentTarget.value)}
-                  placeholder="Gerado automaticamente..."
-                  value={id}
-                  disabled
-                />
-              </div>
-              <div>
-                <a className="font-bold px-2 w-full">Pago em:</a>
-                <input type={"date"} required className="rounded-md border-solid w-full p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
-                  onChange={(e) => setPagamento(e.currentTarget.value)}
-                  placeholder="Insira a data"
-                  value={pagamento}
-                />
-              </div>
-              <div>
-                <a className="font-bold px-2">Fornecedor:</a>
-                <input required className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
-                  onChange={(e) => setFornecedor(e.currentTarget.value)}
-                  placeholder="Insira o nome do fornecedor..."
-                  value={fornecedor}
-                />
-              </div>
-              <div>
-                <a className="font-bold px-2">CNPJ:</a>
-                <MaskedInput type="text"
-                  required
-                  guide={true}
-                  mask={[ /[1-9]/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/]} id="input" className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
-                  onChange={(e: any) => setCnpj(e.currentTarget.value)}
-                  placeholder="Insira o nome do fornecedor..."
-                  value={cnpj}
-                />
-              </div>
-              <div>
-                <a className="font-bold px-2">Valor:</a>
-                <input type="number" required step="0.01" min="0" max="100000000000" className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
-                  onChange={(e) => setValor(e.currentTarget.value)}
-                  placeholder="Insira o valor do pagamento..."
-                  value={valor}
-                />
-              </div><div>
-                <a className="font-bold px-2">Multa:</a>
-                <input type="number" required step="0.01" min="0" max="100000000000" className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
-                  onChange={(e) => setMulta(e.currentTarget.value)}
-                  placeholder="Insira o nome o valor da multa..."
-                  value={multa}
-                />
-              </div>
-              <div>
-                <a className="font-bold px-2">Juros:</a>
-                <input type="number" required step="0.01" min="0" max="100000000000" className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm"
-                  onChange={(e) => setJuros(e.currentTarget.value)}
-                  placeholder="Insira o valor do juros..."
-                  value={juros}
-                />
-              </div>
-              <div>
-                <a className="font-bold px-2">Banco:</a>
-                <input className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm" required
-                  onChange={(e) => setBanco(e.currentTarget.value)}
-                  placeholder="Insira o nome do banco pago..."
-                  value={banco}
-                />
-                <button className="rounded-md w-full justify-center uppercase border-solid p-2 mt-6 bg-SC_button text-white text-md font-bold hover:bg-SC_button_hover transition-colors" type="submit"
-                  onClick={() => {
-                    try {
-                      if (fornecedor === "") {
-                        console.log('ola')
-                      } else {
-                        Inserir()
-                        localStorage.setItem("databaseModified", "1");
-                        setPagamento('')
-                        setFornecedor('')
-                        setCnpj('')
-                        setValor('')
-                        setMulta('')
-                        setJuros('')
-                        setBanco('')
-                        handleCloseModal()
-                      }
-                    } catch {
-                    }
-                  }}
-                >
-                  Inserir
-                </button>
-                <button className="rounded-md w-full justify-center uppercase border-solid p-2 mt-6 bg-SC_button_excluir text-white text-md font-bold hover:bg-SC_button_excluir_hover transition-colors" type="button" onClick={() => {
-                  handleCloseModal()
-                }}>
-                  Fechar
-                </button>
-              </div>
+
+              <label className="font-bold px-2">Fornecedor: </label>
+              <input required className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm" 
+              {...register("fornecedor", {required: true, maxLength: 20 })} />
+
+              <label className="font-bold px-2">CNPJ: </label>
+              <InputMask mask="99.999.999/9999-99" required className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm" 
+              type='text'
+              {...register("cnpj", { required: true, maxLength: 20 })} />
+
+              <label className="font-bold px-2">Data de pagamento: </label>
+              <input required className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm" 
+              type='date'
+              {...register("dataPagamento", { required: true, maxLength: 20 })} />
+
+              <label className="font-bold px-2">Valor: </label>
+              <input required className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm" 
+              {...register("valor", { required: true, maxLength: 20 })} />
+              
+              <label className="font-bold px-2">Multa: </label>
+              <input type="number" required step={0.01} maxLength={1000} className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm" 
+              {...register("multa", { required: true, maxLength: 20 })} />
+              
+              <label className="font-bold px-2">Juros: </label>
+              <input required className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm" 
+              {...register("juros", { required: true, maxLength: 20 })} />
+              
+              <label className="font-bold px-2">Banco: </label>
+              <input required className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm" 
+              {...register("banco", { required: true, maxLength: 20 })} />
+            </div>
+            <div>
+              <button className="rounded-md w-full justify-center uppercase border-solid p-2 mt-6 bg-SC_button text-white text-md font-bold hover:bg-SC_button_hover transition-colors" type="submit"
+              >
+                Inserir
+              </button>
+              <button className="rounded-md w-full justify-center uppercase border-solid p-2 mt-6 bg-SC_button_excluir text-white text-md font-bold hover:bg-SC_button_excluir_hover transition-colors" type="button" onClick={() => {
+                handleCloseModal()
+              }}>
+                Fechar
+              </button>
             </div>
           </form>
         </Modal>
@@ -209,6 +164,6 @@ export default function InserirPages() {
           theme="light"
         />
       </div>
-    </div>
+    </div >
   );
 }

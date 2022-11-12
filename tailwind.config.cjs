@@ -14,12 +14,19 @@ module.exports = {
       '8': '8px',
     },
     extend: {
+      spacing: {
+        '20%': '20%',
+        '30%': '40%',
+        'N50%': '-50%',
+      },
       fontFamily: {
         sans: 'Roboto, sans-serif',
       },
       width: {
         '268': '95%',
         '20%': '20%',
+        '30%': '30%',
+        '40%': '40%',
         '50%': '50%',
       },
       height: {
