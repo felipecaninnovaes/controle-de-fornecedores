@@ -28,9 +28,9 @@ export default function InserirPages() {
       cnpj: "",
       dataPagamento: "",
       fornecedor: "",
-      juros: "0",
-      multa: "0",
-      valor: "0"
+      valor: "1.00",
+      juros: "0.00",
+      multa: "0.00"
     }
   });
   const onSubmit: SubmitHandler<IFornecedores> = async data => {
@@ -38,7 +38,6 @@ export default function InserirPages() {
     reset()
     localStorage.setItem("databaseModified", "1");
     handleCloseModal()
-    console.log("CNPJ: ", data.cnpj)
   };
 
 
@@ -108,8 +107,8 @@ export default function InserirPages() {
               {...register("valor", { required: true, maxLength: 20 })} />
               
               <label className="font-bold px-2">Multa: </label>
-              <input type="number" required step={0.01} maxLength={1000} className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm" 
-              {...register("multa", { required: true, maxLength: 20 })} />
+              <input type="number" step={0.01} placeholder="100.54" className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm" 
+              {...register("multa", { required: false, maxLength: 20 })} />
               
               <label className="font-bold px-2">Juros: </label>
               <input required className="w-full rounded-md border-solid p-2 bg-SC_input placeholder:text-gray-500 placeholder:text-sm" 
