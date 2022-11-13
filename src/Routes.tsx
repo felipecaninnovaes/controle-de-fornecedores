@@ -1,8 +1,6 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 
-// import { inserirpagina } from './pages/insert_page'
 import InserirPages from './pages/InserirPages'
-import ListView from "./pages/ListPage";
 
 
 export function AppRoutes() {
