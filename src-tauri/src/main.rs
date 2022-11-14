@@ -7,12 +7,20 @@ use modules::{
     edit_in_database::edit_in_database::edit_in_database, 
     insert_in_database::insert_in_database::insert_in_database, 
     select_from_database::select_from_database::{select_from_database, Empresas},
-    create_database::create_database::create_database,
+    create_database::create_database::create_database_fornecedores,
+    create_database::create_database::create_database_user,
     export_database_to_exel::export_database_to_exel::export_database_to_exel,
-    delete_in_database::delete_in_database::delete_in_database
+    delete_in_database::delete_in_database::delete_in_database,
+    select_from_id_in_database::select_from_id_in_database::{select_from_id_in_database, EmpresasSelectID},
+    verify_user_password::verify_user_password::{verify_user_password, UserSelectUsename},
 };
 
 #[allow(non_snake_case)]
+
+#[tauri::command]
+fn verify_user_password_fn(local: String ,username: String, password: String) -> Vec<UserSelectUsename>{
+    verify_user_password(local ,username, password).expect("Erro ao inserir")
+}
 #[tauri::command]
 fn delete_in_database_fn(local: String ,id: String){
     delete_in_database(local ,id).expect("Erro ao inserir");
@@ -25,8 +33,14 @@ fn select_from_database_fn(local: String) -> Vec<Empresas>{
 }
 
 #[tauri::command]
+fn select_from_id_in_database_fn(local: String, id: String) -> Vec<EmpresasSelectID>{
+    select_from_id_in_database(local, id).expect("Erro ao selecionar no banco de dados")
+}
+
+#[tauri::command]
 fn create_database_fn(local: String) {
-    create_database(local).expect("Erro ao criar o banco de dados");
+    create_database_fornecedores(local.to_string()).expect("Erro ao criar o banco de dados");
+    create_database_user(local).expect("Erro ao criar o banco de dados");
 }
 #[allow(non_snake_case)]
 #[tauri::command]
@@ -48,7 +62,7 @@ fn export_xlsx_fn(local: String ,mesValue: String, xlsxFolder: String) {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![create_database_fn, edit_in_database_fn, insert_database_fn, export_xlsx_fn, select_from_database_fn, delete_in_database_fn])
+        .invoke_handler(tauri::generate_handler![create_database_fn, edit_in_database_fn, insert_database_fn, export_xlsx_fn, select_from_database_fn, delete_in_database_fn, select_from_id_in_database_fn,verify_user_password_fn])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
