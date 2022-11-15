@@ -1,9 +1,8 @@
 
 import { invoke } from '@tauri-apps/api/tauri'
-import { createDir, BaseDirectory } from '@tauri-apps/api/fs'
 import { appDir, downloadDir } from '@tauri-apps/api/path'
 
-export async function export_xlsx(periodo: string) {
+export const export_xlsx = async (periodo: string) => {
     const mounthReplacedSeparetor = periodo.replace('-', '/')
     const appDirPath = await appDir() + 'database.sqlite'
     const xlsxFolderLocation = (await downloadDir() + 'relatorio_duplicata_' + (mounthReplacedSeparetor).replace('/', '') + '.xlsx')

@@ -1,15 +1,15 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { VTextField, VForm, useVForm, IVFormErrors } from '../../shared/forms'
 import { FerramentasDeDetalhe } from '../../shared/components'
 import { LayoutBaseDePagina } from '../../shared/layouts'
-import { insert_db} from '../../shared/services/fornecedores-services'
+import { insert_db, select_from_id_in_database } from '../../shared/services/fornecedores-services'
+import { edit_db } from '../../shared/services/fornecedores-services/edit'
 
 
 interface IFormData {
-  nome: string,
   id: string,
   mes: string,
   cnpj: string,
@@ -21,25 +21,36 @@ interface IFormData {
   banco: string
 }
 
-export const NovoFornecedores: React.FC = () => {
+
+
+export const DetalhesFornecedores: React.FC = () => {
+  const today = new Date()
+  const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
+
   const { formRef } = useVForm()
+  const { idURL = 'novo', mesURL = '', dataPagamentoURL = date, fornecedorURL = '', cnpjURL = '', valorURL = '0', multaURL = '0', jurosURL = '0', bancoURL = '' } = useParams<'idURL' | 'mesURL' | 'dataPagamentoURL' | 'fornecedorURL' | 'cnpjURL' | 'valorURL' | 'multaURL' | 'jurosURL' | 'bancoURL'>()
   const navigate = useNavigate()
 
-
+  const [fornecedores, setFornecedores] = useState<IFormData[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const [pagamento, setPagamento] = useState('')
-  const [fornecedor, setFornecedor] = useState('')
-  const [cnpj, setCnpj] = useState('')
-  const [valor, setValor] = useState('0')
-  const [multa, setMulta] = useState('0')
-  const [juros, setJuros] = useState('0')
-  const [banco, setBanco] = useState('')
+  const [pagamento, setPagamento] = useState(dataPagamentoURL)
+  const [fornecedor, setFornecedor] = useState(fornecedorURL)
+  const [cnpj, setCnpj] = useState(cnpjURL)
+  const [valor, setValor] = useState(valorURL)
+  const [multa, setMulta] = useState(multaURL)
+  const [juros, setJuros] = useState(jurosURL)
+  const [banco, setBanco] = useState(bancoURL)
 
 
-  const handleSave = (dados: IFormData) => {
-    return (<h1>ola</h1>)
+
+  const handleSave = (id: string) => {
+    if (id === 'novo') {
+      insert_db(fornecedor, cnpj, pagamento, valor, multa, juros, banco)
+    } else {
+      edit_db(id, fornecedor, cnpj, pagamento, valor, multa, juros, banco)
+    }
+
   }
-
 
   return (
     <LayoutBaseDePagina
@@ -47,8 +58,19 @@ export const NovoFornecedores: React.FC = () => {
       barraDeFerramentas={
         <FerramentasDeDetalhe
           mostrarBotaoSalvar
+          mostrarBotaoSalvarEFechar
+          mostrarBotaoApagar={idURL !== 'novo'}
+          mostrarBotaoNovo={idURL !== 'novo'}
           mostrarBotaoVoltar
-          aoClicarEmSalvar={() => { insert_db(fornecedor, cnpj, pagamento, valor, multa, juros, banco); navigate('/fornecedores') }}
+
+          aoClicarEmSalvar={() => {
+            handleSave(idURL)
+            navigate('/fornecedores')
+          }}
+          aoClicarEmSalvarEFechar={() => {
+            console.log(fornecedores)
+          }}
+          aoClicarEmNovo={() => navigate('/fornecedores/detalhe/novo')}
           aoClicarEmVoltar={() => navigate('/fornecedores')}
         />
       }
@@ -57,7 +79,7 @@ export const NovoFornecedores: React.FC = () => {
         <Box margin={1} display='flex' flexDirection='column' component={Paper} variant='elevation'>
 
           <Grid item>
-            <Typography variant='h6'>Insira os dados</Typography>
+            <Typography variant='h6'>Insira os dados do {fornecedor}</Typography>
           </Grid>
 
           <Grid display='flex' flexDirection='row' padding={2} gap={2} spacing={2}>

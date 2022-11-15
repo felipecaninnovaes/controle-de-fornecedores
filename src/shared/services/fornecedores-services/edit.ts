@@ -1,7 +1,7 @@
 import { invoke } from '@tauri-apps/api/tauri'
 import { appDir } from '@tauri-apps/api/path'
 
-export async function edit_db(id: string, fornecedor: string, cnpj: string, data_pagamento: string, valor: string, multa: string, juros: string, banco: string) {
+export const edit_db = async (id: string, fornecedor: string, cnpj: string, data_pagamento: string, valor: string, multa: string, juros: string, banco: string) => {
     const appDirPath = await appDir() + 'database.sqlite'
     let data = data_pagamento.toString().replace('-', '/').replace('-', '/')
     const mesSplitValues = data.split('/')

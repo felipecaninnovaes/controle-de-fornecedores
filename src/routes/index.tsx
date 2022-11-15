@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { useDrawerContext } from '../shared/contexts'
 import {
   Dashboard,
-  NovoFornecedores,
+  DetalhesFornecedores,
   ListagemDeFornecedores,
 } from '../pages'
 
@@ -30,7 +30,9 @@ export const AppRoutes = () => {
     <Routes>
       <Route path="/pagina-inicial" element={<Dashboard />} />
       <Route path="/fornecedores" element={<ListagemDeFornecedores />} />
-      <Route path='/fornecedores/detalhe/novo' element={<NovoFornecedores />} />
+      {/* <Route path='/fornecedores/detalhe/novo' element={<DetalhesFornecedores />} /> */}
+      <Route path='/fornecedores/detalhe/novo' element={<DetalhesFornecedores />} />
+      <Route path='/fornecedores/detalhe/:idURL/:mesURL/:dataPagamentoURL/:fornecedorURL/:cnpjURL/:valorURL/:multaURL/:jurosURL/:bancoURL' element={<DetalhesFornecedores />} />
       <Route path="*" element={<Navigate to="/pagina-inicial" />} />
     </Routes>
   )

@@ -1,3 +1,3 @@
 export * from './fornecedores/ListagemDeFornecedores'
-export * from './fornecedores/NovoFornecedores'
+export * from './fornecedores/DetalhesFornecedores'
 export * from './dashboard/Dashboard'

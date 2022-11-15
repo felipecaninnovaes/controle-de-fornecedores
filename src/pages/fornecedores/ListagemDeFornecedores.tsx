@@ -54,7 +54,7 @@ export const ListagemDeFornecedores: React.FC = () => {
       barraDeFerramentas={
         <FerramentasDaListagem
           mostrarInputBusca={false}
-          textoBotaoNovo='Nova'
+          textoBotaoNovo='Novo'
           aoClicarEmNovo={() => navigate('/fornecedores/detalhe/novo')}
         />
       }
@@ -83,7 +83,7 @@ export const ListagemDeFornecedores: React.FC = () => {
                   <IconButton size="small" onClick={() => { delete_in_database(String(row?.id)); setValue(value + 1) }}>
                     <Icon>delete</Icon>
                   </IconButton>
-                  <IconButton size="small" onClick={() => navigate(`/pessoas/detalhe/${row?.id}`)}>
+                  <IconButton size="small" onClick={() => navigate(`/fornecedores/detalhe/${row?.id}/${row?.mes}/${row?.dataPagamento}/${row?.fornecedor}/${row?.cnpj}/${row?.valor}/${row?.multa}/${row?.juros}/${row?.banco}`)}>
                     <Icon>edit</Icon>
                   </IconButton>
                 </TableCell>
