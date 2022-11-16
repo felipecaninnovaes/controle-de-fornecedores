@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Button, Icon, IconButton, LinearProgress, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from '@mui/material'
+import { Button, Icon, IconButton, LinearProgress, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow, Alert, Collapse } from '@mui/material'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { FerramentasDaListagem } from '../../shared/components'
 import { LayoutBaseDePagina } from '../../shared/layouts'
-import { delete_in_database, select_from_database, select_from_mes_in_database } from '../../shared/services/fornecedores-services'
+import { delete_in_database, export_xlsx, select_from_database, select_from_mes_in_database } from '../../shared/services/fornecedores-services'
 import { Box } from '@mui/system'
 import { Environment } from '../../shared/environment'
 
@@ -13,6 +13,7 @@ export const ExportFornecedores: React.FC = () => {
   const navigate = useNavigate()
 
   const [isLoading, setIsLoading] = useState(true)
+  const [isCollapse, setIsCollapse] = useState(false)
   const [rowsPage, setRowsPage] = useState(Environment.LIMITE_DE_LINHAS)
   const [countPages, setCountPages] = useState(1)
   const [searchParams, setSearchParams] = useSearchParams()
@@ -29,12 +30,17 @@ export const ExportFornecedores: React.FC = () => {
     banco: string,
   }
 
+  const exportExel = () => {
+    export_xlsx(busca)
+    setIsCollapse(true)
+    setTimeout(function(){setIsCollapse(false)},1200)
+  }
+  
   const busca = useMemo(() => {
     return searchParams.get('busca') || ''
   }, [searchParams])
 
   const [value, setValue] = useState('')
-  const [id, setId] = useState('')
   const [fornecedores, setFornecedores] = useState<IFornecedores[] | null[]>([])
 
   useEffect(() => {
@@ -45,7 +51,6 @@ export const ExportFornecedores: React.FC = () => {
       const trimStart = (countPages - 1) * rowsPage
       const trimEnd = trimStart + rowsPage
       const trimmedData = apiResponse.slice(trimStart, trimEnd)
-      const pages = Math.ceil(fornecedores.length / rowsPage)
       localStorage.setItem('databaseModified', '0')
       console.log('DataBase Updated')
       setFornecedores(trimmedData)
@@ -55,6 +60,7 @@ export const ExportFornecedores: React.FC = () => {
   }, [value, countPages, busca])
 
   return (
+    
     <LayoutBaseDePagina
       titulo='Exporta fornecedores'
       barraDeFerramentas={
@@ -64,10 +70,12 @@ export const ExportFornecedores: React.FC = () => {
           aoMudarTextoDeBuscaMes={texto => setSearchParams({ busca: texto }, { replace: true })}
           mostrarBotaoExport={true}
           textoBotaoExport='Exportar Exel'
-          aoClicarEmExport={() => navigate('/fornecedores/detalhe/novo')}
+          aoClicarEmExport={() => exportExel()}
         />
       }
+      
     >
+      <Collapse in={isCollapse}><Alert variant='filled' severity="success">Arquivo salvo em Downloads</Alert></Collapse>
       <TableContainer component={Paper} variant="outlined" sx={{ overflow: 'hidden', m: 1, width: 'auto' }}>
         <Table>
           <TableHead>

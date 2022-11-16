@@ -39,7 +39,6 @@ export const ListagemDeFornecedores: React.FC = () => {
       const trimStart = (countPages - 1) * rowsPage
       const trimEnd = trimStart + rowsPage
       const trimmedData = apiResponse.slice(trimStart, trimEnd)
-      const pages = Math.ceil(fornecedores.length / rowsPage)
       localStorage.setItem('databaseModified', '0')
       console.log('DataBase Updated')
       setFornecedores(trimmedData)

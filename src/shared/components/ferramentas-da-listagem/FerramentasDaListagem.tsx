@@ -68,6 +68,7 @@ export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
           <Button
             color='primary'
             disableElevation
+            size='large'
             variant='contained'
             onClick={aoClicarEmNovo}
             endIcon={<Icon>add</Icon>}
@@ -76,10 +77,11 @@ export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
         {mostrarBotaoExport && (
           <Button
             color='primary'
+            size='large'
             disableElevation
             variant='contained'
             onClick={aoClicarEmExport}
-            endIcon={<Icon>file_download</Icon>}
+            endIcon={<Icon>ios_share</Icon>}
           >{textoBotaoExport}</Button>
         )}
       </Box>
