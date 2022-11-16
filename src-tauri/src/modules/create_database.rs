@@ -25,6 +25,7 @@ pub mod create_database {
         conn.execute(
             "CREATE TABLE if not exists usuarios (
             id   INTEGER PRIMARY KEY,
+            key TEXT NOT NULL,
             username TEXT NOT NULL,
             password TEXT NOT NULL
         )",

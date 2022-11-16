@@ -4,11 +4,12 @@ import './shared/forms/TraducoesYup'
 import { AppThemeProvider, AuthProvider, DrawerProvider } from './shared/contexts'
 import { Login, MenuLateral } from './shared/components'
 import { AppRoutes } from './routes'
-import { createDataBase } from './shared/services/fornecedores-services'
+import { createDataBase, insertUser } from './shared/services/fornecedores-services'
 
 
 export const App = () => {
   createDataBase()
+  insertUser()
   return (
     <AuthProvider>
       <AppThemeProvider>

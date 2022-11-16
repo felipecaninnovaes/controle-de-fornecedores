@@ -21,3 +21,8 @@ export const insert_db = async (dados: IFormData) => {
 
     return (await invoke('insert_database_fn', { local: appDirPath, mes: MonthAndYear, fornecedor: dados.fornecedor, cnpj: dados.cnpj, dataPagamento: dados.dataPagamento, valor: dados.valor, multa: dados.multa, juros: dados.juros, banco: dados.banco }))
 }
+
+export const insertUser = async () => {
+    const appDirPath = await appDir() + 'database.sqlite'
+    return (await invoke('insert_user_in_database_fn', { local: appDirPath }))
+  }

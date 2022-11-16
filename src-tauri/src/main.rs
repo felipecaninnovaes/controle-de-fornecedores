@@ -10,6 +10,7 @@ use modules::{
     edit_in_database::edit_in_database::edit_in_database,
     export_database_to_exel::export_database_to_exel::export_database_to_exel,
     insert_in_database::insert_in_database::insert_in_database,
+    insert_user_in_databese::insert_user_in_database::insert_user_in_database,
     select_from_database::select_from_database::{select_from_database, Empresas},
     select_from_mes_in_database::select_from_mes_in_database::{
         select_from_mes_in_database, EmpresasSelectID,
@@ -46,6 +47,10 @@ fn select_from_mes_in_database_fn(local: String, mes: String) -> Vec<EmpresasSel
 fn create_database_fn(local: String) {
     create_database_fornecedores(local.to_string()).expect("Erro ao criar o banco de dados");
     create_database_user(local).expect("Erro ao criar o banco de dados");
+}
+#[tauri::command]
+fn insert_user_in_database_fn(local: String) {
+    insert_user_in_database(local.to_string()).expect("Erro ao criar usuairo o banco de dados");
 }
 #[allow(non_snake_case)]
 #[tauri::command]
@@ -119,7 +124,8 @@ fn main() {
             select_from_database_fn,
             delete_in_database_fn,
             select_from_mes_in_database_fn,
-            verify_user_password_fn
+            verify_user_password_fn,
+            insert_user_in_database_fn
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
