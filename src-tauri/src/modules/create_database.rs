@@ -2,8 +2,7 @@ pub mod create_database {
     pub use rusqlite::{Connection, Result};
 
     #[allow(dead_code)]
-    pub fn create_database(local: String) -> Result<()> {
-        
+    pub fn create_database_fornecedores(local: String) -> Result<()> {
         let conn = Connection::open(local)?;
         conn.execute(
             "CREATE TABLE if not exists empresas (
@@ -16,6 +15,18 @@ pub mod create_database {
             multa TEXT NOT NULL,
             juros TEXT NOT NULL,
             banco TEXT NOT NULL
+        )",
+            (), // empty list of parameters.
+        )?;
+        Ok(())
+    }
+    pub fn create_database_user(local: String) -> Result<()> {
+        let conn = Connection::open(local)?;
+        conn.execute(
+            "CREATE TABLE if not exists usuarios (
+            id   INTEGER PRIMARY KEY,
+            username TEXT NOT NULL,
+            password TEXT NOT NULL
         )",
             (), // empty list of parameters.
         )?;
