@@ -14,14 +14,14 @@ interface IFormData {
   multa: string,
   valor: string
 }
-export const select_from_id_in_database = async (id: string) => {
-    const appDirPath = await appDir() + 'database.sqlite'
-    const resultOfSelectDataBase: any = await invoke('select_from_id_in_database_fn', { local: appDirPath, id: id })
-    return resultOfSelectDataBase
-  }
-  
-  export const select_from_database = async () => {
-    const appDirPath = await appDir() + 'database.sqlite'
-    const resultOfSelectDataBase = await invoke('select_from_database_fn', { local: appDirPath })
-    return resultOfSelectDataBase
-  }
+export const select_from_mes_in_database = async (mes: string) => {
+  const appDirPath = await appDir() + 'database.sqlite'
+  const resultOfSelectDataBase: any = await invoke('select_from_mes_in_database_fn', { local: appDirPath, mes: mes })
+  return resultOfSelectDataBase
+}
+
+export const select_from_database = async () => {
+  const appDirPath = await appDir() + 'database.sqlite'
+  const resultOfSelectDataBase = await invoke('select_from_database_fn', { local: appDirPath })
+  return resultOfSelectDataBase
+}

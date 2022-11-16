@@ -1,4 +1,4 @@
-pub mod select_from_id_in_database {
+pub mod select_from_mes_in_database {
 
     pub use rusqlite::{Connection, Result};
     pub use serde::{Deserialize, Serialize};
@@ -19,11 +19,16 @@ pub mod select_from_id_in_database {
         banco: String,
     }
 
-    pub fn select_from_id_in_database(local: String, id: String) -> Result<Vec<EmpresasSelectID>> {
+    pub fn select_from_mes_in_database(
+        local: String,
+        mes: String,
+    ) -> Result<Vec<EmpresasSelectID>> {
         let conn = Connection::open(local)?;
 
-        let mut statement = conn.prepare("SELECT * FROM empresas WHERE id = ?").unwrap();
-        let res = from_rows::<EmpresasSelectID>(statement.query([id]).unwrap());
+        let mut statement = conn
+            .prepare("SELECT * FROM empresas WHERE mes = ?")
+            .unwrap();
+        let res = from_rows::<EmpresasSelectID>(statement.query([mes]).unwrap());
 
         let mut names = Vec::new();
         for empresas in res {

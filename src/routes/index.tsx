@@ -5,6 +5,7 @@ import { useDrawerContext } from '../shared/contexts'
 import {
   Dashboard,
   DetalhesFornecedores,
+  ExportFornecedores,
   ListagemDeFornecedores,
 } from '../pages'
 
@@ -19,9 +20,14 @@ export const AppRoutes = () => {
         label: 'Página inicial',
       },
       {
-        icon: 'apartment',
+        icon: 'payments',
         path: '/fornecedores',
-        label: 'Fornecedores',
+        label: 'Pagamento de fornecedores',
+      },
+      {
+        icon: 'ios_share',
+        path: '/export',
+        label: 'Exportar Arquivo',
       },
     ])
   }, [])
@@ -30,6 +36,7 @@ export const AppRoutes = () => {
     <Routes>
       <Route path="/pagina-inicial" element={<Dashboard />} />
       <Route path="/fornecedores" element={<ListagemDeFornecedores />} />
+      <Route path="/export" element={<ExportFornecedores />} />
       {/* <Route path='/fornecedores/detalhe/novo' element={<DetalhesFornecedores />} /> */}
       <Route path='/fornecedores/detalhe/novo' element={<DetalhesFornecedores />} />
       <Route path='/fornecedores/detalhe/:idURL/:mesURL/:dataPagamentoURL/:fornecedorURL/:cnpjURL/:valorURL/:multaURL/:jurosURL/:bancoURL' element={<DetalhesFornecedores />} />

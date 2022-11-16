@@ -5,19 +5,31 @@ import { Environment } from '../../environment'
 
 interface IFerramentasDaListagemProps {
   textoDaBusca?: string
+  textoDaBuscaMes?: string
   mostrarInputBusca?: boolean
+  mostrarInputBuscaMes?: boolean
   aoMudarTextoDeBusca?: (novoTexto: string) => void
+  aoMudarTextoDeBuscaMes?: (novoTextoMes: string) => void
   textoBotaoNovo?: string
   mostrarBotaoNovo?: boolean
   aoClicarEmNovo?: () => void
+  textoBotaoExport?: string
+  mostrarBotaoExport?: boolean
+  aoClicarEmExport?: () => void
 }
 export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
   textoDaBusca = '',
+  textoDaBuscaMes = '',
   aoMudarTextoDeBusca,
+  aoMudarTextoDeBuscaMes,
   mostrarInputBusca = false,
+  mostrarInputBuscaMes = false,
   aoClicarEmNovo,
   textoBotaoNovo = 'Novo',
-  mostrarBotaoNovo = true,
+  mostrarBotaoNovo = false,
+  aoClicarEmExport,
+  textoBotaoExport = 'Export',
+  mostrarBotaoExport = false,
 }) => {
   const theme = useTheme()
 
@@ -36,8 +48,18 @@ export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
         <TextField
           size="small"
           value={textoDaBusca}
+          type={'month'}
           placeholder={Environment.INPUT_DE_BUSCA}
           onChange={(e) => aoMudarTextoDeBusca?.(e.target.value)}
+        />
+      )}
+      {mostrarInputBuscaMes && (
+        <TextField
+          size="small"
+          value={textoDaBuscaMes}
+          type={'month'}
+          placeholder={Environment.INPUT_DE_BUSCA}
+          onChange={(e) => aoMudarTextoDeBuscaMes?.(e.target.value)}
         />
       )}
 
@@ -50,6 +72,15 @@ export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
             onClick={aoClicarEmNovo}
             endIcon={<Icon>add</Icon>}
           >{textoBotaoNovo}</Button>
+        )}
+        {mostrarBotaoExport && (
+          <Button
+            color='primary'
+            disableElevation
+            variant='contained'
+            onClick={aoClicarEmExport}
+            endIcon={<Icon>file_download</Icon>}
+          >{textoBotaoExport}</Button>
         )}
       </Box>
     </Box>
