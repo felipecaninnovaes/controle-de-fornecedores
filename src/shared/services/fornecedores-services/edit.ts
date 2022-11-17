@@ -31,6 +31,7 @@ export const edit_db = async (id: string, dados: IFormData) => {
     valor: dados.valor,
     multa: dados.multa,
     juros: dados.juros,
+    desconto: dados.desconto,
     banco: dados.banco
   }))
 }

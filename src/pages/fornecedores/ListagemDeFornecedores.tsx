@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Button, Icon, IconButton, LinearProgress, Collapse, Alert, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from '@mui/material'
+import { Button, Icon, Typography, IconButton, LinearProgress, Collapse, Alert, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from '@mui/material'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { FerramentasDaListagem } from '../../shared/components'
@@ -7,7 +7,7 @@ import { LayoutBaseDePagina } from '../../shared/layouts'
 import { delete_in_database, select_from_database } from '../../shared/services/fornecedores-services'
 import { Box } from '@mui/system'
 import { Environment } from '../../shared/environment'
-
+import '../../styles/tableNoWrap.css'
 
 export const ListagemDeFornecedores: React.FC = () => {
 
@@ -19,7 +19,7 @@ export const ListagemDeFornecedores: React.FC = () => {
   const [isCollapseSuccesses, setIsCollapseSuccesses] = useState(false)
   const [isCollapseError, setIsCollapseError] = useState(false)
   const [totalCount, setTotalCount] = useState(0)
-  
+
   interface IFornecedores {
     id: string,
     mes: string,
@@ -56,6 +56,7 @@ export const ListagemDeFornecedores: React.FC = () => {
       const trimEnd = trimStart + rowsPage
       const trimmedData = apiResponse.slice(trimStart, trimEnd)
       localStorage.setItem('databaseModified', '0')
+      console.log(apiResponse)
       setTotalCount(apiResponse.length)
       setFornecedores(trimmedData)
       setIsLoading(false)
@@ -77,6 +78,7 @@ export const ListagemDeFornecedores: React.FC = () => {
     >
 
       <Collapse in={isCollapseError}><Alert variant='filled' severity="info">Não existe mais pagina :(</Alert></Collapse>
+        <div className={'textContainer'}>
       <TableContainer component={Paper} variant="outlined" sx={{ overflow: 'hidden', m: 1, width: 'auto' }}>
         <Table>
           <TableHead>
@@ -97,49 +99,50 @@ export const ListagemDeFornecedores: React.FC = () => {
           </TableHead>
           <TableBody sx={{ overflow: 'hidden' }}>
             {fornecedores.map(row => (
-              <TableRow key={row?.id}>
+                <TableRow key={row?.id}>
 
-                <TableCell>
-                  <IconButton size="small" onClick={() => { delete_in_database(String(row?.id)); setValue(value + 1) }}>
-                    <Icon>delete</Icon>
-                  </IconButton>
-                  <IconButton size="small" onClick={() => navigate(`/fornecedores/detalhe/${row?.id}/${row?.mes}/${row?.dataPagamento}/${row?.fornecedor}/${row?.cnpj}/${row?.valor}/${row?.multa}/${row?.juros}/${row?.banco}`)}>
-                    <Icon>edit</Icon>
-                  </IconButton>
-                </TableCell>
-                <TableCell>{row?.id}</TableCell>
-                <TableCell>{row?.mes}</TableCell>
-                <TableCell>{row?.dataPagamento}</TableCell>
-                <TableCell>{row?.fornecedor}</TableCell>
-                <TableCell>{row?.cnpj}</TableCell>
-                <TableCell>{row?.numeroDaNota}</TableCell>
-                <TableCell>{row?.valor}</TableCell>
-                <TableCell>{row?.multa}</TableCell>
-                <TableCell>{row?.juros}</TableCell>
-                <TableCell>{row?.desconto}</TableCell>
-                <TableCell>{row?.banco}</TableCell>
+                  <TableCell>
+                    <IconButton size="small" onClick={() => { delete_in_database(String(row?.id)); setValue(value + 1) }}>
+                      <Icon>delete</Icon>
+                    </IconButton>
+                    <IconButton size="small" onClick={() => navigate(`/fornecedores/detalhe/${row?.id}/${row?.mes}/${row?.dataPagamento}/${row?.fornecedor}/${row?.cnpj}/${row?.valor}/${row?.multa}/${row?.juros}/${row?.banco}`)}>
+                      <Icon>edit</Icon>
+                    </IconButton>
+                  </TableCell>
+                  <TableCell><Typography>{row?.id}</Typography></TableCell>
+                  <TableCell>{row?.mes}</TableCell>
+                  <TableCell>{row?.dataPagamento}</TableCell>
+                  <TableCell>{row?.fornecedor}</TableCell>
+                  <TableCell>{row?.cnpj}</TableCell>
+                  <TableCell>{row?.numeroDaNota}</TableCell>
+                  <TableCell>{row?.valor}</TableCell>
+                  <TableCell>{row?.multa}</TableCell>
+                  <TableCell>{row?.juros}</TableCell>
+                  <TableCell>{row?.desconto}</TableCell>
+                  <TableCell>{row?.banco}</TableCell>
               </TableRow>
             ))}
-          </TableBody>
-        </Table>
-        {isLoading && (
-          <LinearProgress variant='indeterminate' />
-        )}
-        {(totalCount > 0 && totalCount > Environment.LIMITE_DE_LINHAS) && (
-          <TableRow>
-            <TableCell colSpan={3}>
-              <Pagination
-                page={countPages}
-                showFirstButton showLastButton
-                color='primary'
-                variant='outlined'
-                count={Math.ceil(totalCount / Environment.LIMITE_DE_LINHAS)}
-                onChange={(_, newPage) => setCountPages(newPage)}
+        </TableBody>
+      </Table>
+      {isLoading && (
+        <LinearProgress variant='indeterminate' />
+      )}
+      {(totalCount > 0 && totalCount > Environment.LIMITE_DE_LINHAS) && (
+        <TableRow>
+          <TableCell colSpan={3}>
+            <Pagination
+              page={countPages}
+              showFirstButton showLastButton
+              color='primary'
+              variant='outlined'
+              count={Math.ceil(totalCount / Environment.LIMITE_DE_LINHAS)}
+              onChange={(_, newPage) => setCountPages(newPage)}
               />
-            </TableCell>
-          </TableRow>
-        )}
-      </TableContainer>
-    </LayoutBaseDePagina>
+          </TableCell>
+        </TableRow>
+      )}
+    </TableContainer>
+      </div>
+    </LayoutBaseDePagina >
   )
 }
