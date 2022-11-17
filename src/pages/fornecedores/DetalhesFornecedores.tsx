@@ -5,17 +5,19 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { VTextField, VForm, useVForm, IVFormErrors } from '../../shared/forms'
 import { FerramentasDeDetalhe } from '../../shared/components'
 import { LayoutBaseDePagina } from '../../shared/layouts'
-import { insert_db} from '../../shared/services/fornecedores-services'
+import { insert_db } from '../../shared/services/fornecedores-services'
 import { edit_db } from '../../shared/services/fornecedores-services/edit'
 
 
 interface IFormData {
-  dataPagamento: string,
   fornecedor: string,
   cnpj: string,
+  dataPagamento: string,
+  numeroDaNota: string,
   valor: string,
   multa: string,
   juros: string,
+  desconto: string,
   banco: string
 }
 
@@ -26,7 +28,30 @@ export const DetalhesFornecedores: React.FC = () => {
   const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
 
   const { formRef } = useVForm()
-  const { idURL = 'novo', mesURL = '', dataPagamentoURL = date, fornecedorURL = 'undefined', cnpjURL = 'undefined', valorURL = '0', multaURL = '0', jurosURL = '0', bancoURL = 'undefined' } = useParams<'idURL' | 'mesURL' | 'dataPagamentoURL' | 'fornecedorURL' | 'cnpjURL' | 'valorURL' | 'multaURL' | 'jurosURL' | 'bancoURL'>()
+  const {
+    idURL = 'novo',
+    mesURL = '',
+    dataPagamentoURL = date,
+    fornecedorURL = '',
+    numeroDaNotaURL = '0',
+    cnpjURL = '0',
+    valorURL = '0',
+    multaURL = '0',
+    jurosURL = '0',
+    descontoURL = '0',
+    bancoURL = '0'
+  } = useParams<'idURL' |
+    'mesURL' |
+    'dataPagamentoURL' |
+    'fornecedorURL' |
+    'numeroDaNotaURL' |
+    'cnpjURL' |
+    'valorURL' |
+    'multaURL' |
+    'jurosURL' |
+    'descontoURL' |
+    'bancoURL'
+  >()
   const navigate = useNavigate()
 
 
@@ -36,24 +61,27 @@ export const DetalhesFornecedores: React.FC = () => {
   const dataEdit: IFormData = {
     dataPagamento: dataPagamentoURL,
     fornecedor: fornecedorURL,
+    numeroDaNota: numeroDaNotaURL,
     cnpj: cnpjURL,
     valor: valorURL,
     multa: multaURL,
     juros: jurosURL,
+    desconto: descontoURL,
     banco: bancoURL
   }
 
   useEffect(() => {
     setIsLoading(true)
-    if(idURL !== 'novo') {
-    formRef.current?.setData(dataEdit)
-  }
-  setIsLoading(false)
+    if (idURL !== 'novo') {
+      formRef.current?.setData(dataEdit)
+    } else {
+      formRef.current?.setData(dataEdit)
+    }
+    setIsLoading(false)
   })
 
   const handleSave = async (dados: IFormData) => {
     if (idURL === 'novo') {
-      console.log(dados)
       await insert_db(dados)
     } else {
       edit_db(idURL, dados)
@@ -67,20 +95,17 @@ export const DetalhesFornecedores: React.FC = () => {
       barraDeFerramentas={
         <FerramentasDeDetalhe
           mostrarBotaoSalvar
-          mostrarBotaoSalvarEFechar
+          // mostrarBotaoSalvarEFechar
           mostrarBotaoApagar={idURL !== 'novo'}
           mostrarBotaoNovo={idURL !== 'novo'}
           mostrarBotaoVoltar
           aoClicarEmSalvar={() => {
             formRef.current?.submitForm(); navigate('/fornecedores')
           }}
-          // aoClicarEmSalvar={() => {
-          //   handleSave(idURL)
-          //   navigate('/fornecedores')
+          //botao de teste
+          // aoClicarEmSalvarEFechar={() => { 
+          //   console.log('click 😊')
           // }}
-          aoClicarEmSalvarEFechar={() => {
-            console.log('click 😊')
-          }}
           aoClicarEmNovo={() => navigate('/fornecedores/detalhe/novo')}
           aoClicarEmVoltar={() => navigate('/fornecedores')}
         />
@@ -107,13 +132,17 @@ export const DetalhesFornecedores: React.FC = () => {
                 <VTextField
                   fullWidth
                   type={'date'}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   name='dataPagamento'
                   label='Data de pagamento'
                   disabled={isLoading}
-                // onChange={e => setPagamento(e.target.value)}
                 />
               </Grid>
             </Grid>
+
+
 
             <Grid container item direction='column'>
               <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
@@ -122,7 +151,6 @@ export const DetalhesFornecedores: React.FC = () => {
                   name='fornecedor'
                   label='Fornecedor'
                   disabled={isLoading}
-                // onChange={e => setFornecedor(e.target.value)}
                 />
               </Grid>
             </Grid>
@@ -130,11 +158,10 @@ export const DetalhesFornecedores: React.FC = () => {
             <Grid container item direction='column'>
               <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
                 <VTextField
-                  fullWidth
+                  type='number'
                   name='cnpj'
                   label='CNPJ'
                   disabled={isLoading}
-                // onChange={e => setCnpj(e.target.value)}
                 />
               </Grid>
             </Grid>
@@ -143,10 +170,21 @@ export const DetalhesFornecedores: React.FC = () => {
               <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
                 <VTextField
                   fullWidth
+                  type='number'
                   name='valor'
                   label='Valor'
                   disabled={isLoading}
-                // onChange={e => setValor(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+
+            <Grid container item direction='column'>
+              <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
+                <VTextField
+                  type='number'
+                  name='numeroDaNota'
+                  label='Numero Da Nota'
+                  disabled={isLoading}
                 />
               </Grid>
             </Grid>
@@ -156,9 +194,9 @@ export const DetalhesFornecedores: React.FC = () => {
                 <VTextField
                   fullWidth
                   name='multa'
+                  type='number'
                   label='Multa'
                   disabled={isLoading}
-                // onChange={e => setMulta(e.target.value)}
                 />
               </Grid>
             </Grid>
@@ -167,10 +205,22 @@ export const DetalhesFornecedores: React.FC = () => {
               <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
                 <VTextField
                   fullWidth
+                  type='number'
                   name='juros'
                   label='Juros'
                   disabled={isLoading}
-                // onChange={e => setJuros(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+
+            <Grid container item direction='column'>
+              <Grid item xs={12} sm={12} md={6} lg={4} xl={2}>
+                <VTextField
+                  fullWidth
+                  type='number'
+                  name='desconto'
+                  label='Desconto'
+                  disabled={isLoading}
                 />
               </Grid>
             </Grid>
@@ -182,7 +232,6 @@ export const DetalhesFornecedores: React.FC = () => {
                   name='banco'
                   label='Banco'
                   disabled={isLoading}
-                // onChange={e => setBanco(e.target.value)}
                 />
               </Grid>
             </Grid>

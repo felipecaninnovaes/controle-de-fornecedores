@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Button, Icon, IconButton, LinearProgress, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from '@mui/material'
+import { Button, Icon, IconButton, LinearProgress, Collapse, Alert, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from '@mui/material'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { FerramentasDaListagem } from '../../shared/components'
@@ -10,26 +10,42 @@ import { Environment } from '../../shared/environment'
 
 
 export const ListagemDeFornecedores: React.FC = () => {
-  const navigate = useNavigate()
 
   const [isLoading, setIsLoading] = useState(true)
   const [rowsPage, setRowsPage] = useState(Environment.LIMITE_DE_LINHAS)
   const [countPages, setCountPages] = useState(1)
-
+  const [value, setValue] = useState('')
+  const [fornecedores, setFornecedores] = useState<IFornecedores[] | null[]>([])
+  const [isCollapseSuccesses, setIsCollapseSuccesses] = useState(false)
+  const [isCollapseError, setIsCollapseError] = useState(false)
+  const [totalCount, setTotalCount] = useState(0)
+  
   interface IFornecedores {
     id: string,
     mes: string,
-    cnpj: string,
     fornecedor: string,
+    cnpj: string,
     dataPagamento: string,
+    numeroDaNota: string,
     valor: string,
     multa: string,
     juros: string,
-    banco: string,
+    desconto: string,
+    banco: string
   }
 
-  const [value, setValue] = useState('')
-  const [fornecedores, setFornecedores] = useState<IFornecedores[] | null[]>([])
+
+  const navigate = useNavigate()
+
+  const notifySuccesses = () => {
+    setIsCollapseSuccesses(true)
+    setTimeout(function () { setIsCollapseSuccesses(false) }, 1200)
+  }
+
+  const notifyError = () => {
+    setIsCollapseError(true)
+    setTimeout(function () { setIsCollapseError(false) }, 1200)
+  }
 
   useEffect(() => {
     setIsLoading(true)
@@ -40,7 +56,7 @@ export const ListagemDeFornecedores: React.FC = () => {
       const trimEnd = trimStart + rowsPage
       const trimmedData = apiResponse.slice(trimStart, trimEnd)
       localStorage.setItem('databaseModified', '0')
-      console.log('DataBase Updated')
+      setTotalCount(apiResponse.length)
       setFornecedores(trimmedData)
       setIsLoading(false)
     }
@@ -59,19 +75,23 @@ export const ListagemDeFornecedores: React.FC = () => {
         />
       }
     >
+
+      <Collapse in={isCollapseError}><Alert variant='filled' severity="info">Não existe mais pagina :(</Alert></Collapse>
       <TableContainer component={Paper} variant="outlined" sx={{ overflow: 'hidden', m: 1, width: 'auto' }}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell width={100}>ACOES</TableCell>
+              <TableCell>ACOES</TableCell>
               <TableCell>ID</TableCell>
               <TableCell>MES</TableCell>
               <TableCell>DATA DE PAGAMENTO</TableCell>
               <TableCell>FORNECEDOR</TableCell>
               <TableCell>CNPJ</TableCell>
+              <TableCell>NUMERO DA NOTA</TableCell>
               <TableCell>VALOR</TableCell>
               <TableCell>MULTA</TableCell>
               <TableCell>JUROS</TableCell>
+              <TableCell>DESCONTO</TableCell>
               <TableCell>BANCO</TableCell>
             </TableRow>
           </TableHead>
@@ -92,9 +112,11 @@ export const ListagemDeFornecedores: React.FC = () => {
                 <TableCell>{row?.dataPagamento}</TableCell>
                 <TableCell>{row?.fornecedor}</TableCell>
                 <TableCell>{row?.cnpj}</TableCell>
+                <TableCell>{row?.numeroDaNota}</TableCell>
                 <TableCell>{row?.valor}</TableCell>
                 <TableCell>{row?.multa}</TableCell>
                 <TableCell>{row?.juros}</TableCell>
+                <TableCell>{row?.desconto}</TableCell>
                 <TableCell>{row?.banco}</TableCell>
               </TableRow>
             ))}
@@ -103,11 +125,20 @@ export const ListagemDeFornecedores: React.FC = () => {
         {isLoading && (
           <LinearProgress variant='indeterminate' />
         )}
-        <Box flexDirection='column'>
-          <Button onClick={() => setCountPages(countPages - 1)}>VOLTAR PAGINA</Button>
-          <Button onClick={() => setCountPages(countPages + 1)}>PROXIMA PAGINA</Button>
-        </Box>
-
+        {(totalCount > 0 && totalCount > Environment.LIMITE_DE_LINHAS) && (
+          <TableRow>
+            <TableCell colSpan={3}>
+              <Pagination
+                page={countPages}
+                showFirstButton showLastButton
+                color='primary'
+                variant='outlined'
+                count={Math.ceil(totalCount / Environment.LIMITE_DE_LINHAS)}
+                onChange={(_, newPage) => setCountPages(newPage)}
+              />
+            </TableCell>
+          </TableRow>
+        )}
       </TableContainer>
     </LayoutBaseDePagina>
   )

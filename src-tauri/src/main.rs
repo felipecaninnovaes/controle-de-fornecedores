@@ -61,10 +61,12 @@ fn edit_in_database_fn(
     fornecedor: String,
     cnpj: String,
     dataPagamento: String,
+    numeroDaNota: String,
     valor: String,
     multa: String,
     juros: String,
-    banco: String,
+    desconto: String,
+    banco: String
 ) {
     edit_in_database(
         local,
@@ -73,10 +75,12 @@ fn edit_in_database_fn(
         fornecedor,
         cnpj,
         dataPagamento,
+        numeroDaNota,
         valor,
         multa,
         juros,
-        banco,
+        desconto,
+        banco
     )
     .expect("Erro ao editar");
 }
@@ -89,10 +93,12 @@ fn insert_database_fn(
     fornecedor: String,
     cnpj: String,
     dataPagamento: String,
+    numeroDaNota: String,
     valor: String,
     multa: String,
     juros: String,
-    banco: String,
+    desconto: String,
+    banco: String
 ) {
     insert_in_database(
         local,
@@ -100,10 +106,12 @@ fn insert_database_fn(
         fornecedor,
         cnpj,
         dataPagamento,
+        numeroDaNota,
         valor,
         multa,
         juros,
-        banco,
+        desconto,
+        banco
     )
     .expect("Erro ao inserir");
 }

@@ -11,9 +11,11 @@ pub mod create_database {
             fornecedor TEXT NOT NULL,
             cnpj TEXT NOT NULL,
             dataPagamento TEXT NOT NULL,
+            numeroDaNota TEXT NOT NULL,
             valor TEXT NOT NULL,
             multa TEXT NOT NULL,
             juros TEXT NOT NULL,
+            desconto TEXT NOT NULL,
             banco TEXT NOT NULL
         )",
             (), // empty list of parameters.

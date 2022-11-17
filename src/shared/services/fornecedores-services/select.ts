@@ -1,22 +1,26 @@
 
 import { invoke } from '@tauri-apps/api/tauri'
 import { appDir } from '@tauri-apps/api/path'
+import { useEffect, useState } from 'react'
 
 
 interface IFormData {
-  banco: string,
+  mes: string,
+  fornecedor: string,
   cnpj: string,
   dataPagamento: string,
-  fornecedor: string,
-  id: string,
-  juros: string,
-  mes: string,
+  numeroDaNota: string,
+  valor: string,
   multa: string,
-  valor: string
+  juros: string,
+  desconto: string,
+  banco: string
 }
 export const select_from_mes_in_database = async (mes: string) => {
+
   const appDirPath = await appDir() + 'database.sqlite'
-  const resultOfSelectDataBase: any = await invoke('select_from_mes_in_database_fn', { local: appDirPath, mes: mes })
+  const resultOfSelectDataBase: IFormData = await invoke('select_from_mes_in_database_fn', { local: appDirPath, mes: mes }) as IFormData
+
   return resultOfSelectDataBase
 }
 

@@ -1,4 +1,4 @@
-import { setLocale } from 'yup';
+import { setLocale } from 'yup'
 
 setLocale({
   mixed: {
@@ -27,4 +27,4 @@ setLocale({
   boolean: {},
   object: {},
   array: {},
-});
+})

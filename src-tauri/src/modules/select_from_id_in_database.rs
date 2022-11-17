@@ -1,36 +1,33 @@
-pub mod select_from_database {
-    
+pub mod select_from_id_in_database {
+
     pub use rusqlite::{Connection, Result};
     pub use serde::{Deserialize, Serialize};
-    use serde_rusqlite::*;
     pub use serde_json::*;
+    use serde_rusqlite::*;
     #[allow(dead_code)]
     #[derive(Serialize, Deserialize, Debug, PartialEq)]
     #[allow(non_snake_case)]
-    pub struct Empresas {
+    pub struct EmpresasSelectID {
         id: i32,
         mes: String,
         fornecedor: String,
         cnpj: String,
         dataPagamento: String,
-        numeroDaNota: String,
         valor: String,
         multa: String,
         juros: String,
-        desconto: String,
         banco: String,
     }
 
-    pub fn select_from_database(local: String) -> Result<Vec<Empresas>> {
-
+    pub fn select_from_id_in_database(local: String, id: String) -> Result<Vec<EmpresasSelectID>> {
         let conn = Connection::open(local)?;
 
-        let mut statement = conn.prepare("SELECT * FROM empresas").unwrap();
-        let res = from_rows::<Empresas>(statement.query([]).unwrap());
+        let mut statement = conn.prepare("SELECT * FROM empresas WHERE id = ?").unwrap();
+        let res = from_rows::<EmpresasSelectID>(statement.query([id]).unwrap());
 
         let mut names = Vec::new();
         for empresas in res {
-           names.push(empresas.unwrap())
+            names.push(empresas.unwrap())
         }
         Ok(names)
     }
