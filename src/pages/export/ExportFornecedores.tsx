@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Button, Icon, IconButton, LinearProgress, Paper, Table, TableBody, Pagination, TableCell, TableContainer, TableHead, TableRow, Alert, Collapse, Box } from '@mui/material'
+import { Button, Icon, IconButton, LinearProgress, Paper, Table, TableBody, Pagination, TableCell, TableContainer, TableHead, TableRow, Alert, Collapse, Box, Typography } from '@mui/material'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { FerramentasDaListagem } from '../../shared/components'
@@ -20,7 +20,6 @@ export const ExportFornecedores: React.FC = () => {
   const [retunButton, setReturnButton] = useState(false)
   const [rowsPage, setRowsPage] = useState(Environment.LIMITE_DE_LINHAS)
   const [totalCount, setTotalCount] = useState(0)
-
 
   interface IFornecedores {
     id: string,
@@ -77,9 +76,10 @@ export const ExportFornecedores: React.FC = () => {
 
 
     <LayoutBaseDePagina
-      titulo='Exporta fornecedores'
       barraDeFerramentas={
         <FerramentasDaListagem
+          showTitle={true}
+          textTitle='Exporta de exel de'
           mostrarInputBuscaMes={true}
           textoDaBuscaMes={busca}
           aoMudarTextoDeBuscaMes={texto => setSearchParams({ busca: texto }, { replace: true })}
@@ -91,14 +91,14 @@ export const ExportFornecedores: React.FC = () => {
     >
       <Collapse in={isCollapseSuccesses}><Alert variant='filled' severity="success">Arquivo salvo em Downloads</Alert></Collapse>
       <Collapse in={isCollapseError}><Alert variant='filled' severity="info">Não existe mais pagina :(</Alert></Collapse>
+      <div className={'textContainer'}>
       <TableContainer component={Paper} variant="outlined" sx={{ overflow: 'hidden', m: 1, width: 'auto' }}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ACOES</TableCell>
               <TableCell>ID</TableCell>
               <TableCell>MES</TableCell>
-              <TableCell>DATA DE PAGAMENTO</TableCell>
+              <TableCell>PAGAMENTO</TableCell>
               <TableCell>FORNECEDOR</TableCell>
               <TableCell>CNPJ</TableCell>
               <TableCell>NUMERO DA NOTA</TableCell>
@@ -112,28 +112,17 @@ export const ExportFornecedores: React.FC = () => {
           <TableBody sx={{ overflow: 'hidden' }}>
             {fornecedores.map(row => (
               <TableRow key={row?.id}>
-
-
-
-                <TableCell>
-                  <IconButton size="small" onClick={() => { delete_in_database(String(row?.id)); setValue(value + 1) }}>
-                    <Icon>delete</Icon>
-                  </IconButton>
-                  <IconButton size="small" onClick={() => navigate(`/fornecedores/detalhe/${row?.id}/${row?.mes}/${row?.dataPagamento}/${row?.fornecedor}/${row?.cnpj}/${row?.valor}/${row?.multa}/${row?.juros}/${row?.banco}`)}>
-                    <Icon>edit</Icon>
-                  </IconButton>
-                </TableCell>
-                <TableCell>{row?.id}</TableCell>
-                <TableCell>{row?.mes}</TableCell>
-                <TableCell>{row?.dataPagamento}</TableCell>
-                <TableCell>{row?.fornecedor}</TableCell>
-                <TableCell>{row?.cnpj}</TableCell>
-                <TableCell>{row?.numeroDaNota}</TableCell>
-                <TableCell>{row?.valor}</TableCell>
-                <TableCell>{row?.multa}</TableCell>
-                <TableCell>{row?.juros}</TableCell>
-                <TableCell>{row?.desconto}</TableCell>
-                <TableCell>{row?.banco}</TableCell>
+                <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'>{row?.id}</Typography></TableCell>
+                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.mes}</Typography></TableCell>
+                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.dataPagamento}</Typography></TableCell>
+                  <TableCell><Typography width='6.7rem' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.fornecedor}</Typography></TableCell>
+                  <TableCell><Typography width='6.0rem' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.cnpj}</Typography></TableCell>
+                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.numeroDaNota}</Typography></TableCell>
+                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.valor}</Typography></TableCell>
+                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.multa}</Typography></TableCell>
+                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.juros}</Typography></TableCell>
+                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.desconto}</Typography></TableCell>
+                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.banco}</Typography></TableCell>
               </TableRow>
 
             ))}
@@ -158,6 +147,7 @@ export const ExportFornecedores: React.FC = () => {
         )}
 
       </TableContainer>
+      </div>
     </LayoutBaseDePagina>
   )
 }

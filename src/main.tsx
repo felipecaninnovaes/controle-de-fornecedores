@@ -6,6 +6,7 @@ import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import './global.css'
+// import './styles/tableNoWrap.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <App />

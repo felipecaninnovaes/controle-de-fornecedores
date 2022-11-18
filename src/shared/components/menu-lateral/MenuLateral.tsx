@@ -45,7 +45,7 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
 
   return (
     <>
-      <Drawer open={isDrawerOpen} variant={smDown ? 'temporary' : 'permanent'} onClose={toggleDrawerOpen}>
+      <Drawer open={isDrawerOpen} variant={smDown ? 'temporary' : 'temporary'} onClose={toggleDrawerOpen}>
         <Box width={theme.spacing(28)} height="100%" display="flex" flexDirection="column">
 
           <Box width="100%" height={theme.spacing(20)} display="flex" alignItems="center" justifyContent="center">
@@ -65,7 +65,7 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
                   key={drawerOption.path}
                   icon={drawerOption.icon}
                   label={drawerOption.label}
-                  onClick={smDown ? toggleDrawerOpen : undefined}
+                  onClick={toggleDrawerOpen}
                 />
               ))}
             </List>
@@ -90,7 +90,7 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
         </Box>
       </Drawer>
 
-      <Box height="100vh" marginLeft={smDown ? 0 : theme.spacing(28)}>
+      <Box height="100vh" marginLeft={smDown ? 0 : theme.spacing(1)}>
         {children}
       </Box>
     </>

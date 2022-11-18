@@ -1,5 +1,5 @@
 .textContainer {
-    /* white-space: hidden;
-    overflow-x: hidden !important;
-    text-overflow: ellipsis !important; */
+    text-overflow: ellipsis ;
+    white-space: nowrap;
+    overflow: scroll;
   }

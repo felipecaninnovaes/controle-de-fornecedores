@@ -1,4 +1,5 @@
-import { Box, Button, Icon, Paper, TextField, useTheme } from '@mui/material'
+import { Box, Button, Icon, IconButton, Paper, TextField, Typography, useTheme } from '@mui/material'
+import { useDrawerContext } from '../../contexts'
 
 import { Environment } from '../../environment'
 
@@ -6,6 +7,8 @@ import { Environment } from '../../environment'
 interface IFerramentasDaListagemProps {
   textoDaBusca?: string
   textoDaBuscaMes?: string
+  textTitle?: string
+  showTitle?: boolean
   mostrarInputBusca?: boolean
   mostrarInputBuscaMes?: boolean
   aoMudarTextoDeBusca?: (novoTexto: string) => void
@@ -18,12 +21,15 @@ interface IFerramentasDaListagemProps {
   aoClicarEmExport?: () => void
 }
 export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
+
   textoDaBusca = '',
   textoDaBuscaMes = '',
+  textTitle = '',
   aoMudarTextoDeBusca,
   aoMudarTextoDeBuscaMes,
   mostrarInputBusca = false,
   mostrarInputBuscaMes = false,
+  showTitle = false,
   aoClicarEmNovo,
   textoBotaoNovo = 'Novo',
   mostrarBotaoNovo = false,
@@ -33,6 +39,8 @@ export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
 }) => {
   const theme = useTheme()
 
+  const { toggleDrawerOpen } = useDrawerContext()
+  
   return (
     <Box
       gap={1}
@@ -44,6 +52,12 @@ export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
       height={theme.spacing(5)}
       component={Paper}
     >
+      <IconButton onClick={toggleDrawerOpen}>
+        <Icon>menu</Icon>
+      </IconButton>
+      {showTitle && (
+        <Typography>{textTitle}</Typography>
+      )}
       {mostrarInputBusca && (
         <TextField
           size="small"

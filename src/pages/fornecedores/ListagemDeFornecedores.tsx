@@ -7,7 +7,7 @@ import { LayoutBaseDePagina } from '../../shared/layouts'
 import { delete_in_database, select_from_database } from '../../shared/services/fornecedores-services'
 import { Box } from '@mui/system'
 import { Environment } from '../../shared/environment'
-import '../../styles/tableNoWrap.css'
+// import '../../styles/tableNoWrap.css'
 
 export const ListagemDeFornecedores: React.FC = () => {
 
@@ -19,7 +19,6 @@ export const ListagemDeFornecedores: React.FC = () => {
   const [isCollapseSuccesses, setIsCollapseSuccesses] = useState(false)
   const [isCollapseError, setIsCollapseError] = useState(false)
   const [totalCount, setTotalCount] = useState(0)
-
   interface IFornecedores {
     id: string,
     mes: string,
@@ -66,10 +65,11 @@ export const ListagemDeFornecedores: React.FC = () => {
 
   return (
     <LayoutBaseDePagina
-      titulo='Listagem de pagamentos de fornecedores'
       barraDeFerramentas={
         <FerramentasDaListagem
           mostrarInputBusca={false}
+          showTitle={true}
+          textTitle='Controle de Fornecedores'
           mostrarBotaoNovo={true}
           textoBotaoNovo='Novo'
           aoClicarEmNovo={() => navigate('/fornecedores/detalhe/novo')}
@@ -78,15 +78,16 @@ export const ListagemDeFornecedores: React.FC = () => {
     >
 
       <Collapse in={isCollapseError}><Alert variant='filled' severity="info">Não existe mais pagina :(</Alert></Collapse>
-        <div className={'textContainer'}>
+      <div className={'textContainer'}>
       <TableContainer component={Paper} variant="outlined" sx={{ overflow: 'hidden', m: 1, width: 'auto' }}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ACOES</TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
               <TableCell>ID</TableCell>
               <TableCell>MES</TableCell>
-              <TableCell>DATA DE PAGAMENTO</TableCell>
+              <TableCell>PAGAMENTO</TableCell>
               <TableCell>FORNECEDOR</TableCell>
               <TableCell>CNPJ</TableCell>
               <TableCell>NUMERO DA NOTA</TableCell>
@@ -99,49 +100,52 @@ export const ListagemDeFornecedores: React.FC = () => {
           </TableHead>
           <TableBody sx={{ overflow: 'hidden' }}>
             {fornecedores.map(row => (
-                <TableRow key={row?.id}>
-
-                  <TableCell>
+              <TableRow key={row?.id}>
+                <TableCell>
                     <IconButton size="small" onClick={() => { delete_in_database(String(row?.id)); setValue(value + 1) }}>
-                      <Icon>delete</Icon>
-                    </IconButton>
-                    <IconButton size="small" onClick={() => navigate(`/fornecedores/detalhe/${row?.id}/${row?.mes}/${row?.dataPagamento}/${row?.fornecedor}/${row?.cnpj}/${row?.valor}/${row?.multa}/${row?.juros}/${row?.banco}`)}>
-                      <Icon>edit</Icon>
+                      <Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'><Icon>delete</Icon></Typography>
                     </IconButton>
                   </TableCell>
-                  <TableCell><Typography>{row?.id}</Typography></TableCell>
-                  <TableCell>{row?.mes}</TableCell>
-                  <TableCell>{row?.dataPagamento}</TableCell>
-                  <TableCell>{row?.fornecedor}</TableCell>
-                  <TableCell>{row?.cnpj}</TableCell>
-                  <TableCell>{row?.numeroDaNota}</TableCell>
-                  <TableCell>{row?.valor}</TableCell>
-                  <TableCell>{row?.multa}</TableCell>
-                  <TableCell>{row?.juros}</TableCell>
-                  <TableCell>{row?.desconto}</TableCell>
-                  <TableCell>{row?.banco}</TableCell>
+                  <TableCell>
+                    <IconButton size="small" onClick={() => navigate(`/fornecedores/detalhe/${row?.id}/${row?.mes}/${row?.dataPagamento}/${row?.fornecedor}/${row?.cnpj}/${row?.valor}/${row?.multa}/${row?.juros}/${row?.banco}`)}>
+                      <Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'><Icon>edit</Icon></Typography>
+                    </IconButton>
+                  </TableCell>
+                <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'>{row?.id}</Typography></TableCell>
+                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.mes}</Typography></TableCell>
+                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.dataPagamento}</Typography></TableCell>
+                  <TableCell><Typography width='6.7rem' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.fornecedor}</Typography></TableCell>
+                  <TableCell><Typography width='6.0rem' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.cnpj}</Typography></TableCell>
+                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.numeroDaNota}</Typography></TableCell>
+                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.valor}</Typography></TableCell>
+                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.multa}</Typography></TableCell>
+                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.juros}</Typography></TableCell>
+                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.desconto}</Typography></TableCell>
+                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.banco}</Typography></TableCell>
               </TableRow>
+
             ))}
-        </TableBody>
-      </Table>
-      {isLoading && (
-        <LinearProgress variant='indeterminate' />
-      )}
-      {(totalCount > 0 && totalCount > Environment.LIMITE_DE_LINHAS) && (
-        <TableRow>
-          <TableCell colSpan={3}>
-            <Pagination
-              page={countPages}
-              showFirstButton showLastButton
-              color='primary'
-              variant='outlined'
-              count={Math.ceil(totalCount / Environment.LIMITE_DE_LINHAS)}
-              onChange={(_, newPage) => setCountPages(newPage)}
+          </TableBody>
+        </Table>
+        {isLoading && (
+          <LinearProgress variant='indeterminate' />
+        )}
+        {(totalCount > 0 && totalCount > Environment.LIMITE_DE_LINHAS) && (
+          <TableRow>
+            <TableCell colSpan={3}>
+              <Pagination
+                page={countPages}
+                showFirstButton showLastButton
+                color='primary'
+                variant='outlined'
+                count={Math.ceil(totalCount / Environment.LIMITE_DE_LINHAS)}
+                onChange={(_, newPage) => setCountPages(newPage)}
               />
-          </TableCell>
-        </TableRow>
-      )}
-    </TableContainer>
+            </TableCell>
+          </TableRow>
+        )}
+
+      </TableContainer>
       </div>
     </LayoutBaseDePagina >
   )

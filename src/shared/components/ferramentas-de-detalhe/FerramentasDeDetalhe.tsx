@@ -1,4 +1,5 @@
-import { Box, Button, Divider, Icon, Paper, Skeleton, Theme, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Button, Divider, Icon, IconButton, Paper, Skeleton, Theme, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { useDrawerContext } from '../../contexts'
 
 
 interface IFerramentasDeDetalheProps {
@@ -46,6 +47,7 @@ export const FerramentasDeDetalhe: React.FC<IFerramentasDeDetalheProps> = ({
   const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
   const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
   const theme = useTheme()
+  const { toggleDrawerOpen } = useDrawerContext()
 
   return (
     <Box
@@ -58,6 +60,9 @@ export const FerramentasDeDetalhe: React.FC<IFerramentasDeDetalheProps> = ({
       height={theme.spacing(5)}
       component={Paper}
     >
+      <IconButton onClick={toggleDrawerOpen}>
+        <Icon>menu</Icon>
+      </IconButton>
       {(mostrarBotaoSalvar && !mostrarBotaoSalvarCarregando) && (
         <Button
           color='primary'
