@@ -3,8 +3,8 @@ import { Box, Button, Grid, LinearProgress, Paper, Typography } from '@mui/mater
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { VTextField, VForm, useVForm, IVFormErrors } from '../../shared/forms'
-import { FerramentasDeDetalhe } from '../../shared/components'
-import { LayoutBaseDePagina } from '../../shared/layouts'
+import { DetailTools } from '../../shared/components'
+import { BaseLayoutFromPages } from '../../shared/layouts'
 import { insert_db } from '../../shared/services/fornecedores-services'
 import { edit_db } from '../../shared/services/fornecedores-services/edit'
 
@@ -90,24 +90,23 @@ export const DetalhesFornecedores: React.FC = () => {
   }
 
   return (
-    <LayoutBaseDePagina
-      titulo={'Novo fornecedor'}
-      barraDeFerramentas={
-        <FerramentasDeDetalhe
-          mostrarBotaoSalvar
+    <BaseLayoutFromPages
+      toolBars={
+        <DetailTools
+          showSaveButton
           // mostrarBotaoSalvarEFechar
-          mostrarBotaoApagar={idURL !== 'novo'}
-          mostrarBotaoNovo={idURL !== 'novo'}
-          mostrarBotaoVoltar
-          aoClicarEmSalvar={() => {
+          showDeleteButton={idURL !== 'novo'}
+          showNewButton={idURL !== 'novo'}
+          showBackButton
+          onClickSave={() => {
             formRef.current?.submitForm(); navigate('/fornecedores')
           }}
           //botao de teste
           // aoClicarEmSalvarEFechar={() => { 
           //   console.log('click 😊')
           // }}
-          aoClicarEmNovo={() => navigate('/fornecedores/detalhe/novo')}
-          aoClicarEmVoltar={() => navigate('/fornecedores')}
+          onClickOnNew={() => navigate('/fornecedores/detalhe/novo')}
+          onClickInBack={() => navigate('/fornecedores')}
         />
       }
     >
@@ -240,6 +239,6 @@ export const DetalhesFornecedores: React.FC = () => {
 
         </Box>
       </VForm>
-    </LayoutBaseDePagina>
+    </BaseLayoutFromPages>
   )
 }

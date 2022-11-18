@@ -1,4 +1,4 @@
-export * from './ferramentas-da-listagem/FerramentasDaListagem'
-export * from './ferramentas-de-detalhe/FerramentasDeDetalhe'
+export * from './ListingTools/ListingTools'
+export * from './DetailTools/DetailTools'
 export * from './menu-lateral/MenuLateral'
 export * from './login/Login'

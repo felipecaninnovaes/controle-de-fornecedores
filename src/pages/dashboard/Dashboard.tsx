@@ -1,15 +1,15 @@
 import { Typography } from '@mui/material'
-import { FerramentasDaListagem } from '../../shared/components'
-import { LayoutBaseDePagina } from '../../shared/layouts'
+import { ListingTools } from '../../shared/components'
+import { BaseLayoutFromPages } from '../../shared/layouts'
 
 export const Dashboard = () => {
   return (
-    <LayoutBaseDePagina>
-      <FerramentasDaListagem
+    <BaseLayoutFromPages>
+      <ListingTools
         showTitle={true}
         textTitle='Pagina Inicial (Em desenvolvimento)'
       />
 
-    </LayoutBaseDePagina>
+    </BaseLayoutFromPages>
   )
 }

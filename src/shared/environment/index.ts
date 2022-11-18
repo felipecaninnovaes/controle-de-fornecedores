@@ -1,15 +1,15 @@
 
 export const Environment = {
   /**
-   * Define a quantidade de linhas a ser carregada por padrão nas listagens
+   * Set limit the rows
    */
-  LIMITE_DE_LINHAS: 6,
+  ROWS_LIMIT: 6,
   /**
-   * Placeholder exibido nas inputs
+   * Showing placeholder text in inputs
    */
-  INPUT_DE_BUSCA: 'Pesquisar...',
+  SEARCH_INPUT: 'Pesquisar...',
   /**
-   * Texto exibido quando nenhum registro é encontrado em uma listagem
+   * Showing text on empty list
    */
-  LISTAGEM_VAZIA: 'Nenhum registro encontrado.',
+  EMPTY_LISTING: 'Nenhum registro encontrado.',
 }

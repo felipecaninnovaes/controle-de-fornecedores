@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { Button, Icon, IconButton, LinearProgress, Paper, Table, TableBody, Pagination, TableCell, TableContainer, TableHead, TableRow, Alert, Collapse, Box, Typography } from '@mui/material'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
-import { FerramentasDaListagem } from '../../shared/components'
-import { LayoutBaseDePagina } from '../../shared/layouts'
+import { ListingTools } from '../../shared/components'
+import { BaseLayoutFromPages } from '../../shared/layouts'
 import { delete_in_database, export_xlsx, select_from_mes_in_database } from '../../shared/services/fornecedores-services'
 import { Environment } from '../../shared/environment'
 
@@ -18,7 +18,7 @@ export const ExportFornecedores: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const [nextButton, setNextButton] = useState(false)
   const [retunButton, setReturnButton] = useState(false)
-  const [rowsPage, setRowsPage] = useState(Environment.LIMITE_DE_LINHAS)
+  const [rowsPage, setRowsPage] = useState(Environment.ROWS_LIMIT)
   const [totalCount, setTotalCount] = useState(0)
 
   interface IFornecedores {
@@ -61,8 +61,8 @@ export const ExportFornecedores: React.FC = () => {
     setIsLoading(true)
     async function apiCall() {
       const apiResponse: any = (await select_from_mes_in_database(busca))
-      const trimStart = (countPages - 1) * Environment.LIMITE_DE_LINHAS
-      const trimEnd = trimStart + Environment.LIMITE_DE_LINHAS
+      const trimStart = (countPages - 1) * Environment.ROWS_LIMIT
+      const trimEnd = trimStart + Environment.ROWS_LIMIT
       const trimmedData: any = apiResponse.slice(trimStart, trimEnd) as any
       localStorage.setItem('databaseModified', '0')
       setTotalCount(apiResponse.length)
@@ -75,44 +75,44 @@ export const ExportFornecedores: React.FC = () => {
   return (
 
 
-    <LayoutBaseDePagina
-      barraDeFerramentas={
-        <FerramentasDaListagem
+    <BaseLayoutFromPages
+      toolBars={
+        <ListingTools
           showTitle={true}
           textTitle='Exporta de exel de'
-          mostrarInputBuscaMes={true}
-          textoDaBuscaMes={busca}
-          aoMudarTextoDeBuscaMes={texto => setSearchParams({ busca: texto }, { replace: true })}
-          mostrarBotaoExport={true}
-          textoBotaoExport='Exportar Exel'
-          aoClicarEmExport={() => exportExel()}
+          showSearchMonth={true}
+          searchMonth={busca}
+          onChangeMonthSearch={texto => setSearchParams({ busca: texto }, { replace: true })}
+          showExportButton={true}
+          exportButtonText='Exportar Exel'
+          onClickInExport={() => exportExel()}
         />
       }
     >
       <Collapse in={isCollapseSuccesses}><Alert variant='filled' severity="success">Arquivo salvo em Downloads</Alert></Collapse>
       <Collapse in={isCollapseError}><Alert variant='filled' severity="info">Não existe mais pagina :(</Alert></Collapse>
       <div className={'textContainer'}>
-      <TableContainer component={Paper} variant="outlined" sx={{ overflow: 'hidden', m: 1, width: 'auto' }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>MES</TableCell>
-              <TableCell>PAGAMENTO</TableCell>
-              <TableCell>FORNECEDOR</TableCell>
-              <TableCell>CNPJ</TableCell>
-              <TableCell>NUMERO DA NOTA</TableCell>
-              <TableCell>VALOR</TableCell>
-              <TableCell>MULTA</TableCell>
-              <TableCell>JUROS</TableCell>
-              <TableCell>DESCONTO</TableCell>
-              <TableCell>BANCO</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody sx={{ overflow: 'hidden' }}>
-            {fornecedores.map(row => (
-              <TableRow key={row?.id}>
-                <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'>{row?.id}</Typography></TableCell>
+        <TableContainer component={Paper} variant="outlined" sx={{ overflow: 'hidden', m: 1, width: 'auto' }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>MES</TableCell>
+                <TableCell>PAGAMENTO</TableCell>
+                <TableCell>FORNECEDOR</TableCell>
+                <TableCell>CNPJ</TableCell>
+                <TableCell>NUMERO DA NOTA</TableCell>
+                <TableCell>VALOR</TableCell>
+                <TableCell>MULTA</TableCell>
+                <TableCell>JUROS</TableCell>
+                <TableCell>DESCONTO</TableCell>
+                <TableCell>BANCO</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody sx={{ overflow: 'hidden' }}>
+              {fornecedores.map(row => (
+                <TableRow key={row?.id}>
+                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'>{row?.id}</Typography></TableCell>
                   <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.mes}</Typography></TableCell>
                   <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.dataPagamento}</Typography></TableCell>
                   <TableCell><Typography width='6.7rem' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.fornecedor}</Typography></TableCell>
@@ -123,31 +123,31 @@ export const ExportFornecedores: React.FC = () => {
                   <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.juros}</Typography></TableCell>
                   <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.desconto}</Typography></TableCell>
                   <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.banco}</Typography></TableCell>
-              </TableRow>
+                </TableRow>
 
-            ))}
-          </TableBody>
-        </Table>
-        {isLoading && (
-          <LinearProgress variant='indeterminate' />
-        )}
-        {(totalCount > 0 && totalCount > Environment.LIMITE_DE_LINHAS) && (
-          <TableRow>
-            <TableCell colSpan={3}>
-              <Pagination
-                page={countPages}
-                showFirstButton showLastButton
-                color='primary'
-                variant='outlined'
-                count={Math.ceil(totalCount / Environment.LIMITE_DE_LINHAS)}
-                onChange={(_, newPage) => setCountPages(newPage)}
-              />
-            </TableCell>
-          </TableRow>
-        )}
+              ))}
+            </TableBody>
+          </Table>
+          {isLoading && (
+            <LinearProgress variant='indeterminate' />
+          )}
+          {(totalCount > 0 && totalCount > Environment.ROWS_LIMIT) && (
+            <TableRow>
+              <TableCell colSpan={3}>
+                <Pagination
+                  page={countPages}
+                  showFirstButton showLastButton
+                  color='primary'
+                  variant='outlined'
+                  count={Math.ceil(totalCount / Environment.ROWS_LIMIT)}
+                  onChange={(_, newPage) => setCountPages(newPage)}
+                />
+              </TableCell>
+            </TableRow>
+          )}
 
-      </TableContainer>
+        </TableContainer>
       </div>
-    </LayoutBaseDePagina>
+    </BaseLayoutFromPages>
   )
 }
