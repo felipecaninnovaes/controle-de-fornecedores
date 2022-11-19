@@ -1,6 +1,6 @@
 
 import { invoke } from '@tauri-apps/api/tauri'
-import { appDir } from '@tauri-apps/api/path'
+import { appConfigDir } from '@tauri-apps/api/path'
 interface IFormData {
     fornecedor: string,
     cnpj: string,
@@ -15,7 +15,7 @@ interface IFormData {
 
 export const insert_db = async (dados: IFormData) => {
 
-    const appDirPath = await appDir() + 'database.sqlite'
+    const appDirPath = await appConfigDir() + 'database.sqlite'
     let data = dados.dataPagamento.toString()
     const mesSplitValues = data.split('-')
     const MonthAndYear = String(mesSplitValues[0] + '-' + mesSplitValues[1])
@@ -37,6 +37,6 @@ export const insert_db = async (dados: IFormData) => {
 }
 
 export const insertUser = async () => {
-    const appDirPath = await appDir() + 'database.sqlite'
+    const appDirPath = await appConfigDir() + 'database.sqlite'
     return (await invoke('insert_user_in_database_fn', { local: appDirPath }))
 }

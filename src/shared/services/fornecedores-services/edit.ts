@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/tauri'
-import { appDir } from '@tauri-apps/api/path'
+import { appConfigDir } from '@tauri-apps/api/path'
 
 interface IFormData {
   fornecedor: string,
@@ -14,7 +14,7 @@ interface IFormData {
 }
 
 export const edit_db = async (id: string, dados: IFormData) => {
-  const appDirPath = await appDir() + 'database.sqlite'
+  const appDirPath = await appConfigDir() + 'database.sqlite'
   let data = dados.dataPagamento.toString()
   const mesSplitValues = data.split('-')
   const MonthAndYear = String(mesSplitValues[0] + '-' + mesSplitValues[1])

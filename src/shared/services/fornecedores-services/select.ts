@@ -1,7 +1,6 @@
 
 import { invoke } from '@tauri-apps/api/tauri'
-import { appDir } from '@tauri-apps/api/path'
-import { useEffect, useState } from 'react'
+import { appConfigDir } from '@tauri-apps/api/path'
 
 
 interface IFormData {
@@ -18,14 +17,14 @@ interface IFormData {
 }
 export const select_from_mes_in_database = async (mes: string) => {
 
-  const appDirPath = await appDir() + 'database.sqlite'
+  const appDirPath = await appConfigDir() + 'database.sqlite'
   const resultOfSelectDataBase: IFormData = await invoke('select_from_mes_in_database_fn', { local: appDirPath, mes: mes }) as IFormData
 
   return resultOfSelectDataBase
 }
 
 export const select_from_database = async () => {
-  const appDirPath = await appDir() + 'database.sqlite'
+  const appDirPath = await appConfigDir() + 'database.sqlite'
   const resultOfSelectDataBase = await invoke('select_from_database_fn', { local: appDirPath })
   return resultOfSelectDataBase
 }

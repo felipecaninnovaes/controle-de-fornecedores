@@ -8,6 +8,11 @@ import '@fontsource/roboto/700.css'
 import './global.css'
 // import './styles/tableNoWrap.css'
 
+import { appWindow } from '@tauri-apps/api/window'
+await appWindow.onCloseRequested(async () => {
+    localStorage.setItem('APP_ACCESS_TOKEN', '')
+})
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <App />
 )

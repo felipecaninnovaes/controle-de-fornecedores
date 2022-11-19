@@ -7,6 +7,7 @@ import { AppRoutes } from './routes'
 import { createDataBase, insertUser } from './shared/services/fornecedores-services'
 
 
+
 export const App = () => {
   createDataBase()
   insertUser()
@@ -21,7 +22,7 @@ export const App = () => {
 
               <MenuLateral>
 
-                <div className="App">
+                <div className='App'>
                   <AppRoutes />
                 </div>
               </MenuLateral>
