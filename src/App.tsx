@@ -5,6 +5,7 @@ import { AppThemeProvider, AuthProvider, DrawerProvider } from './shared/context
 import { Login, MenuLateral } from './shared/components'
 import { AppRoutes } from './routes'
 import { createDataBase, insertUser } from './shared/services/fornecedores-services'
+import { checkUpdatesApp } from './shared/services/update'
 
 
 

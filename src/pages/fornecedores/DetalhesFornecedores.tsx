@@ -81,11 +81,17 @@ export const DetalhesFornecedores: React.FC = () => {
   })
 
   const handleSave = async (dados: IFormData) => {
-    if (idURL === 'novo') {
-      await insert_db(dados)
-    } else {
-      edit_db(idURL, dados)
+
+    if (dados.fornecedor.length < 3) {
+      formRef.current?.setFieldError('fornecedor', 'O campo precisa ser preenchido.')
+      
     }
+
+    // if (idURL === 'novo') {
+    //   await insert_db(dados)
+    // } else {
+    //   edit_db(idURL, dados)
+    // }
 
   }
 
@@ -94,7 +100,7 @@ export const DetalhesFornecedores: React.FC = () => {
       toolBars={
         <DetailTools
           showSaveButton
-          // mostrarBotaoSalvarEFechar
+          // showButtonCloseAndSave={true}
           showDeleteButton={idURL !== 'novo'}
           showNewButton={idURL !== 'novo'}
           showBackButton
@@ -102,7 +108,7 @@ export const DetalhesFornecedores: React.FC = () => {
             formRef.current?.submitForm(); navigate('/fornecedores')
           }}
           //botao de teste
-          // aoClicarEmSalvarEFechar={() => { 
+          // onClickSaveAndClose={() => { 
           //   console.log('click 😊')
           // }}
           onClickOnNew={() => navigate('/fornecedores/detalhe/novo')}
