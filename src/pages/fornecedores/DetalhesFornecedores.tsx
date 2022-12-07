@@ -82,16 +82,11 @@ export const DetalhesFornecedores: React.FC = () => {
 
   const handleSave = async (dados: IFormData) => {
 
-    if (dados.fornecedor.length < 3) {
-      formRef.current?.setFieldError('fornecedor', 'O campo precisa ser preenchido.')
-      
+    if (idURL === 'novo') {
+      await insert_db(dados)
+    } else {
+      edit_db(idURL, dados)
     }
-
-    // if (idURL === 'novo') {
-    //   await insert_db(dados)
-    // } else {
-    //   edit_db(idURL, dados)
-    // }
 
   }
 

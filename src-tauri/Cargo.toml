@@ -9,7 +9,7 @@ edition = "2021"
 rust-version = "1.67"
 
 [build-dependencies]
-tauri-build = { version = "1.2.0", features = [] }
+tauri-build = { version = "1.2.1", features = [] }
 
 [dependencies]
 rusqlite = { version = "0.28.0", features = ["bundled"] }
@@ -17,7 +17,7 @@ rust_xlsxwriter = "0.12.1"
 serde = {version = "1.0.147", features = ["derive"] }
 serde_rusqlite = "0.31.0"
 serde_json = { version ="1.0.87"}
-tauri = { version = "1.2.0", features = ["api-all"] }
+tauri = { version = "1.2.1", features = ["api-all"] }
 
 [features]
 default = [ "custom-protocol" ]
