@@ -1,23 +1,23 @@
 [package]
 name = "controle-de-fornecedores"
-version = "1.0.2"
+version = "1.1.0"
 description = "Controle a entrada de fornecedores"
 authors = ["felipecaninnovaes"]
 license = "GNU General Public License v3.0"
 repository = "https://github.com/felipecaninnovaes/controle-de-fornecedores"
 edition = "2021"
-rust-version = "1.67"
+rust-version = "1.68"
 
 [build-dependencies]
-tauri-build = { version = "1.2.0", features = [] }
+tauri-build = { version = "1.2.1", features = [] }
 
 [dependencies]
 rusqlite = { version = "0.28.0", features = ["bundled"] }
-rust_xlsxwriter = "0.12.1"
-serde = {version = "1.0.147", features = ["derive"] }
+rust_xlsxwriter = "0.16.0"
+serde = {version = "1.0.150", features = ["derive"] }
 serde_rusqlite = "0.31.0"
-serde_json = { version ="1.0.87"}
-tauri = { version = "1.2.0", features = ["api-all"] }
+serde_json = { version ="1.0.89"}
+tauri = { version = "1.2.2", features = ["api-all"] }
 
 [features]
 default = [ "custom-protocol" ]

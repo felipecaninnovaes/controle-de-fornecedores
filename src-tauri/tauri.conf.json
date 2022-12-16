@@ -7,11 +7,43 @@
   },
   "package": {
     "productName": "controle-de-fornecedores",
-    "version": "1.0.2"
+    "version": "1.1.0"
   },
   "tauri": {
     "allowlist": {
       "all": true,
+      "window": {
+        "all": true,
+        "center": true,
+        "close": true,
+        "create": true,
+        "hide": true,
+        "maximize": true,
+        "minimize": true,
+        "print": true,
+        "requestUserAttention": true,
+        "setAlwaysOnTop": true,
+        "setCursorGrab": true,
+        "setCursorIcon": true,
+        "setCursorPosition": true,
+        "setCursorVisible": true,
+        "setDecorations": true,
+        "setFocus": true,
+        "setFullscreen": true,
+        "setIcon": true,
+        "setIgnoreCursorEvents": true,
+        "setMaxSize": true,
+        "setMinSize": true,
+        "setPosition": true,
+        "setResizable": true,
+        "setSize": true,
+        "setSkipTaskbar": true,
+        "setTitle": true,
+        "show": true,
+        "startDragging": true,
+        "unmaximize": true,
+        "unminimize": true
+      },
       "fs": {
         "all": true,
         "readFile": true,
@@ -59,7 +91,10 @@
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
-        "timestampUrl": ""
+        "timestampUrl": "",
+        "webviewInstallMode": {
+          "type": "offlineInstaller"
+        }
       }
     },
     "security": {

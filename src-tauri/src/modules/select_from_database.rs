@@ -13,9 +13,11 @@ pub mod select_from_database {
         fornecedor: String,
         cnpj: String,
         dataPagamento: String,
+        numeroDaNota: String,
         valor: String,
         multa: String,
         juros: String,
+        desconto: String,
         banco: String,
     }
 
