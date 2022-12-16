@@ -9,7 +9,7 @@ import './global.css'
 // import './styles/tableNoWrap.css'
 
 import { appWindow } from '@tauri-apps/api/window'
-await appWindow.onCloseRequested(async () => {
+appWindow.onCloseRequested(() => {
     localStorage.setItem('APP_ACCESS_TOKEN', '')
 })
 

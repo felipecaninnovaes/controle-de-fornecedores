@@ -12,4 +12,6 @@ export const Environment = {
    * Showing text on empty list
    */
   EMPTY_LISTING: 'Nenhum registro encontrado.',
+
+  APP_VERSION: '1.1.0'
 }

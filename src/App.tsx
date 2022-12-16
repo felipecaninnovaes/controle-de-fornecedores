@@ -8,8 +8,8 @@ import { createDataBase, insertUser } from './shared/services/fornecedores-servi
 import { checkUpdatesApp } from './shared/services/update'
 
 
-
 export const App = () => {
+  checkUpdatesApp()
   createDataBase()
   insertUser()
   return (
