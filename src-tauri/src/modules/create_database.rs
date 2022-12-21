@@ -2,7 +2,7 @@ pub mod create_database {
     pub use rusqlite::{Connection, Result};
 
     #[allow(dead_code)]
-    pub fn create_database_fornecedores(local: String) -> Result<()> {
+    pub fn create_database(local: String) -> Result<()> {
         let conn = Connection::open(local)?;
         conn.execute(
             "CREATE TABLE if not exists empresas (
@@ -20,8 +20,52 @@ pub mod create_database {
         )",
             (), // empty list of parameters.
         )?;
+        conn.execute(
+            "CREATE TABLE if not exists venda (
+            id   INTEGER PRIMARY KEY,
+            idCliente TEXT NOT NULL,
+            produto TEXT NOT NULL,
+            saida TEXT NOT NULL,
+            valor TEXT NOT NULL
+        )",
+            (), // empty list of parameters.
+        )?;
+        conn.execute(
+            "CREATE TABLE if not exists cliente (
+            id   INTEGER PRIMARY KEY,
+            nome TEXT NOT NULL,
+            sobrenome TEXT NOT NULL,
+            cpf TEXT NOT NULL,
+            dataDeNascimento TEXT NOT NULL,
+            endereco TEXT NOT NULL,
+            telefone TEXT NOT NULL
+        )",
+            (), // empty list of parameters.
+        )?;
+        conn.execute(
+            "CREATE TABLE if not exists estoque (
+            id   INTEGER PRIMARY KEY,
+            codigo TEXT NOT NULL,
+            descricao TEXT NOT NULL,
+            valorEntrada TEXT NOT NULL,
+            valorSaida TEXT NOT NULL,
+            quantidade TEXT NOT NULL
+        )",
+            (), // empty list of parameters.
+        )?;
+        conn.execute(
+            "CREATE TABLE if not exists venda (
+            id   INTEGER PRIMARY KEY,
+            idCliente TEXT NOT NULL,
+            produto TEXT NOT NULL,
+            quantidade TEXT NOT NULL,
+            valor TEXT NOT NULL
+        )",
+            (), // empty list of parameters.
+        )?;
         Ok(())
     }
+
     pub fn create_database_user(local: String) -> Result<()> {
         let conn = Connection::open(local)?;
         conn.execute(

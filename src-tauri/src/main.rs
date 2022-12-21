@@ -4,7 +4,7 @@
 )]
 mod modules;
 use modules::{
-    create_database::create_database::create_database_fornecedores,
+    create_database::create_database::create_database,
     create_database::create_database::create_database_user,
     delete_in_database::delete_in_database::delete_in_database,
     edit_in_database::edit_in_database::edit_in_database,
@@ -45,7 +45,7 @@ fn select_from_mes_in_database_fn(local: String, mes: String) -> Vec<EmpresasSel
 
 #[tauri::command]
 fn create_database_fn(local: String) {
-    create_database_fornecedores(local.to_string()).expect("Erro ao criar o banco de dados");
+    create_database(local.to_string()).expect("Erro ao criar o banco de dados");
     create_database_user(local).expect("Erro ao criar o banco de dados");
 }
 #[tauri::command]
@@ -66,7 +66,7 @@ fn edit_in_database_fn(
     multa: String,
     juros: String,
     desconto: String,
-    banco: String
+    banco: String,
 ) {
     edit_in_database(
         local,
@@ -80,7 +80,7 @@ fn edit_in_database_fn(
         multa,
         juros,
         desconto,
-        banco
+        banco,
     )
     .expect("Erro ao editar");
 }
@@ -98,7 +98,7 @@ fn insert_database_fn(
     multa: String,
     juros: String,
     desconto: String,
-    banco: String
+    banco: String,
 ) {
     insert_in_database(
         local,
@@ -111,7 +111,7 @@ fn insert_database_fn(
         multa,
         juros,
         desconto,
-        banco
+        banco,
     )
     .expect("Erro ao inserir");
 }
