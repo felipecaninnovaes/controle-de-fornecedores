@@ -6,11 +6,14 @@ mod modules;
 use modules::{
     create_database::create_database::create_database_fornecedores,
     create_database::create_database::create_database_user,
-    delete_in_database::delete_in_database::delete_in_database,
-    edit_in_database::edit_in_database::edit_in_database,
+    delete_in_database::delete_in_database::*,
+    edit_in_database::edit_in_database::*,
     export_database_to_exel::export_database_to_exel::export_database_to_exel,
-    insert_in_database::insert_in_database::insert_in_database,
-    insert_user_in_databese::insert_user_in_database::insert_user_in_database,
+    insert_in_database::insert_in_database::*,
+    insert_user_in_database::insert_user_in_database::insert_user_in_database as auto_create_user,
+    select_all_users_from_database::select_all_users_from_database::{
+        select_all_users_from_database, Usuarios,
+    },
     select_from_database::select_from_database::{select_from_database, Empresas},
     select_from_mes_in_database::select_from_mes_in_database::{
         select_from_mes_in_database, EmpresasSelectID,
@@ -32,10 +35,20 @@ fn delete_in_database_fn(local: String, id: String) {
     delete_in_database(local, id).expect("Erro ao inserir");
 }
 
+#[tauri::command]
+fn delete_user_in_database_fn(local: String, id: String) {
+    delete_users_in_database(local, id).expect("Erro ao inserir");
+}
+
 #[allow(dead_code)]
 #[tauri::command]
 fn select_from_database_fn(local: String) -> Vec<Empresas> {
     select_from_database(local).expect("Erro ao selecionar no banco de dados")
+}
+
+#[tauri::command]
+fn select_all_users_from_database_fn(local: String) -> Vec<Usuarios> {
+    select_all_users_from_database(local).expect("Erro ao selecionar no banco de dados")
 }
 
 #[tauri::command]
@@ -49,9 +62,10 @@ fn create_database_fn(local: String) {
     create_database_user(local).expect("Erro ao criar o banco de dados");
 }
 #[tauri::command]
-fn insert_user_in_database_fn(local: String) {
-    insert_user_in_database(local.to_string()).expect("Erro ao criar usuairo o banco de dados");
+fn auto_create_user_fn(local: String) {
+    auto_create_user(local.to_string()).expect("Erro ao criar usuairo o banco de dados");
 }
+
 #[allow(non_snake_case)]
 #[tauri::command]
 fn edit_in_database_fn(
@@ -66,7 +80,7 @@ fn edit_in_database_fn(
     multa: String,
     juros: String,
     desconto: String,
-    banco: String
+    banco: String,
 ) {
     edit_in_database(
         local,
@@ -80,7 +94,7 @@ fn edit_in_database_fn(
         multa,
         juros,
         desconto,
-        banco
+        banco,
     )
     .expect("Erro ao editar");
 }
@@ -98,7 +112,7 @@ fn insert_database_fn(
     multa: String,
     juros: String,
     desconto: String,
-    banco: String
+    banco: String,
 ) {
     insert_in_database(
         local,
@@ -111,9 +125,19 @@ fn insert_database_fn(
         multa,
         juros,
         desconto,
-        banco
+        banco,
     )
     .expect("Erro ao inserir");
+}
+
+#[tauri::command]
+fn insert_user_in_database_fn(local: String, username: String, password: String) {
+    insert_user_in_database(local, username, password).expect("Erro ao inserir");
+}
+
+#[tauri::command]
+fn edit_user_in_database_fn(local: String, id: String, username: String, password: String) {
+    edit_user_in_database(local, id, username, password).expect("Erro ao inserir");
 }
 
 #[allow(non_snake_case)]
@@ -128,12 +152,16 @@ fn main() {
             create_database_fn,
             edit_in_database_fn,
             insert_database_fn,
+            edit_user_in_database_fn,
             export_xlsx_fn,
             select_from_database_fn,
             delete_in_database_fn,
+            delete_user_in_database_fn,
             select_from_mes_in_database_fn,
             verify_user_password_fn,
-            insert_user_in_database_fn
+            auto_create_user_fn,
+            insert_user_in_database_fn,
+            select_all_users_from_database_fn
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

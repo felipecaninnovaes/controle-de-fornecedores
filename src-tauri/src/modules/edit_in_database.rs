@@ -22,4 +22,17 @@ pub mod edit_in_database {
         stmt.execute((id, mes, fornecedor, cnpj, data_pagamento, numero_da_nota, valor, multa, juros, desconto, banco))?;
         Ok(())
     }
+    #[allow(dead_code)]
+    pub fn edit_user_in_database(
+        local: String,
+        id: String,
+        username: String,
+        password: String
+    ) -> Result<()> {
+        let conn = Connection::open(local)?;
+        let query = "INSERT OR REPLACE INTO usuarios(id, key, username, password) VALUES (?, ?, ?, ?)";
+        let mut stmt = conn.prepare_cached(query)?;
+        stmt.execute((id, "12324324", username, password))?;
+        Ok(())
+    }
 }

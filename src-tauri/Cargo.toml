@@ -18,6 +18,8 @@ serde = {version = "1.0.150", features = ["derive"] }
 serde_rusqlite = "0.31.0"
 serde_json = { version ="1.0.89"}
 tauri = { version = "1.2.2", features = ["api-all"] }
+chrono = "0.4.23"
+md5 = "0.7.0"
 
 [features]
 default = [ "custom-protocol" ]
