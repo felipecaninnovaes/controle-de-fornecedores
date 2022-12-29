@@ -32,7 +32,7 @@ export const AppRoutes = () => {
         label: 'Exportar Arquivo',
       },
       {
-        icon: 'ios_share',
+        icon: 'person',
         path: '/usuarios',
         label: 'Usuarios',
       },
