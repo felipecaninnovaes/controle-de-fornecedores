@@ -6,18 +6,18 @@ authors = ["felipecaninnovaes"]
 license = "GNU General Public License v3.0"
 repository = "https://github.com/felipecaninnovaes/controle-de-fornecedores"
 edition = "2021"
-rust-version = "1.70"
+rust-version = "1.73"
 
 [build-dependencies]
-tauri-build = { version = "1.2.1", features = [] }
+tauri-build = { version = "1.4.0", features = [] }
 
 [dependencies]
-rusqlite = { version = "0.28.0", features = ["bundled"] }
-rust_xlsxwriter = "0.29.0"
+rusqlite = { version = "0.29.0", features = ["bundled"] }
+rust_xlsxwriter = "0.42.0"
 serde = {version = "1.0.150", features = ["derive"] }
-serde_rusqlite = "0.31.0"
-serde_json = { version ="1.0.94"}
-tauri = { version = "1.2.4", features = ["api-all"] }
+serde_rusqlite = "0.33.1"
+serde_json = { version ="1.0.89"}
+tauri = { version = "1.2.2", features = ["api-all"] }
 chrono = "0.4.24"
 md5 = "0.7.0"
 

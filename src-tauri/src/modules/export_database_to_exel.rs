@@ -102,7 +102,7 @@ pub mod export_database_to_exel {
                 .write_string(
                     num,
                     4,
-                    &empresas.as_ref().unwrap().numero_da_nota.to_string().as_str(),
+                    empresas.as_ref().unwrap().numero_da_nota.to_string().as_str(),
                 )
                 .expect("Falha ao gravar");
             worksheet
@@ -130,7 +130,7 @@ pub mod export_database_to_exel {
                 .write_string(
                     num,
                     8,
-                    &empresas.as_ref().unwrap().desconto.to_string().as_str(),
+                    empresas.as_ref().unwrap().desconto.to_string().as_str(),
                 )
                 .expect("Falha ao gravar");
             worksheet
