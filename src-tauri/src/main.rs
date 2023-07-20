@@ -18,8 +18,15 @@ use modules::{
     select_from_mes_in_database::select_from_mes_in_database::{
         select_from_mes_in_database, EmpresasSelectID,
     },
-    verify_user_password::verify_user_password::{verify_user_password, UserSelectUsename}, verify_session::verify_session::{verify_session, VerifySession}
+    token::token::check_token_valid,
+    verify_user_password::verify_user_password::{verify_user_password, UserSelectUsename},
 };
+#[allow(non_snake_case)]
+#[tauri::command]
+fn check_token_valid_fn(local: String, token: String, id: String) -> bool {
+    let result = check_token_valid(local, token, id).unwrap();
+    return result;
+}
 
 #[allow(non_snake_case)]
 #[tauri::command]
@@ -30,15 +37,6 @@ fn verify_user_password_fn(
 ) -> Vec<UserSelectUsename> {
     verify_user_password(local, username, password).expect("Erro ao inserir")
 }
-#[allow(non_snake_case)]
-#[tauri::command]
-fn verify_user_token_fn(
-    local: String,
-    id: String,
-) -> Vec<VerifySession> {
-    verify_session(local, id).expect("Erro ao inserir")
-}
-
 #[tauri::command]
 fn delete_in_database_fn(local: String, id: String) {
     delete_in_database(local, id).expect("Erro ao inserir");
@@ -171,7 +169,8 @@ fn main() {
             auto_create_user_fn,
             insert_user_in_database_fn,
             select_all_users_from_database_fn,
-            verify_user_token_fn,
+            // verify_user_token_fn,
+            check_token_valid_fn,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

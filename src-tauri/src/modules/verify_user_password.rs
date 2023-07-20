@@ -17,11 +17,15 @@ pub mod verify_user_password {
 
         let mut statement = conn.prepare("SELECT * FROM usuarios WHERE username = ? AND password = ?").unwrap();
         let res = from_rows::<UserSelectUsename>(statement.query([username, password]).unwrap());
-
+        
         let mut names = Vec::new();
         for users in res {
             names.push(users.unwrap())
         }
-        Ok(names)
+        if names == Vec::new() {
+            Ok(Vec::new())
+        } else {
+            Ok(names)
+        }
      }
 }

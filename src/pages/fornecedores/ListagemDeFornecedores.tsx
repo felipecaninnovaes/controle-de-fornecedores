@@ -39,10 +39,8 @@ export const ListagemDeFornecedores: React.FC = () => {
       const trimEnd = trimStart + Environment.ROWS_LIMIT
       const trimmedData = apiResponse.slice(trimStart, trimEnd)
       localStorage.setItem('databaseModified', '0')
-      console.log(apiResponse)
       setTotalRows(apiResponse.length)
       setFornecedores(trimmedData)
-      console.log(trimmedData)
       setIsLoading(false)
     }
     apiCall()

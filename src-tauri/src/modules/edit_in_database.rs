@@ -1,6 +1,8 @@
 pub mod edit_in_database {
 
     pub use rusqlite::{Connection, Result};
+
+    use crate::modules::token::token::generate_token;
     #[allow(dead_code)]
     pub fn edit_in_database(
         local: String,
@@ -32,7 +34,7 @@ pub mod edit_in_database {
         let conn = Connection::open(local)?;
         let query = "INSERT OR REPLACE INTO usuarios(id, key, username, password) VALUES (?, ?, ?, ?)";
         let mut stmt = conn.prepare_cached(query)?;
-        stmt.execute((id, "12324324", username, password))?;
+        stmt.execute((id, (generate_token().to_string()), username, password))?;
         Ok(())
     }
 }
