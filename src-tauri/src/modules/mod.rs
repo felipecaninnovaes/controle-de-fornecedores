@@ -8,3 +8,4 @@ pub mod export_database_to_exel;
 pub mod delete_in_database;
 pub mod verify_user_password;
 pub mod insert_user_in_database;
+pub mod verify_session;

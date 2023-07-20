@@ -28,25 +28,25 @@ export const ListagemDeFornecedores: React.FC = () => {
     banco: string
   }
 
-
   const navigate = useNavigate()
 
   useEffect(() => {
     setIsLoading(true)
 
     async function apiCall() {
-      const apiResponse: any = await select_from_database()
+      const apiResponse = await select_from_database()
       const trimStart = (countPages - 1) * Environment.ROWS_LIMIT
       const trimEnd = trimStart + Environment.ROWS_LIMIT
       const trimmedData = apiResponse.slice(trimStart, trimEnd)
       localStorage.setItem('databaseModified', '0')
+      console.log(apiResponse)
       setTotalRows(apiResponse.length)
       setFornecedores(trimmedData)
+      console.log(trimmedData)
       setIsLoading(false)
     }
     apiCall()
   }, [value, countPages])
-
   return (
     <BaseLayoutFromPages
       toolBars={

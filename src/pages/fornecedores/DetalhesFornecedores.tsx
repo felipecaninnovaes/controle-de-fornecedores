@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Box, Button, Grid, LinearProgress, Paper, Typography } from '@mui/material'
+import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { VTextField, VForm, useVForm, IVFormErrors } from '../../shared/forms'
+import { VTextField, VForm, useVForm } from '../../shared/forms'
 import { DetailTools } from '../../shared/components'
 import { BaseLayoutFromPages } from '../../shared/layouts'
 import { delete_in_database, insert_db } from '../../shared/services/fornecedores-services'
@@ -30,7 +30,6 @@ export const DetalhesFornecedores: React.FC = () => {
   const { formRef } = useVForm()
   const {
     idURL = 'novo',
-    mesURL = '',
     dataPagamentoURL = date,
     fornecedorURL = '',
     numeroDaNotaURL = '0',

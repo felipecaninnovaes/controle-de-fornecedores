@@ -4,6 +4,7 @@ import { appConfigDir } from '@tauri-apps/api/path'
 
 
 interface IFormData {
+  id: string,
   mes: string,
   fornecedor: string,
   cnpj: string,
@@ -23,8 +24,8 @@ export const select_from_mes_in_database = async (mes: string) => {
   return resultOfSelectDataBase
 }
 
-export const select_from_database = async () => {
+export const select_from_database = async (): Promise<null[]|IFormData[]> => {
   const appDirPath = await appConfigDir() + 'database.sqlite'
-  const resultOfSelectDataBase = await invoke('select_from_database_fn', { local: appDirPath })
+  const resultOfSelectDataBase:Array<IFormData> = await invoke('select_from_database_fn', { local: appDirPath })
   return resultOfSelectDataBase
-}
+} 

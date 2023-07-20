@@ -1,4 +1,4 @@
-pub mod verify_user_password {
+pub mod verify_session {
 
     pub use rusqlite::{Connection, Result};
     pub use serde::{Deserialize, Serialize};
@@ -7,16 +7,16 @@ pub mod verify_user_password {
     #[allow(dead_code)]
     #[derive(Serialize, Deserialize, Debug, PartialEq)]
     #[allow(non_snake_case)]
-    pub struct UserSelectUsename {
+    pub struct VerifySession {
         id: i32,
         key: String,
     }
 
-    pub fn verify_user_password(local: String, username: String, password: String) -> Result<Vec<UserSelectUsename>> {
+    pub fn verify_session(local: String, id: String) -> Result<Vec<VerifySession>, rusqlite::Error> {
         let conn = Connection::open(local)?;
-
-        let mut statement = conn.prepare("SELECT * FROM usuarios WHERE username = ? AND password = ?").unwrap();
-        let res = from_rows::<UserSelectUsename>(statement.query([username, password]).unwrap());
+        let fix_id: String = id.replace(&['(', ')', ',', '\"', '.', ';', ':', '\''][..], "");
+        let mut statement = conn.prepare("SELECT * FROM usuarios WHERE id = ? ").unwrap();
+        let res = from_rows::<VerifySession>(statement.query([fix_id]).unwrap());
 
         let mut names = Vec::new();
         for users in res {

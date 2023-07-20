@@ -18,7 +18,7 @@ export const checkUpdatesApp = async () => {
     
     const remoteVersion = String(version)
     const currentVersion = String(Environment.APP_VERSION)
-    console.log(remoteVersion)
+    // console.log(remoteVersion)
     if (currentVersion !== remoteVersion && remoteVersion !== '') {
         const response = await ask('A versão '+ remoteVersion + ' está disponivel', {title: 'Atualização', type: 'warning'})
         if(response === true) {

@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material'
 import { ListingTools } from '../../shared/components'
 import { BaseLayoutFromPages } from '../../shared/layouts'
 
