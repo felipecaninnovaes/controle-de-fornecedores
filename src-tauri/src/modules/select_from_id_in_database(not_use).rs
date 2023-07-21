@@ -7,7 +7,7 @@ pub mod select_from_id_in_database {
     #[allow(dead_code)]
     #[derive(Serialize, Deserialize, Debug, PartialEq)]
     #[allow(non_snake_case)]
-    pub struct EmpresasSelectID {
+    struct EmpresasSelectID {
         id: i32,
         mes: String,
         fornecedor: String,
@@ -19,10 +19,26 @@ pub mod select_from_id_in_database {
         banco: String,
     }
 
-    pub fn select_from_id_in_database(local: String, id: String) -> Result<Vec<EmpresasSelectID>> {
+    fn select_from_id_in_database(local: String, id: String) -> Result<Vec<EmpresasSelectID>> {
         let conn = Connection::open(local)?;
 
         let mut statement = conn.prepare("SELECT * FROM empresas WHERE id = ?").unwrap();
+        let res = from_rows::<EmpresasSelectID>(statement.query([id]).unwrap());
+
+        let mut names = Vec::new();
+        for empresas in res {
+            names.push(empresas.unwrap())
+        }
+        Ok(names)
+    }
+
+    fn select_user_where_id_in_database(
+        local: String,
+        id: String,
+    ) -> Result<Vec<EmpresasSelectID>> {
+        let conn = Connection::open(local)?;
+
+        let mut statement = conn.prepare("SELECT * FROM usuarios WHERE id = ?").unwrap();
         let res = from_rows::<EmpresasSelectID>(statement.query([id]).unwrap());
 
         let mut names = Vec::new();

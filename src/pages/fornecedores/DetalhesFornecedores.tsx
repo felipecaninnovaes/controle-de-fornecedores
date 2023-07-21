@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
-import { Box, Button, Grid, LinearProgress, Paper, Typography } from '@mui/material'
+import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { VTextField, VForm, useVForm, IVFormErrors } from '../../shared/forms'
+import { VTextField, VForm, useVForm } from '../../shared/forms'
 import { DetailTools } from '../../shared/components'
 import { BaseLayoutFromPages } from '../../shared/layouts'
-import { insert_db } from '../../shared/services/fornecedores-services'
+import { delete_in_database, insert_db } from '../../shared/services/fornecedores-services'
 import { edit_db } from '../../shared/services/fornecedores-services/edit'
 
 
@@ -30,7 +30,6 @@ export const DetalhesFornecedores: React.FC = () => {
   const { formRef } = useVForm()
   const {
     idURL = 'novo',
-    mesURL = '',
     dataPagamentoURL = date,
     fornecedorURL = '',
     numeroDaNotaURL = '0',
@@ -106,6 +105,7 @@ export const DetalhesFornecedores: React.FC = () => {
           // onClickSaveAndClose={() => { 
           //   console.log('click 😊')
           // }}
+          onClickDelete={() => {delete_in_database(idURL); navigate('/fornecedores')}}
           onClickOnNew={() => navigate('/fornecedores/detalhe/novo')}
           onClickInBack={() => navigate('/fornecedores')}
         />

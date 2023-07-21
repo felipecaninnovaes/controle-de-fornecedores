@@ -5,8 +5,10 @@ import { useDrawerContext } from '../shared/contexts'
 import {
   Dashboard,
   DetalhesFornecedores,
+  DetalhesUsuarios,
   ExportFornecedores,
   ListagemDeFornecedores,
+  ListagemDeUsuarios,
 } from '../pages'
 
 export const AppRoutes = () => {
@@ -29,6 +31,11 @@ export const AppRoutes = () => {
         path: '/export',
         label: 'Exportar Arquivo',
       },
+      {
+        icon: 'person',
+        path: '/usuarios',
+        label: 'Usuarios',
+      },
     ])
   }, [])
 
@@ -36,10 +43,13 @@ export const AppRoutes = () => {
     <Routes>
       <Route path="/pagina-inicial" element={<Dashboard />} />
       <Route path="/fornecedores" element={<ListagemDeFornecedores />} />
+      <Route path="/usuarios" element={<ListagemDeUsuarios />} />
       <Route path="/export" element={<ExportFornecedores />} />
       {/* <Route path='/fornecedores/detalhe/novo' element={<DetalhesFornecedores />} /> */}
       <Route path='/fornecedores/detalhe/novo' element={<DetalhesFornecedores />} />
+      <Route path='/usuarios/detalhe/novo' element={<DetalhesUsuarios />} />
       <Route path='/fornecedores/detalhe/:idURL/:mesURL/:dataPagamentoURL/:fornecedorURL/:cnpjURL/:valorURL/:multaURL/:jurosURL/:bancoURL' element={<DetalhesFornecedores />} />
+      <Route path='/usuarios/detalhe/:idURL/:keyURL/:usernameURL/:passwordURL' element={<DetalhesUsuarios />} />
       <Route path="*" element={<Navigate to="/fornecedores" />} />
     </Routes>
   )

@@ -25,34 +25,34 @@ pub mod export_database_to_exel {
         let mut workbook = Workbook::new();
         let worksheet = workbook.add_worksheet();
         worksheet
-            .write_string_only(0, 0, "DATA DE PAGAMENTO")
+            .write_string(0, 0, "DATA DE PAGAMENTO")
             .expect("Falha ao gravar");
         worksheet
-            .write_string_only(0, 1, "MES")
+            .write_string(0, 1, "MES")
             .expect("Falha ao gravar");
         worksheet
-            .write_string_only(0, 2, "FORNECEDOR")
+            .write_string(0, 2, "FORNECEDOR")
             .expect("Falha ao gravar");
         worksheet
-            .write_string_only(0, 3, "CNPJ")
+            .write_string(0, 3, "CNPJ")
             .expect("Falha ao gravar");
         worksheet
-            .write_string_only(0, 4, "NUMERO DA NOTA")
+            .write_string(0, 4, "NUMERO DA NOTA")
             .expect("Falha ao gravar");
         worksheet
-            .write_string_only(0, 5, "VALOR")
+            .write_string(0, 5, "VALOR")
             .expect("Falha ao gravar");
         worksheet
-            .write_string_only(0, 6, "MULTA")
+            .write_string(0, 6, "MULTA")
             .expect("Falha ao gravar");
         worksheet
-            .write_string_only(0, 7, "JUROS")
+            .write_string(0, 7, "JUROS")
             .expect("Falha ao gravar");
         worksheet
-            .write_string_only(0, 8, "DESCONTO")
+            .write_string(0, 8, "DESCONTO")
             .expect("Falha ao gravar");
         worksheet
-            .write_string_only(0, 9, "BANCO")
+            .write_string(0, 9, "BANCO")
             .expect("Falha ao gravar");
 
         let mut stmt = conn.prepare("SELECT id, mes, fornecedor, cnpj, dataPagamento, numeroDaNota, valor, multa, juros, desconto, banco FROM empresas WHERE mes = :mes")?;
@@ -74,7 +74,7 @@ pub mod export_database_to_exel {
         let mut num: u32 = 1;
         for empresas in empresas_iter {
             worksheet
-                .write_string_only(
+                .write_string(
                     num,
                     0,
                     empresas
@@ -86,55 +86,55 @@ pub mod export_database_to_exel {
                 )
                 .expect("Falha ao gravar");
             worksheet
-                .write_string_only(num, 1, empresas.as_ref().unwrap().mes.to_string().as_str())
+                .write_string(num, 1, empresas.as_ref().unwrap().mes.to_string().as_str())
                 .expect("Falha ao gravar");
             worksheet
-                .write_string_only(
+                .write_string(
                     num,
                     2,
                     empresas.as_ref().unwrap().fornecedor.to_string().as_str(),
                 )
                 .expect("Falha ao gravar");
             worksheet
-                .write_string_only(num, 3, empresas.as_ref().unwrap().cnpj.to_string().as_str())
+                .write_string(num, 3, empresas.as_ref().unwrap().cnpj.to_string().as_str())
                 .expect("Falha ao gravar");
             worksheet
-                .write_string_only(
+                .write_string(
                     num,
                     4,
-                    &empresas.as_ref().unwrap().numero_da_nota.to_string().as_str(),
+                    empresas.as_ref().unwrap().numero_da_nota.to_string().as_str(),
                 )
                 .expect("Falha ao gravar");
             worksheet
-                .write_string_only(
+                .write_string(
                     num,
                     5,
                     empresas.as_ref().unwrap().valor.to_string().as_str(),
                 )
                 .expect("Falha ao gravar");
             worksheet
-                .write_string_only(
+                .write_string(
                     num,
                     6,
                     empresas.as_ref().unwrap().multa.to_string().as_str(),
                 )
                 .expect("Falha ao gravar");
             worksheet
-                .write_string_only(
+                .write_string(
                     num,
                     7,
                     empresas.as_ref().unwrap().juros.to_string().as_str(),
                 )
                 .expect("Falha ao gravar");
             worksheet
-                .write_string_only(
+                .write_string(
                     num,
                     8,
-                    &empresas.as_ref().unwrap().desconto.to_string().as_str(),
+                    empresas.as_ref().unwrap().desconto.to_string().as_str(),
                 )
                 .expect("Falha ao gravar");
             worksheet
-                .write_string_only(
+                .write_string(
                     num,
                     9,
                     empresas.as_ref().unwrap().banco.to_string().as_str(),

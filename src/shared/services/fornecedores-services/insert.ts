@@ -36,7 +36,7 @@ export const insert_db = async (dados: IFormData) => {
     }))
 }
 
-export const insertUser = async () => {
+export const autoCreateDefaultUser = async () => {
     const appDirPath = await appConfigDir() + 'database.sqlite'
-    return (await invoke('insert_user_in_database_fn', { local: appDirPath }))
+    return (await invoke('auto_create_user_fn', { local: appDirPath }))
 }

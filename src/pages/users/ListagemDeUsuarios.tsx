@@ -6,27 +6,23 @@ import { ListingTools } from '../../shared/components'
 import { BaseLayoutFromPages } from '../../shared/layouts'
 import { delete_in_database, select_from_database } from '../../shared/services/fornecedores-services'
 import { Environment } from '../../shared/environment'
+import { select_all_users_from_database } from '../../shared/services/usuarios-services'
+import { delete_user_in_database } from '../../shared/services/usuarios-services/delete'
 
-export const ListagemDeFornecedores: React.FC = () => {
+export const ListagemDeUsuarios: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState(true)
   const [countPages, setCountPages] = useState(1)
   const [value, setValue] = useState('')
-  const [fornecedores, setFornecedores] = useState<IFornecedores[] | null[]>([])
+  const [fornecedores, setFornecedores] = useState<IUsuarios[] | null[]>([])
   const [totalRows, setTotalRows] = useState(0)
-  interface IFornecedores {
+  interface IUsuarios {
     id: string,
-    mes: string,
-    fornecedor: string,
-    cnpj: string,
-    dataPagamento: string,
-    numeroDaNota: string,
-    valor: string,
-    multa: string,
-    juros: string,
-    desconto: string,
-    banco: string
+    key: String,
+    username: String,
+    password: String
   }
+
 
   const navigate = useNavigate()
 
@@ -34,7 +30,7 @@ export const ListagemDeFornecedores: React.FC = () => {
     setIsLoading(true)
 
     async function apiCall() {
-      const apiResponse = await select_from_database()
+      const apiResponse: any = await select_all_users_from_database()
       const trimStart = (countPages - 1) * Environment.ROWS_LIMIT
       const trimEnd = trimStart + Environment.ROWS_LIMIT
       const trimmedData = apiResponse.slice(trimStart, trimEnd)
@@ -45,16 +41,17 @@ export const ListagemDeFornecedores: React.FC = () => {
     }
     apiCall()
   }, [value, countPages])
+
   return (
     <BaseLayoutFromPages
       toolBars={
         <ListingTools
           showSearchInput={false}
           showTitle={true}
-          textTitle='Controle de Fornecedores'
+          textTitle='Listagem de Usuarios'
           showNewButton={true}
           newTextButton='Novo'
-          onClickOnNew={() => navigate('/fornecedores/detalhe/novo')}
+          onClickOnNew={() => navigate('/usuarios/detalhe/novo')}
         />
       }
     >
@@ -64,44 +61,26 @@ export const ListagemDeFornecedores: React.FC = () => {
             <TableHead>
               <TableRow>
                 <TableCell></TableCell>
-                <TableCell></TableCell>
+                <TableCell></TableCell> 
                 <TableCell>ID</TableCell>
-                <TableCell>MES</TableCell>
-                <TableCell>PAGAMENTO</TableCell>
-                <TableCell>FORNECEDOR</TableCell>
-                <TableCell>CNPJ</TableCell>
-                <TableCell>NUMERO DA NOTA</TableCell>
-                <TableCell>VALOR</TableCell>
-                <TableCell>MULTA</TableCell>
-                <TableCell>JUROS</TableCell>
-                <TableCell>DESCONTO</TableCell>
-                <TableCell>BANCO</TableCell>
+                <TableCell>USERNAME</TableCell>
               </TableRow>
             </TableHead>
             <TableBody sx={{ overflow: 'hidden' }}>
               {fornecedores.map(row => (
                 <TableRow key={row?.id}>
                   <TableCell>
-                    <IconButton size="small" onClick={() => { delete_in_database(String(row?.id)); setValue(value + 1) }}>
+                    <IconButton size="small" onClick={() => { delete_user_in_database(String(row?.id)); setValue(value + 1) }}>
                       <Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'><Icon>delete</Icon></Typography>
                     </IconButton>
                   </TableCell>
                   <TableCell>
-                    <IconButton size="small" onClick={() => navigate(`/fornecedores/detalhe/${row?.id}/${row?.mes}/${row?.dataPagamento}/${row?.fornecedor}/${row?.cnpj}/${row?.valor}/${row?.multa}/${row?.juros}/${row?.banco}`)}>
+                    <IconButton size="small" onClick={() => navigate(`/usuarios/detalhe/${row?.id}/${row?.key}/${row?.username}/${row?.password}`)}>
                       <Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'><Icon>edit</Icon></Typography>
                     </IconButton>
                   </TableCell>
                   <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'>{row?.id}</Typography></TableCell>
-                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.mes}</Typography></TableCell>
-                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.dataPagamento}</Typography></TableCell>
-                  <TableCell><Typography width='6.7rem' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.fornecedor}</Typography></TableCell>
-                  <TableCell><Typography width='6.0rem' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.cnpj}</Typography></TableCell>
-                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.numeroDaNota}</Typography></TableCell>
-                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.valor}</Typography></TableCell>
-                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.multa}</Typography></TableCell>
-                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.juros}</Typography></TableCell>
-                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.desconto}</Typography></TableCell>
-                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.banco}</Typography></TableCell>
+                  <TableCell><Typography width='auto' overflow='hidden' whiteSpace='nowrap' textOverflow='ellipsis'> {row?.username}</Typography></TableCell>
                 </TableRow>
 
               ))}
