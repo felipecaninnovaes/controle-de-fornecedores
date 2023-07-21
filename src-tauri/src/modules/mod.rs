@@ -9,3 +9,4 @@ pub mod delete_in_database;
 pub mod verify_user_password;
 pub mod insert_user_in_database;
 pub mod token;
+pub mod renew_user_token;

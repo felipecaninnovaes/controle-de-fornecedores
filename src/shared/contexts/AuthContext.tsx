@@ -3,7 +3,6 @@ import { createContext, useCallback, useContext, useEffect, useState } from 'rea
 import { AuthService } from '../services/auth/AuthService'
 import { tokenValidation } from '../services/auth/TokenValidation'
 
-
 interface IAuthContextData {
   logout: () => void
   isAuthenticated: boolean
@@ -40,17 +39,17 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
       localStorage.setItem(LOCAL_STORAGE_KEY_ACCESS_TOKEN, JSON.stringify(result.accessToken))
       localStorage.setItem(LOCAL_STORAGE_USER_ID, JSON.stringify(result.userID))
       setTokenValidade(true)
-      
+
     }
   }, [])
 
-  const handleLogout = useCallback( () => {
+  const handleLogout = useCallback(() => {
     localStorage.removeItem(LOCAL_STORAGE_KEY_ACCESS_TOKEN)
     localStorage.removeItem(LOCAL_STORAGE_USER_ID)
     setTokenValidade(false)
   }, [])
   const isAuthenticated = tokenValidate || false
-  
+
   return (
     <AuthContext.Provider value={{ isAuthenticated, login: handleLogin, logout: handleLogout }}>
       {children}
