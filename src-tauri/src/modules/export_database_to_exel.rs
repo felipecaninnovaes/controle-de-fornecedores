@@ -3,9 +3,9 @@ pub mod export_database_to_exel {
     use rust_xlsxwriter::Workbook;
 
     pub fn export_database_to_exel(
-        local: String,
-        mes_value: String,
-        xlsx_folder: String,
+        local: &String,
+        mes_value: &String,
+        xlsx_folder: &String,
     ) -> Result<()> {
         #[allow(dead_code)]
         struct Empresas {
@@ -21,7 +21,7 @@ pub mod export_database_to_exel {
             desconto: String,
             banco: String,
         }
-        let conn = Connection::open(local)?;
+        let conn = Connection::open(&local)?;
         let mut workbook = Workbook::new();
         let worksheet = workbook.add_worksheet();
         worksheet
@@ -102,7 +102,12 @@ pub mod export_database_to_exel {
                 .write_string(
                     num,
                     4,
-                    empresas.as_ref().unwrap().numero_da_nota.to_string().as_str(),
+                    empresas
+                        .as_ref()
+                        .unwrap()
+                        .numero_da_nota
+                        .to_string()
+                        .as_str(),
                 )
                 .expect("Falha ao gravar");
             worksheet

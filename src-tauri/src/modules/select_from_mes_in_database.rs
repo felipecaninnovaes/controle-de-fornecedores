@@ -22,20 +22,19 @@ pub mod select_from_mes_in_database {
     }
 
     pub fn select_from_mes_in_database(
-        local: String,
-        mes: String,
+        local: &String,
+        mes: &String,
     ) -> Result<Vec<EmpresasSelectID>> {
         let conn = Connection::open(local)?;
-
+        println!("{}", mes);
         let mut statement = conn
             .prepare("SELECT * FROM empresas WHERE mes = ?")
             .unwrap();
         let res = from_rows::<EmpresasSelectID>(statement.query([mes]).unwrap());
-
-        let mut names = Vec::new();
+        let mut result = Vec::new();
         for empresas in res {
-            names.push(empresas.unwrap())
+            result.push(empresas.unwrap())
         }
-        Ok(names)
+        Ok(result)
     }
 }

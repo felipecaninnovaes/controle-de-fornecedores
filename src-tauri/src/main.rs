@@ -8,9 +8,9 @@ use modules::{
     create_database::create_database::create_database_user,
     delete_in_database::delete_in_database::*,
     edit_in_database::edit_in_database::*,
+    exist_in_database::exist_in_database::create_admin_user as auto_create_user,
     export_database_to_exel::export_database_to_exel::export_database_to_exel,
     insert_in_database::insert_in_database::*,
-    insert_user_in_database::insert_user_in_database::insert_user_in_database as auto_create_user,
     select_all_users_from_database::select_all_users_from_database::{
         select_all_users_from_database, Usuarios,
     },
@@ -24,7 +24,7 @@ use modules::{
 #[allow(non_snake_case)]
 #[tauri::command]
 fn check_token_valid_fn(local: String, token: String, id: String) -> bool {
-    let result = check_token_valid(local, token, id).unwrap();
+    let result = check_token_valid(&local, &token, &id).expect("Erro ao obter o token");
     return result;
 }
 
@@ -35,42 +35,42 @@ fn verify_user_password_fn(
     username: String,
     password: String,
 ) -> Vec<UserSelectUsename> {
-    verify_user_password(local, username, password).expect("Erro ao inserir")
+    verify_user_password(&local, &username, &password).expect("Erro ao inserir")
 }
 #[tauri::command]
 fn delete_in_database_fn(local: String, id: String) {
-    delete_in_database(local, id).expect("Erro ao inserir");
+    delete_in_database(&local, &id).expect("Erro ao inserir");
 }
 
 #[tauri::command]
 fn delete_user_in_database_fn(local: String, id: String) {
-    delete_users_in_database(local, id).expect("Erro ao inserir");
+    delete_users_in_database(&local, &id).expect("Erro ao inserir");
 }
 
 #[allow(dead_code)]
 #[tauri::command]
 fn select_from_database_fn(local: String) -> Vec<Empresas> {
-    select_from_database(local).expect("Erro ao selecionar no banco de dados")
+    select_from_database(&local).expect("Erro ao selecionar no banco de dados")
 }
 
 #[tauri::command]
 fn select_all_users_from_database_fn(local: String) -> Vec<Usuarios> {
-    select_all_users_from_database(local).expect("Erro ao selecionar no banco de dados")
+    select_all_users_from_database(&local).expect("Erro ao selecionar no banco de dados")
 }
 
 #[tauri::command]
 fn select_from_mes_in_database_fn(local: String, mes: String) -> Vec<EmpresasSelectID> {
-    select_from_mes_in_database(local, mes).expect("Erro ao selecionar no banco de dados")
+    select_from_mes_in_database(&local, &mes).expect("Erro ao selecionar no banco de dados")
 }
 
 #[tauri::command]
 fn create_database_fn(local: String) {
-    create_database_fornecedores(local.to_string()).expect("Erro ao criar o banco de dados");
-    create_database_user(local).expect("Erro ao criar o banco de dados");
+    create_database_fornecedores(&local).expect("Erro ao criar o banco de dados");
+    create_database_user(&local).expect("Erro ao criar o banco de dados");
 }
 #[tauri::command]
 fn auto_create_user_fn(local: String) {
-    auto_create_user(local.to_string()).expect("Erro ao criar usuairo o banco de dados");
+    auto_create_user(&local).expect("Erro ao criar usuairo o banco de dados");
 }
 
 #[allow(non_snake_case)]
@@ -90,18 +90,18 @@ fn edit_in_database_fn(
     banco: String,
 ) {
     edit_in_database(
-        local,
-        id,
-        mes,
-        fornecedor,
-        cnpj,
-        dataPagamento,
-        numeroDaNota,
-        valor,
-        multa,
-        juros,
-        desconto,
-        banco,
+        &local,
+        &id,
+        &mes,
+        &fornecedor,
+        &cnpj,
+        &dataPagamento,
+        &numeroDaNota,
+        &valor,
+        &multa,
+        &juros,
+        &desconto,
+        &banco,
     )
     .expect("Erro ao editar");
 }
@@ -139,7 +139,7 @@ fn insert_database_fn(
 
 #[tauri::command]
 fn insert_user_in_database_fn(local: String, username: String, password: String) {
-    insert_user_in_database(local, username, password).expect("Erro ao inserir");
+    insert_user_in_database(&local, &username, &password).expect("Erro ao inserir");
 }
 
 #[tauri::command]
@@ -150,7 +150,7 @@ fn edit_user_in_database_fn(local: String, id: String, username: String, passwor
 #[allow(non_snake_case)]
 #[tauri::command]
 fn export_xlsx_fn(local: String, mesValue: String, xlsxFolder: String) {
-    export_database_to_exel(local, mesValue, xlsxFolder).expect("Erro ao exportar")
+    export_database_to_exel(&local, &mesValue, &xlsxFolder).expect("Erro ao exportar")
 }
 
 fn main() {

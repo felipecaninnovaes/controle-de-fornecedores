@@ -13,22 +13,22 @@ pub mod verify_user_password {
         id: i32,
         key: String,
     }
-    pub fn verify_user_password(local: String, username: String, password: String) -> Result<Vec<UserSelectUsename>> {
+    pub fn verify_user_password(local: &String, username: &String, password: &String) -> Result<Vec<UserSelectUsename>> {
         let conn = Connection::open(local.to_string())?;
         let mut statement = conn.prepare("SELECT * FROM usuarios WHERE username = ? AND password = ?").unwrap();
         let result = from_rows::<UserSelectUsename>(statement.query([username, password]).unwrap());
         let mut names = Vec::new();
         let mut id = String::new();
         for users in result {
-            id = users.as_ref().unwrap().id.to_string();
+            id.push_str(users.expect("Erro ao receber os dados").id.to_string().as_str())
         }
-        if id == "" {
+        if &id == &"" {
             Ok(Vec::new())
         } else {
-            let tokens = renew_user_token(local.to_string(), id.to_string()).unwrap();
+            let tokens = renew_user_token(&local, &id).unwrap();
 
             for i in tokens {
-                let _ = edit_key_user_in_database(local.to_string(), i.id.to_string(), i.key.to_string(), i.username.to_string(), i.password.to_string());
+                let _ = edit_key_user_in_database(&local, &i.id.to_string(), &i.key, &i.username, &i.password);
                 names.push(UserSelectUsename {id: i.id, key: i.key.to_string()});
             }
             Ok(names)

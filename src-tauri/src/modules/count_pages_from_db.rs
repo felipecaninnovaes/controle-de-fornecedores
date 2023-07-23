@@ -19,7 +19,7 @@ pub mod count {
         banco: String,
     }
 
-    pub fn count(local: String) -> Result<i32> {
+    pub fn count(local: &String) -> Result<i32> {
         let mut rowCount = 0;
         let mut pageCount = 1;
 
@@ -27,8 +27,6 @@ pub mod count {
 
         let mut statement = conn.prepare("SELECT * FROM empresas").unwrap();
         let res = from_rows::<Empresas>(statement.query([]).unwrap());
-
-        // let mut names = Vec::new();
         for empresas in res {
            if rowCount == 10 {
             pageCount += 1;
@@ -36,8 +34,6 @@ pub mod count {
         }
         rowCount += 1;
         }
-        // let pageCount: String = pageCount.to_string();
-        // let teste:String = ("ola").to_string();
         Ok(pageCount)
     }
 }

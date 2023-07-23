@@ -19,11 +19,11 @@ pub mod renew_user_token {
     }
 
     pub fn edit_key_user_in_database(
-        local: String,
-        id: String,
-        token: String,
-        username: String,
-        password: String
+        local: &String,
+        id: &String,
+        token: &String,
+        username: &String,
+        password: &String
     ) -> Result<()> {
         
         let conn = Connection::open(local)?;
@@ -32,7 +32,7 @@ pub mod renew_user_token {
         stmt.execute((id, token, username, password))?;
         Ok(())
     }
-    pub fn renew_user_token(local: String, id: String) -> Result<Vec<IUsuarios>> {
+    pub fn renew_user_token(local: &String, id: &String) -> Result<Vec<IUsuarios>> {
 
         let conn = Connection::open(local.to_string())?;
 

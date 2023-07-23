@@ -5,18 +5,18 @@ pub mod edit_in_database {
     use crate::modules::token::token::generate_token;
     #[allow(dead_code)]
     pub fn edit_in_database(
-        local: String,
-        id: String,
-        mes: String,
-        fornecedor: String,
-        cnpj: String,
-        data_pagamento: String,
-        numero_da_nota: String,
-        valor: String,
-        multa: String,
-        juros: String,
-        desconto: String,
-        banco: String,
+        local: &String,
+        id: &String,
+        mes: &String,
+        fornecedor: &String,
+        cnpj: &String,
+        data_pagamento: &String,
+        numero_da_nota: &String,
+        valor: &String,
+        multa: &String,
+        juros: &String,
+        desconto: &String,
+        banco: &String,
     ) -> Result<()> {
         let conn = Connection::open(local)?;
         let query = "INSERT OR REPLACE INTO empresas(id, mes, fornecedor, cnpj, dataPagamento, numeroDaNota, valor, multa, juros, desconto, banco) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";

@@ -14,7 +14,7 @@ pub mod select_all_users_from_database {
         password: String
     }
 
-    pub fn select_all_users_from_database(local: String) -> Result<Vec<Usuarios>> {
+    pub fn select_all_users_from_database(local: &String) -> Result<Vec<Usuarios>> {
 
         let conn = Connection::open(local)?;
 

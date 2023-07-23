@@ -21,7 +21,7 @@ pub mod select_from_database {
         banco: String,
     }
 
-    pub fn select_from_database(local: String) -> Result<Vec<Empresas>> {
+    pub fn select_from_database(local: &String) -> Result<Vec<Empresas>> {
 
         let conn = Connection::open(local)?;
 
