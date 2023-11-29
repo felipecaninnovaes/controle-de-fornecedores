@@ -2,7 +2,6 @@ pub mod select_from_mes_in_database {
 
     pub use rusqlite::{Connection, Result};
     pub use serde::{Deserialize, Serialize};
-    pub use serde_json::*;
     use serde_rusqlite::*;
     #[allow(dead_code)]
     #[derive(Serialize, Deserialize, Debug, PartialEq)]

@@ -3,7 +3,6 @@ pub mod select_all_users_from_database {
     pub use rusqlite::{Connection, Result};
     pub use serde::{Deserialize, Serialize};
     use serde_rusqlite::*;
-    pub use serde_json::*;
     #[allow(dead_code)]
     #[derive(Serialize, Deserialize, Debug, PartialEq)]
     #[allow(non_snake_case)]

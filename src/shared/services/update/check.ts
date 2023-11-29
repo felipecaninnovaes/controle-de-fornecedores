@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { ask, message } from '@tauri-apps/api/dialog'
-import { arch, platform } from '@tauri-apps/api/os'
+import { platform } from '@tauri-apps/api/os'
 import { Environment } from '../../environment'
 interface Version {
     tag_name: string

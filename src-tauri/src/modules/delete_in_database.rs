@@ -1,6 +1,6 @@
 pub mod delete_in_database {
 
-    pub use rusqlite::{params ,Connection, Result};
+    pub use rusqlite::{Connection, Result};
     #[allow(dead_code)]
     pub fn delete_in_database(
         local: String,

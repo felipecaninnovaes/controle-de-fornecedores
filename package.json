@@ -1,4 +1,4 @@
-{
+  {
   "name": "controle-de-fornecedores",
   "version": "1.2.0",
   "private": true,
@@ -25,7 +25,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.4.0",
+    "@tauri-apps/cli": "^1.5.6",
     "@types/jest": "^29.5.3",
     "@types/node": "^20.4.2",
     "@types/react": "^18.2.15",

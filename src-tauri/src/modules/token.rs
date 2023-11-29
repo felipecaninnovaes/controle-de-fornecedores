@@ -2,7 +2,6 @@ pub mod token {
 
     pub use rusqlite::{Connection, Result};
     pub use serde::{Deserialize, Serialize};
-    pub use serde_json::*;
     use serde_rusqlite::*;    
     pub use md5;
     pub use chrono::Utc;
